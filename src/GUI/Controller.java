@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class Controller {
     private Stage primaryStage; // the primary stage of the GUI
-    private char[][][] masterMaze;
+    private char[][][] masterMaze; // the map as a 3d array for coordinate purposes.
 
     // used to extract the primary stage from the Main Class.
     public void setStage(Stage stage){
@@ -78,5 +78,11 @@ public class Controller {
             }
             System.out.println("---------------------------------");
         }
+    }
+
+    //clears the map from the gui. Has a keyboard shortcut of ctrl + shift + c
+    //// TODO: 9/2/16 make this method
+    public void clearScreen(){
+        // code to clear GUI
     }
 }
