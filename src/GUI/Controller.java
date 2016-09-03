@@ -1,4 +1,4 @@
-package sample;
+package GUI;
 
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
