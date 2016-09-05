@@ -85,4 +85,13 @@ public class Controller {
     public void clearScreen(){
         // code to clear GUI
     }
+
+    //Shows about info screen from help menu
+    public void about(){
+        AboutWindow aboutWindow = new AboutWindow("About", "Maze Solver", "1.0",
+                "This is the most amazing maze crawler that world will ever know!\n" +
+                        "Let it be known that this is a fact and has been scientifically proven.",
+                "Awesome Team", "https://github.com/shinn16/MazeSolver");
+        aboutWindow.display();
+    }
 }
