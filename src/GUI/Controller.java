@@ -1,10 +1,11 @@
 package GUI;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
@@ -19,14 +20,11 @@ public class Controller {
     private Stage primaryStage; // the primary stage of the GUI, obtained through setStage method.
 
     // Buttons
-    @FXML
-    private Button loadBtn = new Button();
-    @FXML
-    private  Button startBtn = new Button();
+    @FXML private Button loadBtn;
+    @FXML private Button startBtn;
 
     // Labels
-    @FXML
-    private Label statusLbl = new Label();
+    @FXML private Label statusLbl;
 
     // used to extract the primary stage from the Main Class.
     public void setStage(Stage stage){
@@ -50,9 +48,10 @@ public class Controller {
                 new FileChooser.ExtensionFilter("Map Files", "*.map") // custom extension, just for fun.
         );
 
-        File map = chooser.showOpenDialog(primaryStage);
-        //// TODO: 9/2/16 Remove debug here.
-        System.out.println(map.getName());
+        File map = chooser.showOpenDialog(primaryStage);// opens file chooser box to main stage.
+        statusLbl.setText("Status: Loading " + map.getName() + "...");
+
+        masterMaze = new char[0][0][0]; // ensures that the previous maze has been dumped.
 
         try {
             scanner = new Scanner(map);
@@ -94,6 +93,7 @@ public class Controller {
             }
             System.out.println("---------------------------------");
         }
+        statusLbl.setText("Loaded " + map.getName() + ".");
     }
 
     // Starts the search algorithm.
@@ -106,6 +106,8 @@ public class Controller {
     //// TODO: 9/2/16 make this method
     public void clearScreen(){
         // code to clear GUI
+        statusLbl.setText("Status: Nothing Loaded.");
+        masterMaze = new char[0][0][0];
     }
 
     //Shows about info screen from help menu

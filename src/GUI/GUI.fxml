@@ -50,7 +50,7 @@
                   <HBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="43.0" prefWidth="500.0" spacing="10.0">
                      <children>
                         <Slider HBox.hgrow="NEVER" />
-                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="43.0" prefWidth="163.0" HBox.hgrow="ALWAYS" />
+                        <Region maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
                         <Button fx:id="startBtn" mnemonicParsing="false" onAction="#start" prefHeight="25.0" prefWidth="62.0" text="Start" HBox.hgrow="NEVER" />
                         <Button fx:id="loadBtn" mnemonicParsing="false" onAction="#load" prefHeight="25.0" prefWidth="62.0" text="Load" HBox.hgrow="NEVER">
                            <HBox.margin>
@@ -64,8 +64,11 @@
                   </HBox>
                   <HBox layoutY="45.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="15.0" prefWidth="500.0">
                      <children>
-                        <Label fx:id="statusLbl" text="Status:" />
+                        <Label fx:id="statusLbl" text="Status: Nothing Loaded" />
                      </children>
+                     <padding>
+                        <Insets bottom="8.0" left="5.0" right="5.0" />
+                     </padding>
                   </HBox>
                </children>
             </Pane>
