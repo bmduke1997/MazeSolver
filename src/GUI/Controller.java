@@ -1,16 +1,32 @@
 package GUI;
 
+import javafx.fxml.FXML;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class Controller {
-    private Stage primaryStage; // the primary stage of the GUI
+    // data structures
     private char[][][] masterMaze; // the map as a 3d array for coordinate purposes.
+
+    //GUI elements, can be called by using @FXML then defining an object with the same name as the FXid.
+    //--------------------------------------------------------------------------------
+    private Stage primaryStage; // the primary stage of the GUI, obtained through setStage method.
+
+    // Buttons
+    @FXML
+    private Button loadBtn = new Button();
+    @FXML
+    private  Button startBtn = new Button();
+
+    // Labels
+    @FXML
+    private Label statusLbl = new Label();
 
     // used to extract the primary stage from the Main Class.
     public void setStage(Stage stage){
@@ -78,6 +94,12 @@ public class Controller {
             }
             System.out.println("---------------------------------");
         }
+    }
+
+    // Starts the search algorithm.
+    //// TODO: 9/7/16 make method.
+    public void start(){
+        // maze solving algorithm goes here.
     }
 
     //clears the map from the gui. Has a keyboard shortcut of ctrl + shift + c
