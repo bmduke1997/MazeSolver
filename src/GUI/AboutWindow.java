@@ -39,10 +39,7 @@ public class AboutWindow {
         Stage window = new Stage();
         window.setTitle(windowName);
         window.initModality(Modality.APPLICATION_MODAL); // means that while this window is open, you can't interact with the main program.
-        
-        // Buttons
-        Button closeButton = new Button("Close");
-        closeButton.setOnAction(e -> window.close()); // sets the button to close the window
+
         
         // Labels
         Label appNameLabel = new Label(appName);

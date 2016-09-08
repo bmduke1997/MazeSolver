@@ -1,19 +1,24 @@
 package GUI;
 
 import javafx.fxml.FXML;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
+import javafx.scene.shape.ArcType;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class Controller {
-    // data structures
+    // data structures / logic stuff
     private char[][][] masterMaze; // the map as a 3d array for coordinate purposes.
+    private boolean run = false;
+
 
     //GUI elements, can be called by using @FXML then defining an object with the same name as the FXid.
     //--------------------------------------------------------------------------------
@@ -26,10 +31,18 @@ public class Controller {
     // Labels
     @FXML private Label statusLbl;
 
+    // Slider
+    @FXML private Slider slider;
+
+    // Map GUI Stuff
+    @FXML private Canvas mapCanvas;
+
+
     // used to extract the primary stage from the Main Class.
     public void setStage(Stage stage){
         this.primaryStage = stage;
     }
+    private GraphicsContext graphicsContext;
 
     // Load method, loads the maps into a 3d array.
     // // TODO: 9/2/16 make this load the map into the GUI 
@@ -94,12 +107,22 @@ public class Controller {
             System.out.println("---------------------------------");
         }
         statusLbl.setText("Loaded " + map.getName() + ".");
+        run = true;
     }
 
     // Starts the search algorithm.
     //// TODO: 9/7/16 make method.
     public void start(){
-        // maze solving algorithm goes here.
+        // checks to see if a maze is actually loaded...
+        if (!run){
+            WarningWindow warningWindow = new WarningWindow(primaryStage, "NOTHING LOADED", "You have not loaded anything...");
+            warningWindow.display();
+        }else{
+            // maze solving algorithm goes here.
+        }
+        //// TODO: 9/8/16 REMOVE THIS TEST CODE
+        this.graphicsContext = mapCanvas.getGraphicsContext2D();
+        graphicsContext.strokeArc(50.00, 50.00, 50.00, 50.00, 360.00, 360.00, ArcType.ROUND);
     }
 
     //clears the map from the gui. Has a keyboard shortcut of ctrl + shift + c
@@ -108,6 +131,12 @@ public class Controller {
         // code to clear GUI
         statusLbl.setText("Status: Nothing Loaded.");
         masterMaze = new char[0][0][0];
+
+    }
+
+    //// TODO: 9/8/16 DELTE ME
+    public void test(){
+        System.out.println(slider.getValue());
     }
 
     //Shows about info screen from help menu
