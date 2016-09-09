@@ -13,12 +13,11 @@ public class ThompsonStack<T>
       nextNode = null;
     }
   }
-  public ThompsonStack()
-  {
-    headNode = null;
+
+  ThompsonStack()
+  {headNode = null;
   }
-  public boolean isEmpty()
-  {
+   boolean isEmpty(){
     if (headNode == null)
       return true;
     return false;
