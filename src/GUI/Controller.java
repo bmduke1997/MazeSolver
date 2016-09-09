@@ -14,6 +14,14 @@ import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.Scanner;
 
+/**
+ * @author Patrick Shinn
+ * @author Brandon Duke
+ * @author Claire Wallace
+ * @version Alpha 0.05
+ *
+ * This is the controller class for the GUI.fxml. This code does all of the heavy lifting for the GUI.
+ */
 public class Controller {
     // data structures / logic stuff
     private char[][][] masterMaze; // the map as a 3d array for coordinate purposes.
@@ -107,7 +115,7 @@ public class Controller {
             System.out.println("---------------------------------");
         }
         statusLbl.setText("Loaded " + map.getName() + ".");
-        run = true;
+        run = true; // we loaded a file, so now we can run through the maze.
     }
 
     // Starts the search algorithm.
@@ -159,9 +167,11 @@ public class Controller {
 
     }
 
-    //// TODO: 9/8/16 DELTE ME
+    //// TODO: 9/8/16 Patrick's start test method so I don't mess up the logic
     public void test(){
         System.out.println(slider.getValue());
+        this.graphicsContext = mapCanvas.getGraphicsContext2D();
+        graphicsContext.strokeArc(50.00, 50.00, 50.00, 50.00, 360.00, 360.00, ArcType.ROUND);
     }
 
     //Shows about info screen from help menu
