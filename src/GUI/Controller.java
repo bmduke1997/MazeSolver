@@ -110,7 +110,6 @@ public class Controller {
         run = true;
     }
 
-    // Starts the search algorithm.
     //// TODO: 9/7/16 make method.
     public void start(){
         // checks to see if a maze is actually loaded...
@@ -118,12 +117,12 @@ public class Controller {
             WarningWindow warningWindow = new WarningWindow(primaryStage, "NOTHING LOADED", "You have not loaded anything...");
             warningWindow.display();
         }else{
-            // maze solving algorithm goes here.
+            // Starts the search algorithm.
+            // HSITILSLK''
+
         }
-        //// TODO: 9/8/16 REMOVE THIS TEST CODE
-        this.graphicsContext = mapCanvas.getGraphicsContext2D();
-        graphicsContext.strokeArc(50.00, 50.00, 50.00, 50.00, 360.00, 360.00, ArcType.ROUND);
     }
+
 
     //clears the map from the gui. Has a keyboard shortcut of ctrl + shift + c
     //// TODO: 9/2/16 make this method
@@ -131,12 +130,13 @@ public class Controller {
         // code to clear GUI
         statusLbl.setText("Status: Nothing Loaded.");
         masterMaze = new char[0][0][0];
+        run = false;
 
     }
 
-    //// TODO: 9/8/16 DELTE ME
+    //// TODO: 9/8/16 Patrick's gui testing shit so it doesn't interfere with the start method
     public void test(){
-        System.out.println(slider.getValue());
+
     }
 
     //Shows about info screen from help menu
