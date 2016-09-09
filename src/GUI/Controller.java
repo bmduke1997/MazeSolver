@@ -118,7 +118,7 @@ public class Controller {
             WarningWindow warningWindow = new WarningWindow(primaryStage, "NOTHING LOADED", "You have not loaded anything...");
             warningWindow.display();
         }else{
-            // maze solving algorithm goes here.
+            djfhdsjafjdsgfjladsulfjsaljhfjashdfjlashjfj;
         }
         //// TODO: 9/8/16 REMOVE THIS TEST CODE
         this.graphicsContext = mapCanvas.getGraphicsContext2D();
