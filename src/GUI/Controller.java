@@ -14,6 +14,14 @@ import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.Scanner;
 
+/**
+ * @author Patrick Shinn
+ * @author Brandon Duke
+ * @author Claire Wallace
+ * @version Alpha 0.05
+ *
+ * This is the controller class for the GUI.fxml. This code does all of the heavy lifting for the GUI.
+ */
 public class Controller {
     // data structures / logic stuff
     private char[][][] masterMaze; // the map as a 3d array for coordinate purposes.
@@ -95,19 +103,9 @@ public class Controller {
         }
         
         this.masterMaze = masterMazeHolder; //makes the newly made 3D array available to other methods.
-        
-        //// TODO: 9/2/16 more debug stuff to delete 
-        for ( char[][] z : masterMazeHolder){
-            for (char[] y : z ){
-                for (char x : y){
-                    System.out.print(x);
-                }
-                System.out.println();
-            }
-            System.out.println("---------------------------------");
-        }
+
         statusLbl.setText("Loaded " + map.getName() + ".");
-        run = true;
+        run = true; // we loaded a file, so now we can run through the maze.
     }
 
     // Starts the search algorithm.
@@ -118,11 +116,8 @@ public class Controller {
             WarningWindow warningWindow = new WarningWindow(primaryStage, "NOTHING LOADED", "You have not loaded anything...");
             warningWindow.display();
         }else{
-            djfhdsjafjdsgfjladsulfjsaljhfjashdfjlashjfj;
+            //djfhdsjafjdsgfjladsulfjsaljhfjashdfjlashjfj;
         }
-        //// TODO: 9/8/16 REMOVE THIS TEST CODE
-        this.graphicsContext = mapCanvas.getGraphicsContext2D();
-        graphicsContext.strokeArc(50.00, 50.00, 50.00, 50.00, 360.00, 360.00, ArcType.ROUND);
     }
 
     //clears the map from the gui. Has a keyboard shortcut of ctrl + shift + c
@@ -134,9 +129,11 @@ public class Controller {
 
     }
 
-    //// TODO: 9/8/16 DELTE ME
+    //// TODO: 9/8/16 Patrick's start test method so I don't mess up the logic
     public void test(){
         System.out.println(slider.getValue());
+        this.graphicsContext = mapCanvas.getGraphicsContext2D();
+        graphicsContext.strokeArc(50.00, 50.00, 50.00, 50.00, 360.00, 360.00, ArcType.ROUND);
     }
 
     //Shows about info screen from help menu
