@@ -61,11 +61,25 @@ public class MazeSolver {
         return currentLocation;
     }
 
+    public void startExploration(){
+        boolean done = false;
+        while (!done){
+            done = explore();
+        }
+        if (Character.compare('*', masterMaze[currentLocation[0]][currentLocation[1]][currentLocation[2]]) == 0){
+            System.out.println("You found the end at: " + currentLocation[0] + " " + currentLocation[1] + " " + currentLocation[2]);
+        }
+        else {
+            System.out.println("you didn't");
+        }
+    }
+
     // calls of the the methods that return a character, explores the area...
-    public void explore(){ // calls all methods of the class for a search.
+    private boolean explore(){ // calls all methods of the class for a search.
         if (on().compareCharacter('*')){
             // // TODO: 9/9/16 code...
             // WE DONE, MISSA JAJA BINKS, RETURN CURRENT LOCATION.
+            return true;
         }
         /*
         ################################################################# checking for exit
@@ -218,12 +232,18 @@ public class MazeSolver {
             //// TODO: 9/9/16 CODE ME
             for (int q = currentLocation[0]; q < masterMaze.length + currentLocation[0]; q ++ ){
                 try {
-                    if (Character.compare('+', masterMaze[q][currentLocation[1]][currentLocation[2]]) == 0){
-                        currentLocation[0] = q;
+                    if (Character.compare('+', masterMaze[q][currentLocation[1]][currentLocation[2]]) == 0 && explorable()){
+                        explore();
+                    }
+                    else {//terminate
+                        return true;
                     }
                 }catch (IndexOutOfBoundsException error){
-                    if (Character.compare('+', masterMaze[q - currentLocation[0]][currentLocation[1]][currentLocation[2]]) == 0){
-                        currentLocation[0] = q - currentLocation[0];
+                    if (Character.compare('+', masterMaze[q - currentLocation[0]][currentLocation[1]][currentLocation[2]]) == 0 && explorable()){
+                        explore();
+                    }
+                    else {//terminate
+                        return true;
                     }
                 }
             }
@@ -231,14 +251,21 @@ public class MazeSolver {
         else if (on().compareCharacter('=')){
             //// TODO: 9/9/16 CODE ME
             try {
-                if (Character.compare('=', masterMaze[currentLocation[0] + 1][currentLocation[1]][currentLocation[2]]) == 0){
-                    currentLocation[0] = currentLocation[0] + 1;
-                } else  if (Character.compare('=', masterMaze[currentLocation[0] - 1][currentLocation[1]][currentLocation[2]]) == 0){
-                    currentLocation[0] = currentLocation[0] - 1;
+                if (Character.compare('+', masterMaze[currentLocation[0] + 1][currentLocation[1]][currentLocation[2]]) == 0 && explorable()){
+                    explore();
+                }
+                else  if (Character.compare('=', masterMaze[currentLocation[0] - 1][currentLocation[1]][currentLocation[2]]) == 0 && explorable()){
+                    explore();
+                }
+                else {//terminate
+                    return true;
                 }
             }catch (IndexOutOfBoundsException error){
-                if (Character.compare('=', masterMaze[currentLocation[0] - 1][currentLocation[1]][currentLocation[2]]) == 0){
-                    currentLocation[0] = currentLocation[0] - 1;
+                if (Character.compare('=', masterMaze[currentLocation[0] - 1][currentLocation[1]][currentLocation[2]]) == 0 && explorable()){
+                    explore();
+                }
+                else {//terminate
+                    return true;
                 }
             }
         }
@@ -246,8 +273,7 @@ public class MazeSolver {
             FredFin.pop();
             currentLocation = FredFin.peek().getCoords();
         }
-
-
+        return false;
     }
 
     // All of these return the characters in the respective location to the current position.
@@ -306,5 +332,45 @@ public class MazeSolver {
             }
         }
         FredFin.push(new Coordinate('=', currentLocation));
+    }
+
+    private boolean explorable(){
+        if (above().compareCharacter('.') && visitedLocations.add(above())){
+            return true;
+        }
+        else if (left().compareCharacter('.') && visitedLocations.add(left())){
+            return true;
+        }
+        else if (below().compareCharacter('.') && visitedLocations.add(below())){
+            return true;
+        }
+        else if (right().compareCharacter('.') && visitedLocations.add(right())){
+            return true;
+        }
+        else if (above().compareCharacter('+') && visitedSpecial.add(above())){
+            return true;
+        }
+        else if (left().compareCharacter('+') && visitedSpecial.add(left())){
+            return true;
+        }
+        else if (below().compareCharacter('+') && visitedSpecial.add(below())){
+            return true;
+        }
+        else if (right().compareCharacter('+') && visitedSpecial.add(right())){
+            return true;
+        }
+        else if (above().compareCharacter('=') && visitedSpecial.add(above())){
+            return true;
+        }
+        else if (left().compareCharacter('=') && visitedSpecial.add(left())){
+            return true;
+        }
+        else if (below().compareCharacter('=') && visitedSpecial.add(below())){
+            return true;
+        }
+        else if (right().compareCharacter('=') && visitedSpecial.add(right())){
+            return true;
+        }
+        else return false;
     }
 }
