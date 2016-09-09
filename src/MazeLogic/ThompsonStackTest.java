@@ -1,4 +1,4 @@
-package MazeClasses;
+package MazeLogic;
 
 import java.util.*;
 /**
@@ -12,7 +12,8 @@ public class ThompsonStackTest
   public static void main(String[] args)
   {
     Scanner myScanner = new Scanner(System.in);
-    ThompsonStack myStack = new ThompsonStack();
+    ThompsonStack<Character> myStack;
+    myStack = new ThompsonStack<Character>();
     System.out.println("1 - Peek");
     System.out.println("2 - Pop");
     System.out.println("3 - Push");

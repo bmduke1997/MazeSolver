@@ -1,13 +1,13 @@
-package MazeClasses;
+package MazeLogic;
 
-public class ThompsonStack
+public class ThompsonStack<T>
 {
   private Node headNode;
   private class Node
   {
-    private Character data;
+    private T data;
     private Node nextNode;
-    public Node(Character c)
+    public Node(T c)
     {
       data = c;
       nextNode = null;
@@ -23,17 +23,17 @@ public class ThompsonStack
       return true;
     return false;
   }
-  public Character peek()
+  public T peek()
   {
       return headNode.data;
   }
-  public Character pop()
+  public T pop()
   {
     Node tempNode = headNode;
     headNode = headNode.nextNode;
     return tempNode.data;
   }
-  public void push(Character data)
+  public void push(T data)
   {
     Node newNode = new Node(data);
     newNode.nextNode = headNode;
