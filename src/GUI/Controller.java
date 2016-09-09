@@ -120,15 +120,15 @@ public class Controller {
         }
         else{
             //Find the start position
-            for ( char[][] z : masterMaze){
+            for ( char[][] z : masterMaze){ // For every maze in the file
                 if (startFound) break;
                 location[0] = location[0] + 1;
                 location[1] = -1; //new maze reset y val
-                for (char[] y : z ){
+                for (char[] y : z ){  // for every row in the maze
                     if (startFound) break;
                     location[1] = location[1] + 1;
                     location[2] = -1; // new row in maze reset x val
-                    for (char x : y){
+                    for (char x : y){ // for every column in the row
                         location[2] = location[2] + 1;
                         if (Character.compare(x,'@') == 0){
                             startFound=true;
