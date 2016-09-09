@@ -64,6 +64,7 @@ public class MazeSolver {
     public void startExploration(){
         boolean done = false;
         while (!done){
+            System.out.println("Current Location: " + currentLocation[0] + " " + currentLocation[1] + " " + currentLocation[2]);
             done = explore();
         }
         if (Character.compare('*', masterMaze[currentLocation[0]][currentLocation[1]][currentLocation[2]]) == 0){
@@ -104,23 +105,23 @@ public class MazeSolver {
         ################################################################# checking for empty spaces
          */
         else if (above().compareCharacter('.') &&
-                visitedLocations.add(above())){
+                !visitedLocations.add(above())){
             currentLocation = above().getCoords();
             FredFin.push(above());
 
         }
         else if (left().compareCharacter('.') &&
-                visitedLocations.add(left())){
+                !visitedLocations.add(left())){
             currentLocation = left().getCoords();
             FredFin.push(left());
         }
         else if (below().compareCharacter('.') &&
-                visitedLocations.add(below())){
+                !visitedLocations.add(below())){
             currentLocation = below().getCoords();
             FredFin.push(below());
         }
         else if (right().compareCharacter('.') &&
-                visitedLocations.add(below())){
+                !visitedLocations.add(below())){
             currentLocation = right().getCoords();
             FredFin.push(right());
         }
@@ -128,26 +129,26 @@ public class MazeSolver {
         ################################################################# checking for unexplored portals
          */
         else if (above().compareCharacter('+') &&
-                visitedSpecial.add(above())){
+                !visitedSpecial.add(above())){
             currentLocation = above().getCoords();
             FredFin.push(above());
             beamMeUpScotty();
         }
         else if (left().compareCharacter('+') &&
-                visitedSpecial.add(left())){
+                !visitedSpecial.add(left())){
             currentLocation = left().getCoords();
             FredFin.push(left());
             beamMeUpScotty();
         }
         else if (below().compareCharacter('+') &&
-                visitedSpecial.add(below())){
+                !visitedSpecial.add(below())){
             currentLocation = below().getCoords();
             FredFin.push(below());
             beamMeUpScotty();
 
         }
         else if (right().compareCharacter('+') &&
-                visitedSpecial.add(right())){
+                !visitedSpecial.add(right())){
             currentLocation = right().getCoords();
             FredFin.push(right());
             beamMeUpScotty();
@@ -156,25 +157,25 @@ public class MazeSolver {
         ################################################################# checking for unexplored stairs
          */
         else if (above().compareCharacter('=') &&
-                visitedSpecial.add(above())){
+                !visitedSpecial.add(above())){
             currentLocation = above().getCoords();
             FredFin.push(above());
             itsActuallyALadder();
         }
         else if (left().compareCharacter('=') &&
-                visitedSpecial.add(left())){
+                !visitedSpecial.add(left())){
             currentLocation = above().getCoords();
             FredFin.push(left());
             itsActuallyALadder();
         }
         else if (below().compareCharacter('=') &&
-                visitedSpecial.add(below())){
+                !visitedSpecial.add(below())){
             currentLocation = below().getCoords();
             FredFin.push(below());
             itsActuallyALadder();
         }
         else if (right().compareCharacter('=') &&
-                visitedSpecial.add(right())){
+                !visitedSpecial.add(right())){
             currentLocation = right().getCoords();
             FredFin.push(right());
             itsActuallyALadder();
@@ -335,40 +336,40 @@ public class MazeSolver {
     }
 
     private boolean explorable(){
-        if (above().compareCharacter('.') && visitedLocations.add(above())){
+        if (above().compareCharacter('.') && !visitedLocations.add(above())){
             return true;
         }
-        else if (left().compareCharacter('.') && visitedLocations.add(left())){
+        else if (left().compareCharacter('.') && !visitedLocations.add(left())){
             return true;
         }
-        else if (below().compareCharacter('.') && visitedLocations.add(below())){
+        else if (below().compareCharacter('.') && !visitedLocations.add(below())){
             return true;
         }
-        else if (right().compareCharacter('.') && visitedLocations.add(right())){
+        else if (right().compareCharacter('.') && !visitedLocations.add(right())){
             return true;
         }
-        else if (above().compareCharacter('+') && visitedSpecial.add(above())){
+        else if (above().compareCharacter('+') && !visitedSpecial.add(above())){
             return true;
         }
-        else if (left().compareCharacter('+') && visitedSpecial.add(left())){
+        else if (left().compareCharacter('+') && !visitedSpecial.add(left())){
             return true;
         }
-        else if (below().compareCharacter('+') && visitedSpecial.add(below())){
+        else if (below().compareCharacter('+') && !visitedSpecial.add(below())){
             return true;
         }
-        else if (right().compareCharacter('+') && visitedSpecial.add(right())){
+        else if (right().compareCharacter('+') && !visitedSpecial.add(right())){
             return true;
         }
-        else if (above().compareCharacter('=') && visitedSpecial.add(above())){
+        else if (above().compareCharacter('=') && !visitedSpecial.add(above())){
             return true;
         }
-        else if (left().compareCharacter('=') && visitedSpecial.add(left())){
+        else if (left().compareCharacter('=') && !visitedSpecial.add(left())){
             return true;
         }
-        else if (below().compareCharacter('=') && visitedSpecial.add(below())){
+        else if (below().compareCharacter('=') && !visitedSpecial.add(below())){
             return true;
         }
-        else if (right().compareCharacter('=') && visitedSpecial.add(right())){
+        else if (right().compareCharacter('=') && !visitedSpecial.add(right())){
             return true;
         }
         else return false;

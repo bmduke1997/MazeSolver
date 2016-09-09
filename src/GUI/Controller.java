@@ -116,7 +116,9 @@ public class Controller {
         else{
             //Find exit Algorithm
             MazeSolver mySolver = new MazeSolver(masterMaze);
+            statusLbl.setText("Running maze...");
             mySolver.startExploration();
+
         }
 
         //// TODO: 9/8/16 REMOVE THIS TEST CODE
