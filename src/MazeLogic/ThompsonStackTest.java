@@ -1,5 +1,5 @@
 package MazeLogic;
-
+//// TODO: 9/8/16 DELETE ME EVENTUALLY
 import java.util.*;
 /**
  * L10-1 Tests the ThompsonStack class
@@ -19,6 +19,7 @@ public class ThompsonStackTest
     System.out.println("3 - Push");
     System.out.println("4 - Empty?");
     System.out.println("5 - exit");
+    System.out.println("6 - fuck off");
     boolean done = false;
     while (!done)
     {
@@ -38,6 +39,9 @@ public class ThompsonStackTest
         System.out.println(myStack.isEmpty());
       else if (choice == 5)
         done = true;
+      else if (choice == 6){
+          myStack.peekAll();
+      }
       else 
         System.out.println("Invalid choice");
     }

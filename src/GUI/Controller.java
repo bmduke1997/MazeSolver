@@ -3,7 +3,6 @@ package GUI;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.shape.ArcType;
@@ -32,10 +31,6 @@ public class Controller {
     //--------------------------------------------------------------------------------
     private Stage primaryStage; // the primary stage of the GUI, obtained through setStage method.
 
-    // Buttons
-    @FXML private Button loadBtn;
-    @FXML private Button startBtn;
-
     // Labels
     @FXML private Label statusLbl;
 
@@ -47,7 +42,8 @@ public class Controller {
 
 
     // used to extract the primary stage from the Main Class.
-    public void setStage(Stage stage){
+    // there is nothing wrong with the declaration of this method, it is package - private.
+    void setStage(Stage stage){
         this.primaryStage = stage;
     }
     private GraphicsContext graphicsContext;

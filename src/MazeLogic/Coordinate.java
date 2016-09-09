@@ -2,24 +2,30 @@ package MazeLogic;
 
 /**
  * Coordinate data type
+ * This entire class is package private.
  *
  * @author Patrick Shinn
  * @version 9/8/16
  */
-public class Coordinate {
-    char character;
-    int[] coords;
+class Coordinate {
+    private char character;
+    private int[] coords;
 
-    public Coordinate(char character, int[] coords){
+    Coordinate(char character, int[] coords){
         this.character = character;
         this.coords = coords;
     }
 
-    public char getCharacter(){
+    char getCharacter(){
         return character;
     }
 
-    public int[] getCoords() {
+    int[] getCoords() {
         return coords;
+    }
+
+    boolean compareCharacter(char character){
+        int success = Character.compare(this.character, character);
+        return success == 0;
     }
 }

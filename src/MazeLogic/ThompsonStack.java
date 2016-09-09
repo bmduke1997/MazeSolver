@@ -39,4 +39,15 @@ public class ThompsonStack<T>
     newNode.nextNode = headNode;
     headNode = newNode;
   }
+  
+  //// TODO: 9/9/16 TEST THIS 
+  public void peekAll(){
+      Node temp = headNode;
+      Node temp2 = temp;
+      while (temp.nextNode != null){
+          temp = temp2;
+          temp2 = temp2.nextNode;
+          System.out.print(temp.data);
+      }
+  }
 }

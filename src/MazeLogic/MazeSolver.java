@@ -8,6 +8,7 @@ import java.util.HashSet;
  * For use on the current maze coordinate.
  *
  * @author Patrick Shinn
+ * @author Brandon Duke
  * @version 9/8/16
  *
  */
@@ -15,7 +16,8 @@ public class MazeSolver {
 
     private char[][][] masterMaze;
     private int[] startLocation, currentLocation;
-    private HashSet<int[]> visitedLocations = new HashSet<>();
+    private HashSet<Coordinate> visitedSpecial = new HashSet<>(); // visited portals & stairs
+    private HashSet<Coordinate> visitedLocations = new HashSet<>(); // visited open spaces
 
 
     /**
@@ -54,45 +56,152 @@ public class MazeSolver {
 
     }
 
-    // calls of the the methods that return a character, explores the area...
-    public void explore(){ // calls all methods of the class for a search.
-        if (Character.compare(above().getCharacter(), '*') == 0 ){
-            currentLocation = above().getCoords();
-        }
-        else if (Character.compare(right().getCharacter(), '*') == 0){
-            currentLocation = right().getCoords();
-        }
-        else if (Character.compare(left().getCharacter(), '*') == 0 ){
-            currentLocation = left().getCoords();
-        }
-        else if (Character.compare(below().getCharacter(), '*') == 0){
-            currentLocation = below().getCoords();
-        }
-
+    public int[] getCurrentLocation() {
+        return currentLocation;
     }
 
+    // calls of the the methods that return a character, explores the area...
+    public void explore(){ // calls all methods of the class for a search.
+        /*
+        ################################################################# checking for exit
+         */
+        if ((above().compareCharacter('*'))){
+            currentLocation = above().getCoords();
+        }
+        else if (left().compareCharacter('*')){
+            currentLocation = left().getCoords();
+        }
+        else if (below().compareCharacter('*')){
+            currentLocation = below().getCoords();
+        }
+        else if (right().compareCharacter('*')){
+            currentLocation = right().getCoords();
+        }
+        /*
+        ################################################################# checking for empty spaces
+         */
+        else if (above().compareCharacter('.') &&
+                visitedLocations.add(above())){
+            currentLocation = above().getCoords();
+        }
+        else if (left().compareCharacter('.') &&
+                visitedLocations.add(left())){
+            currentLocation = left().getCoords();
+        }
+        else if (below().compareCharacter('.') &&
+                visitedLocations.add(below())){
+            currentLocation = below().getCoords();
+        }
+        else if (right().compareCharacter('.') &&
+                visitedLocations.add(below())){
+            currentLocation = right().getCoords();
+        }
+         /*
+        ################################################################# checking for unexplored portals
+         */
+        else if (above().compareCharacter('+') &&
+                visitedSpecial.add(above())){
+            currentLocation = above().getCoords();
+        }
+        else if (left().compareCharacter('+') &&
+                visitedSpecial.add(left())){
+            currentLocation = left().getCoords();
+        }
+        else if (below().compareCharacter('+') &&
+                visitedSpecial.add(below())){
+            currentLocation = below().getCoords();
+        }
+        else if (right().compareCharacter('+') &&
+                visitedSpecial.add(right())){
+            currentLocation = right().getCoords();
+        }
+         /*
+        ################################################################# checking for unexplored stairs
+         */
+        else if (above().compareCharacter('=') &&
+                visitedSpecial.add(above())){
+            currentLocation = above().getCoords();
+        }
+        else if (left().compareCharacter('=') &&
+                visitedSpecial.add(left())){
+            currentLocation = above().getCoords();
+        }
+        else if (below().compareCharacter('=') &&
+                visitedSpecial.add(below())){
+            currentLocation = below().getCoords();
+        }
+        else if (right().compareCharacter('=') &&
+                visitedSpecial.add(right())){
+            currentLocation = right().getCoords();
+        }
+         /*
+        ################################################################# checking for any portals
+         */
+        else if (above().compareCharacter('+')){
+            currentLocation = above().getCoords();
+        }
+        else if (left().compareCharacter('+')){
+            currentLocation = left().getCoords();
+        }
+        else if (below().compareCharacter('+')){
+            currentLocation = below().getCoords();
+        }
+        else if (right().compareCharacter('+')){
+            currentLocation = right().getCoords();
+        }
+         /*
+        ################################################################# checking for any stairs
+         */
+        else if (above().compareCharacter('=')){
+            currentLocation = above().getCoords();
+        }
+        else if (left().compareCharacter('=')){
+            currentLocation = above().getCoords();
+        }
+        else if (below().compareCharacter('=')){
+            currentLocation = below().getCoords();
+        }
+        else if (right().compareCharacter('=')){
+            currentLocation = right().getCoords();
+        }
+        /*
+        ################################################################# checking the spot we are on for portals
+         */
+        else if (on().compareCharacter('+')){
+            //// TODO: 9/9/16 CODE ME
+        }
+        else if (on().compareCharacter('=')){
+            //// TODO: 9/9/16 CODE ME
+        }
+        else {
+            // // TODO: 9/9/16 POP ME BABY
+        }
+
+
+    }
 
     // All of these return the characters in the respective location to the current position.
     public Coordinate on(){
-        return new Coordinate(masterMaze[currentLocation[0]][currentLocation[1]][currentLocation[2]],currentLocation );
+        return new Coordinate(masterMaze[currentLocation[0]][currentLocation[1]][currentLocation[2]],
+                currentLocation );
     }
 
-    public Coordinate above(){
+    private Coordinate above(){
          return new Coordinate(masterMaze[currentLocation[0]][currentLocation[1]-1][currentLocation[2]],
-                                new int[] {currentLocation[0],currentLocation[1]-1,currentLocation[2]});
+                 new int[] {currentLocation[0],currentLocation[1]-1,currentLocation[2]});
     }
 
-    public Coordinate right(){
+    private Coordinate right(){
         return new Coordinate(masterMaze[currentLocation[0]][currentLocation[1]][currentLocation[2]+1],
                 new int[] {currentLocation[0],currentLocation[1],currentLocation[2]+1});
     }
 
-    public Coordinate left(){
+    private Coordinate left(){
         return new Coordinate(masterMaze[currentLocation[0]][currentLocation[1]][currentLocation[2]-1],
                 new int[] {currentLocation[0],currentLocation[1],currentLocation[2]-1});
     }
 
-    public Coordinate below(){
+    private Coordinate below(){
         return new Coordinate(masterMaze[currentLocation[0]][currentLocation[1]+1][currentLocation[2]],
                 new int[] {currentLocation[0],currentLocation[1]+1,currentLocation[2]});
     }
