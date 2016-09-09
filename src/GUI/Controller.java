@@ -113,13 +113,38 @@ public class Controller {
     // Starts the search algorithm.
     //// TODO: 9/7/16 make method.
     public void start(){
+        int[] location = {-1,-1,-1};
+        boolean startFound = false;
         // checks to see if a maze is actually loaded...
         if (!run){
             WarningWindow warningWindow = new WarningWindow(primaryStage, "NOTHING LOADED", "You have not loaded anything...");
             warningWindow.display();
-        }else{
-            djfhdsjafjdsgfjladsulfjsaljhfjashdfjlashjfj;
         }
+        else{
+            //Find the start position
+            for ( char[][] z : masterMaze){
+                if (startFound) break;
+                location[0] = location[0] + 1;
+                location[1] = -1; //new maze reset y val
+                for (char[] y : z ){
+                    if (startFound) break;
+                    location[1] = location[1] + 1;
+                    location[2] = -1; // new row in maze reset x val
+                    for (char x : y){
+                        location[2] = location[2] + 1;
+                        if (Character.compare(x,'@') == 0){
+                            startFound=true;
+                            break;
+                        }
+                    }
+                }
+            }
+            System.out.println("star is: " + location[0] + " " + location[1] + " " + location[2]);
+
+            //Find exit Algorithm
+
+        }
+
         //// TODO: 9/8/16 REMOVE THIS TEST CODE
         this.graphicsContext = mapCanvas.getGraphicsContext2D();
         graphicsContext.strokeArc(50.00, 50.00, 50.00, 50.00, 360.00, 360.00, ArcType.ROUND);
