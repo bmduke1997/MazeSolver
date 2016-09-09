@@ -103,17 +103,7 @@ public class Controller {
         }
         
         this.masterMaze = masterMazeHolder; //makes the newly made 3D array available to other methods.
-        
-        //// TODO: 9/2/16 more debug stuff to delete 
-        for ( char[][] z : masterMazeHolder){
-            for (char[] y : z ){
-                for (char x : y){
-                    System.out.print(x);
-                }
-                System.out.println();
-            }
-            System.out.println("---------------------------------");
-        }
+
         statusLbl.setText("Loaded " + map.getName() + ".");
         run = true; // we loaded a file, so now we can run through the maze.
     }
