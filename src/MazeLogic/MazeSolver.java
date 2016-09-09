@@ -61,11 +61,16 @@ public class MazeSolver {
         return currentLocation;
     }
 
-    public void startExploration(){
+    public void startExploration(double sliderVal){
         boolean done = false;
         while (!done){
             System.out.println("Current Location: " + currentLocation[0] + " " + currentLocation[1] + " " + currentLocation[2]);
             done = explore();
+            try {
+                Thread.sleep((long) sliderVal*10);
+            }catch (Exception e){
+                // do nothing
+            }
         }
         if (Character.compare('*', masterMaze[currentLocation[0]][currentLocation[1]][currentLocation[2]]) == 0){
             System.out.println("You found the end at: " + currentLocation[0] + " " + currentLocation[1] + " " + currentLocation[2]);
