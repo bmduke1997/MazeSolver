@@ -54,7 +54,6 @@ public class Controller {
     }
 
     // Load method, loads the maps into a 3d array.
-    // // TODO: 9/2/16 make this load the map into the GUI 
     public void load() {
         FileChooser chooser = new FileChooser();
         Scanner scanner;
@@ -135,7 +134,6 @@ public class Controller {
     }
 
     //clears the map from the gui. Has a keyboard shortcut of ctrl + shift + c
-    //// TODO: 9/2/16 make this method
     public void clearScreen(){
         // code to clear GUI
         if (!run){
@@ -146,6 +144,7 @@ public class Controller {
             drawer.clearMap();
             statusLbl.setText("Status: Nothing Loaded.");
             masterMaze = new char[0][0][0];
+            run = false;
         }
     }
 
