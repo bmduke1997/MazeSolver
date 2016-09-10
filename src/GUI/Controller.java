@@ -3,11 +3,9 @@ package GUI;
 import MazeLogic.MazeSolver;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.scene.control.TextArea;
-import javafx.scene.shape.ArcType;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import java.io.File;
@@ -27,11 +25,16 @@ public class Controller {
     // data structures / logic stuff
     private char[][][] masterMaze; // the map as a 3d array for coordinate purposes.
     private boolean run = false;
+    private int currentLevel = 0; // used for changing the level that is currently displayed.
 
 
     //GUI elements, can be called by using @FXML then defining an object with the same name as the FXid.
     //--------------------------------------------------------------------------------
     private Stage primaryStage; // the primary stage of the GUI, obtained through setStage method.
+
+    //Buttons
+    @FXML private Button lvlUp;
+    @FXML private Button lvlDown;
 
     // Labels
     @FXML private Label statusLbl;
@@ -40,7 +43,8 @@ public class Controller {
     @FXML private Slider slider;
 
     // Map GUI Stuff
-    @FXML private TextArea textArea;
+    @FXML private Canvas canvas;
+    private MapDrawer drawer;
 
 
     // used to extract the primary stage from the Main Class.
@@ -98,19 +102,15 @@ public class Controller {
         }catch (FileNotFoundException e){
             //congrats, this doesnt matter... simply appeasing the compiler.
         }
-        
+
         this.masterMaze = masterMazeHolder; //makes the newly made 3D array available to other methods.
 
-        String realWriteMe = "";
+        // draws the newly loaded map.
+        drawer = new MapDrawer(canvas, masterMazeHolder);
+        drawer.drawLevel(0);
+        lvlDown.setDisable(true);
 
-        for (char[][] z : masterMazeHolder){
-            for (char[] y : z){
-                String writeMe = new String(y);
-                realWriteMe += writeMe + "\n";
-                }
-                realWriteMe += ("--------------------------------\n");
-            }
-        textArea.setText(realWriteMe);
+        // Status updates
         statusLbl.setText("Loaded " + map.getName() + ".");
         run = true; // we loaded a file, so now we can run through the maze.
     }
@@ -128,6 +128,7 @@ public class Controller {
             MazeSolver mySolver = new MazeSolver(masterMaze);
             statusLbl.setText("Running maze...");
             mySolver.startExploration(slider.getValue());
+            statusLbl.setText("Done running!");
 
         }
 
@@ -137,15 +138,33 @@ public class Controller {
     //// TODO: 9/2/16 make this method
     public void clearScreen(){
         // code to clear GUI
-        statusLbl.setText("Status: Nothing Loaded.");
-        masterMaze = new char[0][0][0];
-
+        if (!run){
+            WarningWindow warning = new WarningWindow(primaryStage, "Unable to Clear",
+                    "There is nothing loaded, so there is nothing to clear.");
+            warning.display();
+        }else{
+            drawer.clearMap();
+            statusLbl.setText("Status: Nothing Loaded.");
+            masterMaze = new char[0][0][0];
+        }
     }
 
-    //// TODO: 9/8/16 Patrick's start test method so I don't mess up the logic
-    public void test(){
+    // displays the next level down
+    public void displayLevelDown(){
+        currentLevel --;
+        drawer.drawLevel(currentLevel);
+        lvlUp.setDisable(false);
+        if (currentLevel == 0)lvlDown.setDisable(true); // if we are at the bottom, make it impossible to go lower.
     }
 
+    // displays the next level up
+    public void displayLevelUp(){
+        currentLevel ++;
+        drawer.drawLevel(currentLevel);
+        lvlDown.setDisable(false);
+        if(currentLevel == masterMaze.length -1)lvlUp.setDisable(true); // if we are at the top level, make it impossible to go up again.
+
+    }
     //Shows about info screen from help menu
     public void about(){
         AboutWindow aboutWindow = new AboutWindow("About", "Maze Solver", "1.0",
