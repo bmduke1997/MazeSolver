@@ -6,6 +6,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TextArea;
 import javafx.scene.shape.ArcType;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -39,7 +40,7 @@ public class Controller {
     @FXML private Slider slider;
 
     // Map GUI Stuff
-    @FXML private Canvas mapCanvas;
+    @FXML private TextArea textArea;
 
 
     // used to extract the primary stage from the Main Class.
@@ -47,7 +48,6 @@ public class Controller {
     void setStage(Stage stage){
         this.primaryStage = stage;
     }
-    private GraphicsContext graphicsContext;
 
     // Load method, loads the maps into a 3d array.
     // // TODO: 9/2/16 make this load the map into the GUI 
@@ -101,6 +101,16 @@ public class Controller {
         
         this.masterMaze = masterMazeHolder; //makes the newly made 3D array available to other methods.
 
+        String realWriteMe = "";
+
+        for (char[][] z : masterMazeHolder){
+            for (char[] y : z){
+                String writeMe = new String(y);
+                realWriteMe += writeMe + "\n";
+                }
+                realWriteMe += ("--------------------------------\n");
+            }
+        textArea.setText(realWriteMe);
         statusLbl.setText("Loaded " + map.getName() + ".");
         run = true; // we loaded a file, so now we can run through the maze.
     }
@@ -121,9 +131,6 @@ public class Controller {
 
         }
 
-        //// TODO: 9/8/16 REMOVE THIS TEST CODE
-        this.graphicsContext = mapCanvas.getGraphicsContext2D();
-        graphicsContext.strokeArc(50.00, 50.00, 50.00, 50.00, 360.00, 360.00, ArcType.ROUND);
     }
 
     //clears the map from the gui. Has a keyboard shortcut of ctrl + shift + c
@@ -137,9 +144,6 @@ public class Controller {
 
     //// TODO: 9/8/16 Patrick's start test method so I don't mess up the logic
     public void test(){
-        System.out.println(slider.getValue());
-        this.graphicsContext = mapCanvas.getGraphicsContext2D();
-        graphicsContext.strokeArc(50.00, 50.00, 50.00, 50.00, 360.00, 360.00, ArcType.ROUND);
     }
 
     //Shows about info screen from help menu

@@ -15,7 +15,7 @@ import java.util.HashSet;
 public class MazeSolver {
 
     private char[][][] masterMaze;
-    private int[] startLocation, currentLocation;
+    private int[] currentLocation;
     private HashSet<Coordinate> visitedSpecial = new HashSet<>(); // visited portals & stairs
     private HashSet<Coordinate> visitedLocations = new HashSet<>(); // visited open spaces
     private ThompsonStack<Coordinate> FredFin = new ThompsonStack<>();
@@ -51,19 +51,16 @@ public class MazeSolver {
                 }
             }
         }
-
-        this.startLocation = location;
         this.currentLocation = location;
 
     }
-
-    public int[] getCurrentLocation() {
-        return currentLocation;
-    }
+    
 
     public void startExploration(double sliderVal){
         boolean done = false;
         while (!done){
+            // // TODO: 9/9/16 debug code 
+            System.out.println(visitedLocations);
             System.out.println("Current Location: " + currentLocation[0] + " " + currentLocation[1] + " " + currentLocation[2]);
             done = explore();
             try {
@@ -80,11 +77,11 @@ public class MazeSolver {
         }
     }
 
+    // // TODO: 9/9/16 Something is very wrong here...
     // calls of the the methods that return a character, explores the area...
     private boolean explore(){ // calls all methods of the class for a search.
         if (on().compareCharacter('*')){
             // // TODO: 9/9/16 code...
-            // WE DONE, MISSA JAJA BINKS, RETURN CURRENT LOCATION.
             return true;
         }
         /*
@@ -235,7 +232,6 @@ public class MazeSolver {
         ################################################################# checking the spot we are on for portals
          */
         else if (on().compareCharacter('+')){
-            //// TODO: 9/9/16 CODE ME
             for (int q = currentLocation[0]; q < masterMaze.length + currentLocation[0]; q ++ ){
                 try {
                     if (Character.compare('+', masterMaze[q][currentLocation[1]][currentLocation[2]]) == 0 && explorable()){
@@ -255,7 +251,6 @@ public class MazeSolver {
             }
         }
         else if (on().compareCharacter('=')){
-            //// TODO: 9/9/16 CODE ME
             try {
                 if (Character.compare('+', masterMaze[currentLocation[0] + 1][currentLocation[1]][currentLocation[2]]) == 0 && explorable()){
                     explore();
@@ -308,6 +303,7 @@ public class MazeSolver {
                 new int[] {currentLocation[0],currentLocation[1]+1,currentLocation[2]});
     }
 
+    // portal and stair traverse methods
     private void beamMeUpScotty(){
         for (int q = currentLocation[0]; q < masterMaze.length + currentLocation[0]; q ++ ){
             try {
@@ -340,6 +336,7 @@ public class MazeSolver {
         FredFin.push(new Coordinate('=', currentLocation));
     }
 
+    // checks to see if there any explorable positions
     private boolean explorable(){
         if (above().compareCharacter('.') && visitedLocations.add(above())){
             return true;
