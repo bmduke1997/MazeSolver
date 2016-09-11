@@ -88,6 +88,8 @@ public class MazeSolver extends Thread{
 
             graphicsContext.setGlobalAlpha(0.33); // sets opacity for visited image drawing
             graphicsContext.drawImage(visited, (double)(currentLocation[2] * 45), (double)(currentLocation[1]*45));
+            // // TODO: 9/11/16 Optimize opacity setting 
+            graphicsContext.setGlobalAlpha(1); // resets opacity for final image drawing.
             System.out.println(visitedLocations);
             System.out.println("Current Location: " + currentLocation[0] + " " + currentLocation[1] + " " + currentLocation[2]);
             done = explore();
@@ -391,7 +393,7 @@ public class MazeSolver extends Thread{
     }
 
     // checks to see if there any explorable positions
-    // // TODO: 9/11/16 I think we can turn this whole thing into one giant or check. 
+    // // TODO: 9/11/16 I think we can turn this whole thing into one giant or check.
     private boolean explorable(){
         if (above().compareCharacter('.') && visitedLocations.add(above())){
             return true;
