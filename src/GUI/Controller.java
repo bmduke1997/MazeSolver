@@ -122,7 +122,6 @@ public class Controller{
     }
 
     // Starts the search algorithm.
-    //// TODO: 9/7/16 make method.
     public void start(){
         // checks to see if a maze is actually loaded...
         if (!run){

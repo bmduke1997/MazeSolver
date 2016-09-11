@@ -9,6 +9,8 @@ import java.util.HashSet;
  * @version 9/9/16
  */
 public class CoordinateTestClass {
+    
+    // // TODO: 9/11/16 DELETE ME 
 
     public static void main(String[] args){
         HashSet<Coordinate> coordinateHashSet = new HashSet<>();

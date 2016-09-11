@@ -84,7 +84,7 @@ public class MazeSolver extends Thread{
         boolean done = false;
         Image visited = new Image(getClass().getResourceAsStream("/graphics/visited.png"));
         while (!done){
-            // // TODO: 9/9/16 debug code
+            // // // TODO: 9/11/16 make this run in a way that it updates the gui as it does
 
             graphicsContext.setGlobalAlpha(0.33); // sets opacity for visited image drawing
             graphicsContext.drawImage(visited, (double)(currentLocation[2] * 45), (double)(currentLocation[1]*45));
@@ -109,7 +109,6 @@ public class MazeSolver extends Thread{
     // calls of the the methods that return a character, explores the area...
     private boolean explore(){ // calls all methods of the class for a search.
         if (on().compareCharacter('*')){
-            // // TODO: 9/9/16 code...
             return true;
         }
         /*

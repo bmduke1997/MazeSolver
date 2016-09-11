@@ -10,7 +10,6 @@ import java.util.Arrays;
  * @version 9/8/16
  */
 
-// // TODO: 9/9/16 make usable with the hashSet 
 class Coordinate {
     private char character;
     private int[] coords;

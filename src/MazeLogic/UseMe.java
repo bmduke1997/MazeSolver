@@ -32,7 +32,7 @@ public class UseMe {
     Canvas canvas;
     GraphicsContext graphicsContext;
 
-
+// // TODO: 9/11/16 DELETE ME 
 
     /**
      * Constructor of the class.
@@ -75,7 +75,6 @@ public class UseMe {
         this.graphicsContext = canvas.getGraphicsContext2D();
 
         while (!done){
-            // // TODO: 9/9/16 debug code
             try {
 
                 graphicsContext.drawImage(visted, (double)(currentLocation[2] * 45), (double)(currentLocation[1]*45));
@@ -97,11 +96,9 @@ public class UseMe {
         }
     }
 
-    // // TODO: 9/9/16 Something is very wrong here...
     // calls of the the methods that return a character, explores the area...
     private boolean explore(){ // calls all methods of the class for a search.
         if (on().compareCharacter('*')){
-            // // TODO: 9/9/16 code...
             return true;
         }
         else if (above().compareCharacter('.') &&
