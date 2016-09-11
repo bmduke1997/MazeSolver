@@ -99,71 +99,79 @@ public class MazeSolver {
         ################################################################# checking for exit
          */
         else if ((above().compareCharacter('*'))){
-            currentLocation = above().getCoords();
             FredFin.push(above());
+            currentLocation = above().getCoords();
         }
         else if (left().compareCharacter('*')){
-            currentLocation = left().getCoords();
             FredFin.push(left());
+            currentLocation = left().getCoords();
         }
         else if (below().compareCharacter('*')){
-            currentLocation = below().getCoords();
             FredFin.push(below());
+            currentLocation = below().getCoords();
         }
         else if (right().compareCharacter('*')){
-            currentLocation = right().getCoords();
             FredFin.push(right());
+            currentLocation = right().getCoords();
         }
         /*
         ################################################################# checking for empty spaces
          */
         else if (above().compareCharacter('.') &&
                 visitedLocations.add(above())){
-            currentLocation = above().getCoords();
+            System.out.println(above().getCharacter());
             FredFin.push(above());
+            currentLocation = above().getCoords();
 
         }
         else if (left().compareCharacter('.') &&
                 visitedLocations.add(left())){
-            currentLocation = left().getCoords();
+            System.out.println(left().getCharacter());
             FredFin.push(left());
+            currentLocation = left().getCoords();
         }
         else if (below().compareCharacter('.') &&
                 visitedLocations.add(below())){
-            currentLocation = below().getCoords();
+            System.out.println(below().getCharacter());
             FredFin.push(below());
+            currentLocation = below().getCoords();
         }
         else if (right().compareCharacter('.') &&
                 visitedLocations.add(below())){
-            currentLocation = right().getCoords();
+            System.out.println(right().getCharacter());
             FredFin.push(right());
+            currentLocation = right().getCoords();
         }
          /*
         ################################################################# checking for unexplored portals
          */
         else if (above().compareCharacter('+') &&
                 visitedSpecial.add(above())){
-            currentLocation = above().getCoords();
+            System.out.println(above().getCharacter());
             FredFin.push(above());
+            currentLocation = above().getCoords();
             beamMeUpScotty();
         }
         else if (left().compareCharacter('+') &&
                 visitedSpecial.add(left())){
-            currentLocation = left().getCoords();
+            System.out.println(left().getCharacter());
             FredFin.push(left());
+            currentLocation = left().getCoords();
             beamMeUpScotty();
         }
         else if (below().compareCharacter('+') &&
                 visitedSpecial.add(below())){
-            currentLocation = below().getCoords();
+            System.out.println(below().getCharacter());
             FredFin.push(below());
+            currentLocation = below().getCoords();
             beamMeUpScotty();
 
         }
         else if (right().compareCharacter('+') &&
                 visitedSpecial.add(right())){
-            currentLocation = right().getCoords();
+            System.out.println(right().getCharacter());
             FredFin.push(right());
+            currentLocation = right().getCoords();
             beamMeUpScotty();
         }
          /*
@@ -171,72 +179,84 @@ public class MazeSolver {
          */
         else if (above().compareCharacter('=') &&
                 visitedSpecial.add(above())){
-            currentLocation = above().getCoords();
+            System.out.println(above().getCharacter());
             FredFin.push(above());
+            currentLocation = above().getCoords();
             itsActuallyALadder();
         }
         else if (left().compareCharacter('=') &&
                 visitedSpecial.add(left())){
-            currentLocation = above().getCoords();
+            System.out.println(left().getCharacter());
             FredFin.push(left());
+            currentLocation = above().getCoords();
             itsActuallyALadder();
         }
         else if (below().compareCharacter('=') &&
                 visitedSpecial.add(below())){
-            currentLocation = below().getCoords();
+            System.out.println(below().getCharacter());
             FredFin.push(below());
+            currentLocation = below().getCoords();
             itsActuallyALadder();
         }
         else if (right().compareCharacter('=') &&
                 visitedSpecial.add(right())){
-            currentLocation = right().getCoords();
+            System.out.println(right().getCharacter());
             FredFin.push(right());
+            currentLocation = right().getCoords();
             itsActuallyALadder();
         }
          /*
         ################################################################# checking for any portals
          */
         else if (above().compareCharacter('+')){
-            currentLocation = above().getCoords();
+            System.out.println(above().getCharacter());
             FredFin.push(above());
+            currentLocation = above().getCoords();
             beamMeUpScotty();
         }
         else if (left().compareCharacter('+')){
-            currentLocation = left().getCoords();
+            System.out.println(left().getCharacter());
             FredFin.push(left());
+            currentLocation = left().getCoords();
             beamMeUpScotty();
         }
         else if (below().compareCharacter('+')){
-            currentLocation = below().getCoords();
+            System.out.println(below().getCharacter());
             FredFin.push(below());
+            currentLocation = below().getCoords();
             beamMeUpScotty();
         }
         else if (right().compareCharacter('+')){
-            currentLocation = right().getCoords();
+            System.out.println(right().getCharacter());
             FredFin.push(right());
+            currentLocation = right().getCoords();
             beamMeUpScotty();
         }
          /*
         ################################################################# checking for any stairs
          */
         else if (above().compareCharacter('=')){
-            currentLocation = above().getCoords();
+            System.out.println(above().getCharacter());
             FredFin.push(above());
+            currentLocation = above().getCoords();
             itsActuallyALadder();
         }
         else if (left().compareCharacter('=')){
-            currentLocation = above().getCoords();
+            System.out.println(left().getCharacter());
             FredFin.push(left());
+            currentLocation = above().getCoords();
             itsActuallyALadder();
         }
         else if (below().compareCharacter('=')){
-            currentLocation = below().getCoords();
+            System.out.println(below().getCharacter());
             FredFin.push(below());
+            currentLocation = below().getCoords();
             itsActuallyALadder();
         }
         else if (right().compareCharacter('=')){
-            currentLocation = right().getCoords();
+            System.out.println(right().getCharacter());
             FredFin.push(right());
+            currentLocation = right().getCoords();
             itsActuallyALadder();
         }
         /*
@@ -283,9 +303,9 @@ public class MazeSolver {
         }
         else {
             Coordinate tempCoor = FredFin.pop();
-            System.out.println("Poped: " + tempCoor.getCharacter() + " " + Arrays.asList(tempCoor.getCoords()));
+            System.out.println("Poped: " + tempCoor.getCharacter() + " " + Arrays.toString(tempCoor.getCoords()));
             currentLocation = FredFin.peek().getCoords();
-            System.out.println(Arrays.asList(FredFin.peek().getCoords()));
+            System.out.println(Arrays.toString(FredFin.peek().getCoords()));
         }
         return false;
     }
