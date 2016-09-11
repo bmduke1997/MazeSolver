@@ -338,14 +338,14 @@ public class MazeSolver {
 
     // portal and stair traverse methods
     private void beamMeUpScotty(){
-        for (int q = currentLocation[0]; q < masterMaze.length + currentLocation[0]; q ++ ){
+        for (int q = currentLocation[0] + 1; q < masterMaze.length + currentLocation[0]; q ++ ){
             try {
                 if (Character.compare('+', masterMaze[q][currentLocation[1]][currentLocation[2]]) == 0){
                     currentLocation[0] = q;
                     break;
                 }
             }catch (IndexOutOfBoundsException error){
-                if (Character.compare('+', masterMaze[q - currentLocation[0]][currentLocation[1]][currentLocation[2]]) == 0){
+                if (Character.compare('+', masterMaze[q - (currentLocation[0]  + 1)][currentLocation[1]][currentLocation[2]]) == 0){
                     currentLocation[0] = q - currentLocation[0];
                     break;
                 }
