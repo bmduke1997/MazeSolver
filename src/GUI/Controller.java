@@ -132,9 +132,9 @@ public class Controller{
         else{
             //Find exit Algorithm
             //UseMe mySolver = new UseMe(masterMaze);
-            MazeSolver mySolver = new MazeSolver(masterMaze);
+            MazeSolver mySolver = new MazeSolver(masterMaze, slider, canvas, drawer);
             statusLbl.setText("Running maze...");
-            mySolver.startExploration(slider, canvas);
+            mySolver.run();
             statusLbl.setText("Done running!");
 
         }

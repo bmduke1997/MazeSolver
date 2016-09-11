@@ -1,27 +1,29 @@
 package MazeLogic;
 
+import GUI.Maze.MapDrawer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
-
 import java.util.Arrays;
 import java.util.HashSet;
 
 /**
  * MazeSolver Class
- * Creates an object with coordinates and makes life easier...
- * For use on the current maze coordinate.
+ * The logic behind the maze.
  *
  * @author Patrick Shinn
  * @author Brandon Duke
  * @version 9/8/16
  *
  */
-public class MazeSolver {
+public class MazeSolver extends Thread{
 
     private char[][][] masterMaze;
     private int[] currentLocation;
+    private MapDrawer drawer;
+    private Slider slider;
+    private GraphicsContext graphicsContext;
     private HashSet<Coordinate> visitedSpecial = new HashSet<>(); // visited portals & stairs
     private HashSet<Coordinate> visitedLocations = new HashSet<>(); // visited open spaces
     private ThompsonStack<Coordinate> FredFin = new ThompsonStack<>();
@@ -33,8 +35,11 @@ public class MazeSolver {
      * @param masterMaze 3d array of the loaded maze.
      *
      */
-    public MazeSolver(char[][][] masterMaze){
+    public MazeSolver(char[][][] masterMaze, Slider slider, Canvas canvas, MapDrawer drawer){
         this.masterMaze = masterMaze;
+        this.slider = slider;
+        this.drawer = drawer;
+        this.graphicsContext = canvas.getGraphicsContext2D();
 
         // This will find the start position and save it for later use...
         boolean startFound = false;
@@ -60,31 +65,40 @@ public class MazeSolver {
         this.currentLocation = location;
 
     }
-    
 
-    public void startExploration(Slider slider, Canvas canvas){
+    @Override
+    public void run(){
+        System.out.println("Running MazeLogin thread...");
+        try{
+            startExploration();
+        }catch (Exception e){
+            System.out.println("Something went wrong...\n" + e);
+        }
+
+    }
+
+    private void startExploration() throws Exception{
         boolean done = false;
-        Image visted = new Image(getClass().getResourceAsStream("/graphics/visited.png"));
+        Image visited = new Image(getClass().getResourceAsStream("/graphics/visited.png"));
         while (!done){
             // // TODO: 9/9/16 debug code
-            try {
-                GraphicsContext graphicsContext = canvas.getGraphicsContext2D();
-                graphicsContext.drawImage(visted, (double)(currentLocation[2] * 45), (double)(currentLocation[1]*45));
-                System.out.println(visitedLocations);
-                System.out.println("Current Location: " + currentLocation[0] + " " + currentLocation[1] + " " + currentLocation[2]);
-                done = explore();
 
-                    Thread.sleep((long) slider.getValue()*10);
-            }catch (Exception e){
-                System.out.println(e);
-                break;
-            }
+            graphicsContext.setGlobalAlpha(0.33); // sets opacity for visited image drawing
+            graphicsContext.drawImage(visited, (double)(currentLocation[2] * 45), (double)(currentLocation[1]*45));
+            System.out.println(visitedLocations);
+            System.out.println("Current Location: " + currentLocation[0] + " " + currentLocation[1] + " " + currentLocation[2]);
+            done = explore();
+            Thread.sleep((long) slider.getValue()*10);
+
+
         }
+        graphicsContext.setGlobalAlpha(1); // resets opacity for final image drawing.
+        drawer.saveMap(currentLocation[0]);
         if (Character.compare('*', masterMaze[currentLocation[0]][currentLocation[1]][currentLocation[2]]) == 0){
             System.out.println("You found the end at: " + currentLocation[0] + " " + currentLocation[1] + " " + currentLocation[2]);
         }
         else {
-            System.out.println("you didn't");
+            System.out.println("Map unsolvable.");
         }
     }
 
@@ -338,15 +352,20 @@ public class MazeSolver {
 
     // portal and stair traverse methods
     private void beamMeUpScotty(){
+        graphicsContext.setGlobalAlpha(1); // sets opacity back to full for image save.
+        drawer.saveMap(currentLocation[0]);
         for (int q = currentLocation[0] + 1; q < masterMaze.length + currentLocation[0]; q ++ ){
+
             try {
                 if (Character.compare('+', masterMaze[q][currentLocation[1]][currentLocation[2]]) == 0){
                     currentLocation[0] = q;
+                    drawer.displayLevel(q);
                     break;
                 }
             }catch (IndexOutOfBoundsException error){
                 if (Character.compare('+', masterMaze[q - (currentLocation[0]  + 1)][currentLocation[1]][currentLocation[2]]) == 0){
                     currentLocation[0] = q - currentLocation[0];
+                    drawer.displayLevel(q);
                     break;
                 }
             }
