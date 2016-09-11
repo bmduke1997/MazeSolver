@@ -104,19 +104,19 @@ public class UseMe {
         }
         else if (left().compareCharacter('.') &&
                 visitedLocations.add(left())){
-            System.out.println(above().getCharacter());
+            System.out.println(left().getCharacter());
             currentLocation = left().getCoords();
             FredFin.push(left());
         }
         else if (below().compareCharacter('.') &&
                 visitedLocations.add(below())){
-            System.out.println(above().getCharacter());
+            System.out.println(below().getCharacter());
             currentLocation = below().getCoords();
             FredFin.push(below());
         }
         else if (right().compareCharacter('.') &&
                 visitedLocations.add(below())){
-            System.out.println(above().getCharacter());
+            System.out.println(right().getCharacter());
             currentLocation = right().getCoords();
             FredFin.push(right());
         }
