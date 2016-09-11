@@ -22,9 +22,16 @@ public class UseMe {
 
     private char[][][] masterMaze;
     private int[] currentLocation;
-    private HashSet<Coordinate> visitedSpecial = new HashSet<>(); // visited portals & stairs
-    private HashSet<Coordinate> visitedLocations = new HashSet<>(); // visited open spaces
+    private HashSet<String> visitedSpecial = new HashSet<>(); // visited portals & stairs
+    private HashSet<String> visitedLocations = new HashSet<>(); // visited open spaces
     private ThompsonStack<Coordinate> FredFin = new ThompsonStack<>();
+
+    Image visted = new Image(getClass().getResourceAsStream("/graphics/visited.png"));
+    Image popped = new Image(getClass().getResourceAsStream("/graphics/popped.png"));
+
+    Canvas canvas;
+    GraphicsContext graphicsContext;
+
 
 
     /**
@@ -64,11 +71,13 @@ public class UseMe {
 
     public void startExploration(Slider slider, Canvas canvas){
         boolean done = false;
-        Image visted = new Image(getClass().getResourceAsStream("/graphics/visited.png"));
+        this.canvas = canvas;
+        this.graphicsContext = canvas.getGraphicsContext2D();
+
         while (!done){
             // // TODO: 9/9/16 debug code
             try {
-                GraphicsContext graphicsContext = canvas.getGraphicsContext2D();
+
                 graphicsContext.drawImage(visted, (double)(currentLocation[2] * 45), (double)(currentLocation[1]*45));
                 System.out.println(visitedLocations);
                 System.out.println("Current Location: " + currentLocation[0] + " " + currentLocation[1] + " " + currentLocation[2]);
@@ -96,26 +105,26 @@ public class UseMe {
             return true;
         }
         else if (above().compareCharacter('.') &&
-                visitedLocations.add(above())){
+                visitedLocations.add(above().toString())){
             System.out.println(above().getCharacter());
             FredFin.push(above());
             currentLocation = above().getCoords();
 
         }
         else if (left().compareCharacter('.') &&
-                visitedLocations.add(left())){
+                visitedLocations.add(left().toString())){
             System.out.println(left().getCharacter());
             FredFin.push(left());
             currentLocation = left().getCoords();
         }
         else if (below().compareCharacter('.') &&
-                visitedLocations.add(below())){
+                visitedLocations.add(below().toString())){
             System.out.println(below().getCharacter());
             FredFin.push(below());
             currentLocation = below().getCoords();
         }
         else if (right().compareCharacter('.') &&
-                visitedLocations.add(below())){
+                visitedLocations.add(below().toString())){
             System.out.println(right().getCharacter());
             FredFin.push(right());
             currentLocation = right().getCoords();
@@ -125,6 +134,7 @@ public class UseMe {
             Coordinate tempCoor = FredFin.pop();
             System.out.println("Poped: " + tempCoor.getCharacter() + " " + Arrays.toString(tempCoor.getCoords()));
             currentLocation = FredFin.peek().getCoords();
+            graphicsContext.drawImage(popped, currentLocation[3] * 45, currentLocation[2] * 45);
             System.out.println(Arrays.toString(FredFin.peek().getCoords()));
         }
         return false;
@@ -191,40 +201,40 @@ public class UseMe {
 
     // checks to see if there any explorable positions
     private boolean explorable(){
-        if (above().compareCharacter('.') && visitedLocations.add(above())){
+        if (above().compareCharacter('.') && visitedLocations.add(above().toString())){
             return true;
         }
-        else if (left().compareCharacter('.') && visitedLocations.add(left())){
+        else if (left().compareCharacter('.') && visitedLocations.add(left().toString())){
             return true;
         }
-        else if (below().compareCharacter('.') && visitedLocations.add(below())){
+        else if (below().compareCharacter('.') && visitedLocations.add(below().toString())){
             return true;
         }
-        else if (right().compareCharacter('.') && visitedLocations.add(right())){
+        else if (right().compareCharacter('.') && visitedLocations.add(right().toString())){
             return true;
         }
-        else if (above().compareCharacter('+') && visitedSpecial.add(above())){
+        else if (above().compareCharacter('+') && visitedSpecial.add(above().toString())){
             return true;
         }
-        else if (left().compareCharacter('+') && visitedSpecial.add(left())){
+        else if (left().compareCharacter('+') && visitedSpecial.add(left().toString())){
             return true;
         }
-        else if (below().compareCharacter('+') && visitedSpecial.add(below())){
+        else if (below().compareCharacter('+') && visitedSpecial.add(below().toString())){
             return true;
         }
-        else if (right().compareCharacter('+') && visitedSpecial.add(right())){
+        else if (right().compareCharacter('+') && visitedSpecial.add(right().toString())){
             return true;
         }
-        else if (above().compareCharacter('=') && visitedSpecial.add(above())){
+        else if (above().compareCharacter('=') && visitedSpecial.add(above().toString())){
             return true;
         }
-        else if (left().compareCharacter('=') && visitedSpecial.add(left())){
+        else if (left().compareCharacter('=') && visitedSpecial.add(left().toString())){
             return true;
         }
-        else if (below().compareCharacter('=') && visitedSpecial.add(below())){
+        else if (below().compareCharacter('=') && visitedSpecial.add(below().toString())){
             return true;
         }
-        else if (right().compareCharacter('=') && visitedSpecial.add(right())){
+        else if (right().compareCharacter('=') && visitedSpecial.add(right().toString())){
             return true;
         }
         else return false;

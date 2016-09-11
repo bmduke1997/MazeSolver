@@ -49,5 +49,10 @@ class Coordinate {
             return false;
         }
     }
+
+    @Override
+    public String toString(){
+        return coords[0] + "" + coords[1] + "" + coords[2];
+    }
 }
 
