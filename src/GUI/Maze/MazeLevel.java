@@ -26,15 +26,15 @@ class MazeLevel {
         this.snapShot = canvas.snapshot(parameters, writableImage);
 
     }
-    public Image getLevelMap(){
+    Image getLevelMap(){
         return snapShot;
     }
 
-    public int getHeight() {
+    int getHeight() {
         return height;
     }
 
-    public int getWidth() {
+    int getWidth() {
         return width;
     }
 }

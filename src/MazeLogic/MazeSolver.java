@@ -391,6 +391,7 @@ public class MazeSolver extends Thread{
     }
 
     // checks to see if there any explorable positions
+    // // TODO: 9/11/16 I think we can turn this whole thing into one giant or check. 
     private boolean explorable(){
         if (above().compareCharacter('.') && visitedLocations.add(above())){
             return true;

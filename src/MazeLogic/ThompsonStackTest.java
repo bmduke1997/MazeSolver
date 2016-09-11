@@ -13,7 +13,7 @@ public class ThompsonStackTest
   {
     Scanner myScanner = new Scanner(System.in);
     ThompsonStack<Character> myStack;
-    myStack = new ThompsonStack<Character>();
+    myStack = new ThompsonStack<>();
     System.out.println("1 - Peek");
     System.out.println("2 - Pop");
     System.out.println("3 - Push");
