@@ -98,27 +98,27 @@ public class UseMe {
         else if (above().compareCharacter('.') &&
                 visitedLocations.add(above())){
             System.out.println(above().getCharacter());
-            currentLocation = above().getCoords();
             FredFin.push(above());
+            currentLocation = above().getCoords();
 
         }
         else if (left().compareCharacter('.') &&
                 visitedLocations.add(left())){
             System.out.println(left().getCharacter());
-            currentLocation = left().getCoords();
             FredFin.push(left());
+            currentLocation = left().getCoords();
         }
         else if (below().compareCharacter('.') &&
                 visitedLocations.add(below())){
             System.out.println(below().getCharacter());
-            currentLocation = below().getCoords();
             FredFin.push(below());
+            currentLocation = below().getCoords();
         }
         else if (right().compareCharacter('.') &&
                 visitedLocations.add(below())){
             System.out.println(right().getCharacter());
-            currentLocation = right().getCoords();
             FredFin.push(right());
+            currentLocation = right().getCoords();
         }
 
         else {
