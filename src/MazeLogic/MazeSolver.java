@@ -137,7 +137,7 @@ public class MazeSolver {
             currentLocation = below().getCoords();
         }
         else if (right().compareCharacter('.') &&
-                visitedLocations.add(below())){
+                visitedLocations.add(right())){
             System.out.println(right().getCharacter());
             FredFin.push(right());
             currentLocation = right().getCoords();

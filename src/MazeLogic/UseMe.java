@@ -124,7 +124,7 @@ public class UseMe {
             currentLocation = below().getCoords();
         }
         else if (right().compareCharacter('.') &&
-                visitedLocations.add(below().toString())){
+                visitedLocations.add(right().toString())){
             System.out.println(right().getCharacter());
             FredFin.push(right());
             currentLocation = right().getCoords();
@@ -134,7 +134,7 @@ public class UseMe {
             Coordinate tempCoor = FredFin.pop();
             System.out.println("Poped: " + tempCoor.getCharacter() + " " + Arrays.toString(tempCoor.getCoords()));
             currentLocation = FredFin.peek().getCoords();
-            graphicsContext.drawImage(popped, currentLocation[3] * 45, currentLocation[2] * 45);
+            graphicsContext.drawImage(popped, currentLocation[2] * 45, currentLocation[1] * 45);
             System.out.println(Arrays.toString(FredFin.peek().getCoords()));
         }
         return false;
