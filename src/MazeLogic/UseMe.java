@@ -5,6 +5,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 
+import java.util.Arrays;
 import java.util.HashSet;
 
 /**
@@ -96,33 +97,35 @@ public class UseMe {
         }
         else if (above().compareCharacter('.') &&
                 visitedLocations.add(above())){
-            currentLocation = above().getCoords();
             System.out.println(above().getCharacter());
+            currentLocation = above().getCoords();
             FredFin.push(above());
 
         }
         else if (left().compareCharacter('.') &&
                 visitedLocations.add(left())){
-            currentLocation = left().getCoords();
             System.out.println(above().getCharacter());
+            currentLocation = left().getCoords();
             FredFin.push(left());
         }
         else if (below().compareCharacter('.') &&
                 visitedLocations.add(below())){
-            currentLocation = below().getCoords();
             System.out.println(above().getCharacter());
+            currentLocation = below().getCoords();
             FredFin.push(below());
         }
         else if (right().compareCharacter('.') &&
                 visitedLocations.add(below())){
-            currentLocation = right().getCoords();
             System.out.println(above().getCharacter());
+            currentLocation = right().getCoords();
             FredFin.push(right());
         }
 
         else {
-            FredFin.pop();
+            Coordinate tempCoor = FredFin.pop();
+            System.out.println("Poped: " + tempCoor.getCharacter() + " " + Arrays.toString(tempCoor.getCoords()));
             currentLocation = FredFin.peek().getCoords();
+            System.out.println(Arrays.toString(FredFin.peek().getCoords()));
         }
         return false;
     }
