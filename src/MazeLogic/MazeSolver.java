@@ -137,7 +137,7 @@ public class MazeSolver {
             currentLocation = below().getCoords();
         }
         else if (right().compareCharacter('.') &&
-                visitedLocations.add(below())){
+                visitedLocations.add(right())){
             System.out.println(right().getCharacter());
             FredFin.push(right());
             currentLocation = right().getCoords();
@@ -338,14 +338,14 @@ public class MazeSolver {
 
     // portal and stair traverse methods
     private void beamMeUpScotty(){
-        for (int q = currentLocation[0]; q < masterMaze.length + currentLocation[0]; q ++ ){
+        for (int q = currentLocation[0] + 1; q < masterMaze.length + currentLocation[0]; q ++ ){
             try {
                 if (Character.compare('+', masterMaze[q][currentLocation[1]][currentLocation[2]]) == 0){
                     currentLocation[0] = q;
                     break;
                 }
             }catch (IndexOutOfBoundsException error){
-                if (Character.compare('+', masterMaze[q - currentLocation[0]][currentLocation[1]][currentLocation[2]]) == 0){
+                if (Character.compare('+', masterMaze[q - (currentLocation[0]  + 1)][currentLocation[1]][currentLocation[2]]) == 0){
                     currentLocation[0] = q - currentLocation[0];
                     break;
                 }

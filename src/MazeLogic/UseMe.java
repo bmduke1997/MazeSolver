@@ -124,7 +124,7 @@ public class UseMe {
             currentLocation = below().getCoords();
         }
         else if (right().compareCharacter('.') &&
-                visitedLocations.add(below().toString())){
+                visitedLocations.add(right().toString())){
             System.out.println(right().getCharacter());
             FredFin.push(right());
             currentLocation = right().getCoords();
