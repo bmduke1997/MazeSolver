@@ -51,7 +51,6 @@ public class Controller{
 
 
     // used to extract the primary stage from the Main Class.
-    // there is nothing wrong with the declaration of this method, it is package - private.
     void setStage(Stage stage){
         this.primaryStage = stage;
     }
@@ -133,7 +132,13 @@ public class Controller{
             //UseMe mySolver = new UseMe(masterMaze);
             MazeSolver mySolver = new MazeSolver(masterMaze, slider, canvas, drawer);
             statusLbl.setText("Running maze...");
-            mySolver.run();
+            drawer.displayLevel(mySolver.getCurrentLocation()[0]); // displays the location of start on the map.
+            currentLevel = mySolver.getCurrentLocation()[0]; // the current location for the gui display.
+            // modifying the buttons accordingly
+            if (currentLevel == 0)lvlDown.setDisable(true);
+            else if (currentLevel == masterMaze.length - 1)lvlUp.setDisable(true);
+
+            mySolver.run(); // start solving the maze.
             statusLbl.setText("Done running!");
 
         }

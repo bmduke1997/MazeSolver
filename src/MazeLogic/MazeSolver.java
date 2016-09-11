@@ -69,12 +69,18 @@ public class MazeSolver extends Thread{
 
     }
 
+    // Returns the current location.
+    public int[] getCurrentLocation() {
+        return currentLocation;
+    }
+
     @Override
     public void run(){
         System.out.println("Running MazeLogin thread...");
         try{
             startExploration();
         }catch (Exception e){
+            drawer.saveMap(currentLocation[0]); // saves the map where it breaks
             System.out.println("Something went wrong...\n" + e);
         }
 
@@ -93,7 +99,7 @@ public class MazeSolver extends Thread{
             System.out.println(visitedLocations);
             System.out.println("Current Location: " + currentLocation[0] + " " + currentLocation[1] + " " + currentLocation[2]);
             done = explore();
-            Thread.sleep((long) slider.getValue()*10);
+            Thread.sleep((long) (100 - slider.getValue()) * 10);
 
 
         }
