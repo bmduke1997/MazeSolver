@@ -1,5 +1,10 @@
 package MazeLogic;
 
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Slider;
+import javafx.scene.image.Image;
+
 import java.util.HashSet;
 
 /**
@@ -56,17 +61,22 @@ public class MazeSolver {
     }
     
 
-    public void startExploration(double sliderVal){
+    public void startExploration(Slider slider, Canvas canvas){
         boolean done = false;
+        Image visted = new Image(getClass().getResourceAsStream("/graphics/visited.png"));
         while (!done){
-            // // TODO: 9/9/16 debug code 
-            System.out.println(visitedLocations);
-            System.out.println("Current Location: " + currentLocation[0] + " " + currentLocation[1] + " " + currentLocation[2]);
-            done = explore();
+            // // TODO: 9/9/16 debug code
             try {
-                Thread.sleep((long) sliderVal*10);
+                GraphicsContext graphicsContext = canvas.getGraphicsContext2D();
+                graphicsContext.drawImage(visted, (double)(currentLocation[2] * 45), (double)(currentLocation[1]*45));
+                System.out.println(visitedLocations);
+                System.out.println("Current Location: " + currentLocation[0] + " " + currentLocation[1] + " " + currentLocation[2]);
+                done = explore();
+
+                    Thread.sleep((long) slider.getValue()*10);
             }catch (Exception e){
-                // do nothing
+                System.out.println(e);
+                break;
             }
         }
         if (Character.compare('*', masterMaze[currentLocation[0]][currentLocation[1]][currentLocation[2]]) == 0){

@@ -17,7 +17,7 @@ import java.util.Scanner;
  * @author Patrick Shinn
  * @author Brandon Duke
  * @author Claire Wallace
- * @version Alpha 0.05
+ * @version Alpha 0.1
  *
  * This is the controller class for the GUI.fxml. This code does all of the heavy lifting for the GUI.
  */
@@ -106,7 +106,7 @@ public class Controller {
 
         // draws the newly loaded map.
         drawer = new MapDrawer(canvas, masterMazeHolder);
-        drawer.drawLevel(0);
+        drawer.displayLevel(0);
         lvlDown.setDisable(true);
 
         // Status updates
@@ -126,7 +126,7 @@ public class Controller {
             //Find exit Algorithm
             MazeSolver mySolver = new MazeSolver(masterMaze);
             statusLbl.setText("Running maze...");
-            mySolver.startExploration(slider.getValue());
+            mySolver.startExploration(slider, canvas);
             statusLbl.setText("Done running!");
 
         }
@@ -151,7 +151,7 @@ public class Controller {
     // displays the next level down
     public void displayLevelDown(){
         currentLevel --;
-        drawer.drawLevel(currentLevel);
+        drawer.displayLevel(currentLevel);
         lvlUp.setDisable(false);
         if (currentLevel == 0)lvlDown.setDisable(true); // if we are at the bottom, make it impossible to go lower.
     }
@@ -159,11 +159,12 @@ public class Controller {
     // displays the next level up
     public void displayLevelUp(){
         currentLevel ++;
-        drawer.drawLevel(currentLevel);
+        drawer.displayLevel(currentLevel);
         lvlDown.setDisable(false);
         if(currentLevel == masterMaze.length -1)lvlUp.setDisable(true); // if we are at the top level, make it impossible to go up again.
 
     }
+
     //Shows about info screen from help menu
     public void about(){
         AboutWindow aboutWindow = new AboutWindow("About", "Maze Solver", "1.0",

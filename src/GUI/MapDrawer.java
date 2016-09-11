@@ -15,6 +15,9 @@ class MapDrawer {
     private char[][][] masterMaze;
     private Canvas canvas;
     private GraphicsContext graphicsContext;
+
+    private Image[] levels = new Image[0]; // stores the levels as images to be written on.
+
     // all of the images that will be needed to draw the map.
     private Image wall = new Image(getClass().getResourceAsStream("/graphics/wall.png"));
     private Image path = new Image(getClass().getResourceAsStream("/graphics/openPath.png"));
@@ -29,7 +32,8 @@ class MapDrawer {
         this.graphicsContext = canvas.getGraphicsContext2D();
     }
 
-    void drawLevel(int Level){
+    void displayLevel(int Level){
+
         graphicsContext.clearRect(0,0,canvas.getWidth(),canvas.getHeight()); // ensures we are drawing on a clear canvas.
         int zCounter = -1;
         int yCounter = 0;
