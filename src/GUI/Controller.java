@@ -134,11 +134,12 @@ public class Controller{
             statusLbl.setText("Running maze...");
             drawer.displayLevel(mySolver.getCurrentLocation()[0]); // displays the location of start on the map.
             currentLevel = mySolver.getCurrentLocation()[0]; // the current location for the gui display.
+
             // modifying the buttons accordingly
             if (currentLevel == 0)lvlDown.setDisable(true);
             else if (currentLevel == masterMaze.length - 1)lvlUp.setDisable(true);
 
-            mySolver.run(); // start solving the maze.
+            mySolver.startExploration(); // start solving the maze.
             statusLbl.setText("Done running!");
 
         }

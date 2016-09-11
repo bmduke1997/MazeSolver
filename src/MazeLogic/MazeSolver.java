@@ -17,7 +17,7 @@ import java.util.HashSet;
  * @version 9/8/16
  *
  */
-public class MazeSolver extends Thread{
+public class MazeSolver{
 
     private char[][][] masterMaze;
     private int[] currentLocation;
@@ -74,32 +74,26 @@ public class MazeSolver extends Thread{
         return currentLocation;
     }
 
-    @Override
-    public void run(){
-        System.out.println("Running MazeLogin thread...");
-        try{
-            startExploration();
-        }catch (Exception e){
-            drawer.saveMap(currentLocation[0]); // saves the map where it breaks
-            System.out.println("Something went wrong...\n" + e);
-        }
-
-    }
-
-    private void startExploration() throws Exception{
+    // explores!!
+    public void startExploration(){
         boolean done = false;
         Image visited = new Image(getClass().getResourceAsStream("/graphics/visited.png"));
         while (!done){
-            // // // TODO: 9/11/16 make this run in a way that it updates the gui as it does
+            // // // // TODO: 9/11/16 MAKE THIS RUN IN A SEPERATE THREAD SOMEHOW GOD DAMNIT
+            try{
+                graphicsContext.setGlobalAlpha(0.33); // sets opacity for visited image drawing
+                graphicsContext.drawImage(visited, (double)(currentLocation[2] * 45), (double)(currentLocation[1]*45));
+                graphicsContext.setGlobalAlpha(1); // resets opacity for final image drawing.
+                System.out.println(visitedLocations);
+                System.out.println("Current Location: " + currentLocation[0] + " " + currentLocation[1] + " " + currentLocation[2]);
+                done = explore();
+                Thread.sleep((long) (100 - slider.getValue()) * 10);
+            }catch (Exception e){
+                drawer.saveMap(currentLocation[0]); // saves the map where it breaks
+                System.out.println("Something went wrong...");
+                e.printStackTrace();
+            }
 
-            graphicsContext.setGlobalAlpha(0.33); // sets opacity for visited image drawing
-            graphicsContext.drawImage(visited, (double)(currentLocation[2] * 45), (double)(currentLocation[1]*45));
-            // // TODO: 9/11/16 Optimize opacity setting 
-            graphicsContext.setGlobalAlpha(1); // resets opacity for final image drawing.
-            System.out.println(visitedLocations);
-            System.out.println("Current Location: " + currentLocation[0] + " " + currentLocation[1] + " " + currentLocation[2]);
-            done = explore();
-            Thread.sleep((long) (100 - slider.getValue()) * 10);
 
 
         }
@@ -369,13 +363,13 @@ public class MazeSolver extends Thread{
             try {
                 if (Character.compare('+', masterMaze[q][currentLocation[1]][currentLocation[2]]) == 0){
                     currentLocation[0] = q;
-                    drawer.displayLevel(q);
+                    drawer.displayLevel(currentLocation[0]);
                     break;
                 }
             }catch (IndexOutOfBoundsException error){
                 if (Character.compare('+', masterMaze[q - (currentLocation[0]  + 1)][currentLocation[1]][currentLocation[2]]) == 0){
-                    currentLocation[0] = q - currentLocation[0];
-                    drawer.displayLevel(q);
+                    currentLocation[0] = q - currentLocation[0] + 1;
+                    drawer.displayLevel(currentLocation[0]);
                     break;
                 }
             }
@@ -384,15 +378,23 @@ public class MazeSolver extends Thread{
     }
 
     private void itsActuallyALadder(){
+        graphicsContext.setGlobalAlpha(1);
+        drawer.saveMap(currentLocation[0]);
         try {
             if (Character.compare('=', masterMaze[currentLocation[0] + 1][currentLocation[1]][currentLocation[2]]) == 0){
                 currentLocation[0] = currentLocation[0] + 1;
+                drawer.displayLevel(currentLocation[0]);
+
             } else  if (Character.compare('=', masterMaze[currentLocation[0] - 1][currentLocation[1]][currentLocation[2]]) == 0){
                 currentLocation[0] = currentLocation[0] - 1;
+                drawer.displayLevel(currentLocation[0]);
+
             }
         }catch (IndexOutOfBoundsException error){
             if (Character.compare('=', masterMaze[currentLocation[0] - 1][currentLocation[1]][currentLocation[2]]) == 0){
                 currentLocation[0] = currentLocation[0] - 1;
+                drawer.displayLevel(currentLocation[0]);
+
             }
         }
         FredFin.push(new Coordinate('=', currentLocation));
