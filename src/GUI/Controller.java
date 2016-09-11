@@ -1,6 +1,7 @@
 package GUI;
 
 import MazeLogic.MazeSolver;
+import MazeLogic.UseMe;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
@@ -124,7 +125,7 @@ public class Controller {
         }
         else{
             //Find exit Algorithm
-            MazeSolver mySolver = new MazeSolver(masterMaze);
+            UseMe mySolver = new UseMe(masterMaze);
             statusLbl.setText("Running maze...");
             mySolver.startExploration(slider, canvas);
             statusLbl.setText("Done running!");

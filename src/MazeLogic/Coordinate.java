@@ -20,7 +20,7 @@ class Coordinate {
         this.coords = coords;
     }
 
-    private char getCharacter() {
+    char getCharacter() {
         return character;
     }
 
