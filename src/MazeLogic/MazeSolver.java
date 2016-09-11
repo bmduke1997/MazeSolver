@@ -33,6 +33,9 @@ public class MazeSolver extends Thread{
      * Constructor of the class.
      *
      * @param masterMaze 3d array of the loaded maze.
+     * @param slider slider to obtain speed value
+     * @param canvas for drawing to
+     * @param drawer MapDrawer for drawing and saving the map.
      *
      */
     public MazeSolver(char[][][] masterMaze, Slider slider, Canvas canvas, MapDrawer drawer){
