@@ -1,4 +1,4 @@
-package GUI;
+package GUI.Windows;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Button;

@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 
 /**
- * MazeSolver Class
+ * MazeSolver Class Debugger
  * Creates an object with coordinates and makes life easier...
  * For use on the current maze coordinate.
  *
@@ -132,9 +132,9 @@ public class UseMe {
 
         else {
             Coordinate tempCoor = FredFin.pop();
-            System.out.println("Poped: " + tempCoor.getCharacter() + " " + Arrays.toString(tempCoor.getCoords()));
+            System.out.println("Popped: " + tempCoor.getCharacter() + " " + Arrays.toString(tempCoor.getCoords()));
             currentLocation = FredFin.peek().getCoords();
-            graphicsContext.drawImage(popped, currentLocation[3] * 45, currentLocation[2] * 45);
+            graphicsContext.drawImage(popped, currentLocation[2] * 45, currentLocation[1] * 45);
             System.out.println(Arrays.toString(FredFin.peek().getCoords()));
         }
         return false;

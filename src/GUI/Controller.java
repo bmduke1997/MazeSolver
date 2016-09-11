@@ -1,7 +1,9 @@
 package GUI;
 
+import GUI.Maze.MapDrawer;
+import GUI.Windows.AboutWindow;
+import GUI.Windows.WarningWindow;
 import MazeLogic.MazeSolver;
-import MazeLogic.UseMe;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
@@ -22,7 +24,7 @@ import java.util.Scanner;
  *
  * This is the controller class for the GUI.fxml. This code does all of the heavy lifting for the GUI.
  */
-public class Controller {
+public class Controller{
     // data structures / logic stuff
     private char[][][] masterMaze; // the map as a 3d array for coordinate purposes.
     private boolean run = false;
@@ -75,7 +77,7 @@ public class Controller {
 
         masterMaze = new char[0][0][0]; // ensures that the previous maze has been dumped.
 
-        try {
+        try { // builds the array from the file
             scanner = new Scanner(map);
             
 
@@ -108,7 +110,11 @@ public class Controller {
         // draws the newly loaded map.
         drawer = new MapDrawer(canvas, masterMazeHolder);
         drawer.displayLevel(0);
+
+        // updates the gui buttons
+        currentLevel = 0;
         lvlDown.setDisable(true);
+        lvlUp.setDisable(false);
 
         // Status updates
         statusLbl.setText("Loaded " + map.getName() + ".");
@@ -147,6 +153,8 @@ public class Controller {
             statusLbl.setText("Status: Nothing Loaded.");
             masterMaze = new char[0][0][0];
             run = false;
+            lvlDown.setDisable(true);
+            lvlUp.setDisable(true);
         }
     }
 
