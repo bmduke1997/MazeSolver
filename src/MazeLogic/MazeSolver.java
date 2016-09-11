@@ -5,6 +5,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 
+import java.util.Arrays;
 import java.util.HashSet;
 
 /**
@@ -281,8 +282,10 @@ public class MazeSolver {
             }
         }
         else {
-            FredFin.pop();
+            Coordinate tempCoor = FredFin.pop();
+            System.out.println("Poped: " + tempCoor.getCharacter() + " " + Arrays.asList(tempCoor.getCoords()));
             currentLocation = FredFin.peek().getCoords();
+            System.out.println(Arrays.asList(FredFin.peek().getCoords()));
         }
         return false;
     }
