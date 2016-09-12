@@ -28,7 +28,6 @@ public class MazeSolver{
     private int[] currentLocation;
     private MapDrawer drawer;
     private Slider slider;
-    private Canvas canvas;
     private GraphicsContext graphicsContext;
     private HashSet<Coordinate> visitedSpecial = new HashSet<>(); // visited portals & stairs
     private HashSet<Coordinate> visitedLocations = new HashSet<>(); // visited open spaces
@@ -49,7 +48,6 @@ public class MazeSolver{
         this.slider = slider;
         this.drawer = drawer;
         this.graphicsContext = canvas.getGraphicsContext2D();
-        this.canvas = canvas;
 
         // This will find the start position and save it for later use...
         boolean startFound = false;
@@ -100,7 +98,7 @@ public class MazeSolver{
                 movesMade ++;
                 Thread.sleep((long)(100 - slider.getValue())*10);
             }catch (Exception e){
-                // // TODO: 9/12/16 any saves break it
+                // // TODO: 9/12/16 any saves from the can as breaks me
                 //drawer.saveMap(currentLocation[0]); // saves the map where it breaks
                 System.out.println("Something went wrong...");
                 e.printStackTrace();
@@ -110,6 +108,7 @@ public class MazeSolver{
 
         }
         graphicsContext.setGlobalAlpha(1); // resets opacity for final image drawing.
+        // // TODO: 9/12/16 drawer.saveMap here 
         //drawer.saveMap(currentLocation[0]);
         if (Character.compare('*', masterMaze[currentLocation[0]][currentLocation[1]][currentLocation[2]]) == 0){
             System.out.println("You found the end at: " + currentLocation[0] + " " + currentLocation[1] + " " + currentLocation[2]);
@@ -372,6 +371,7 @@ public class MazeSolver{
     // portal and stair traverse methods
     private void beamMeUpScotty(){
         graphicsContext.setGlobalAlpha(1); // sets opacity back to full for image save.
+        // // TODO: 9/12/16 drawer.saveMap here 
         //drawer.saveMap(currentLocation[0]);
         for (int q = currentLocation[0] + 1; q < masterMaze.length + currentLocation[0]; q ++ ){
 
@@ -394,6 +394,7 @@ public class MazeSolver{
 
     private void itsActuallyALadder(){
         graphicsContext.setGlobalAlpha(1);
+        //// TODO: 9/12/16 drawer.saveMap here 
         //drawer.saveMap(currentLocation[0]);
         try {
             if (Character.compare('=', masterMaze[currentLocation[0] + 1][currentLocation[1]][currentLocation[2]]) == 0){
