@@ -71,6 +71,15 @@ public class MapDrawer {
 
     }
 
+    public MapDrawer(Canvas canvas, MazeLevel[] levels){
+        this.canvas = canvas;
+        this.levels = levels;
+    }
+
+    public MazeLevel[] getLevels() {
+        return levels;
+    }
+
     public void displayLevel(int Level){ // displays a map level
         clearMap(); // ensures drawling to a clear map
         graphicsContext.drawImage(levels[Level].getLevelMap(), 0, 0);

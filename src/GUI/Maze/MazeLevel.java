@@ -12,13 +12,13 @@ import javafx.scene.image.WritableImage;
  * @author Patrick Shinn
  * @version 9/11/16
  */
-class MazeLevel {
+public class MazeLevel {
 
     private WritableImage snapShot;
     private int width;
     private int height;
 
-    MazeLevel(Canvas canvas, int width, int height){
+    public MazeLevel(Canvas canvas, int width, int height){
         WritableImage writableImage = new WritableImage(width, height);
         this.width = width;
         this.height = height;
@@ -26,15 +26,15 @@ class MazeLevel {
         this.snapShot = canvas.snapshot(parameters, writableImage);
 
     }
-    Image getLevelMap(){
+    public Image getLevelMap(){
         return snapShot;
     }
 
-    int getHeight() {
+    public int getHeight() {
         return height;
     }
 
-    int getWidth() {
+    public int getWidth() {
         return width;
     }
 }

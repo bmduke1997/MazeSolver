@@ -4,14 +4,11 @@ import GUI.Maze.MapDrawer;
 import GUI.Windows.AboutWindow;
 import GUI.Windows.WarningWindow;
 import MazeLogic.MazeSolver;
-import MazeLogic.Results;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import java.io.File;
@@ -139,9 +136,9 @@ public class Controller{
         }
         else{
             //Find exit Algorithm
+            statusLbl.setText("Running maze...");
             Thread one = new Thread() {
                 public void run() {
-                    statusLbl.setText("Running maze...");
                     MazeSolver mazeSolver = new MazeSolver(masterMaze, slider, canvas, drawer);
                     currentLevel = mazeSolver.getCurrentLocation()[0];
                     drawer.displayLevel(mazeSolver.getCurrentLocation()[0]); // displays the location of start on the map.
