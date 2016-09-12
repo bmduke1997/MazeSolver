@@ -154,9 +154,6 @@ public class Controller{
             };
             one.start();
 
-
-
-
             statusLbl.setText("Done running!");
 
         }
