@@ -2,7 +2,7 @@ package MazeLogic;
 
 /**
  * Results Class.
- * Used for returning results.
+ * Used for returning results data type.
  *
  * @author Patrick Shinn
  * @version 9/11/16
