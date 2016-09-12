@@ -70,7 +70,7 @@ public class MapDrawer {
         }
 
     }
-
+.
     public MapDrawer(Canvas canvas, MazeLevel[] levels){
         this.canvas = canvas;
         this.levels = levels;
