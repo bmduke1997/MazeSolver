@@ -2,10 +2,13 @@ package MazeLogic;
 
 import GUI.Maze.MapDrawer;
 import GUI.Maze.MazeLevel;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
+import javafx.scene.image.WritableImage;
+
 import java.util.Arrays;
 import java.util.HashSet;
 
@@ -25,6 +28,7 @@ public class MazeSolver{
     private int[] currentLocation;
     private MapDrawer drawer;
     private Slider slider;
+    private Canvas canvas;
     private GraphicsContext graphicsContext;
     private HashSet<Coordinate> visitedSpecial = new HashSet<>(); // visited portals & stairs
     private HashSet<Coordinate> visitedLocations = new HashSet<>(); // visited open spaces
@@ -45,6 +49,7 @@ public class MazeSolver{
         this.slider = slider;
         this.drawer = drawer;
         this.graphicsContext = canvas.getGraphicsContext2D();
+        this.canvas = canvas;
 
         // This will find the start position and save it for later use...
         boolean startFound = false;
