@@ -4,11 +4,14 @@ import GUI.Maze.MapDrawer;
 import GUI.Windows.AboutWindow;
 import GUI.Windows.WarningWindow;
 import MazeLogic.MazeSolver;
+import MazeLogic.Results;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import java.io.File;
@@ -20,7 +23,7 @@ import java.util.Scanner;
  * @author Patrick Shinn
  * @author Brandon Duke
  * @author Claire Wallace
- * @version Alpha 0.1
+ * @version Alpha 0.5
  *
  * This is the controller class for the GUI.fxml. This code does all of the heavy lifting for the GUI.
  */
@@ -48,6 +51,13 @@ public class Controller{
     // Map GUI Stuff
     @FXML private Canvas canvas;
     private MapDrawer drawer;
+
+    //// TODO: 9/11/16 This doesnt work, but doesn' break eitehr. Make it work. 
+    // resizes the canvas with window size changes.
+    void canvasResize(double windowWidth, double windowHeight){
+        canvas = new Canvas(windowWidth, windowHeight); // resize the canvas by replacing it.
+        if(run) drawer.displayLevel(currentLevel); // display the level on the newly sized canvas.
+    }
 
 
     // used to extract the primary stage from the Main Class.
@@ -129,17 +139,24 @@ public class Controller{
         }
         else{
             //Find exit Algorithm
-            //UseMe mySolver = new UseMe(masterMaze);
-            MazeSolver mySolver = new MazeSolver(masterMaze, slider, canvas, drawer);
-            statusLbl.setText("Running maze...");
-            drawer.displayLevel(mySolver.getCurrentLocation()[0]); // displays the location of start on the map.
-            currentLevel = mySolver.getCurrentLocation()[0]; // the current location for the gui display.
+            Thread one = new Thread() {
+                public void run() {
+                    statusLbl.setText("Running maze...");
+                    MazeSolver mazeSolver = new MazeSolver(masterMaze, slider, canvas, drawer);
+                    currentLevel = mazeSolver.getCurrentLocation()[0];
+                    drawer.displayLevel(mazeSolver.getCurrentLocation()[0]); // displays the location of start on the map.
 
-            // modifying the buttons accordingly
-            if (currentLevel == 0)lvlDown.setDisable(true);
-            else if (currentLevel == masterMaze.length - 1)lvlUp.setDisable(true);
+                    // modifying the buttons accordingly
+                    if (currentLevel == 0)lvlDown.setDisable(true);
+                    else if (currentLevel == masterMaze.length - 1)lvlUp.setDisable(true);
+                    mazeSolver.startExploration();
+                }
+            };
+            one.start();
 
-            mySolver.startExploration(); // start solving the maze.
+
+
+
             statusLbl.setText("Done running!");
 
         }

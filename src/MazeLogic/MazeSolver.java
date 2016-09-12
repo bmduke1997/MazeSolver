@@ -14,6 +14,7 @@ import java.util.HashSet;
  *
  * @author Patrick Shinn
  * @author Brandon Duke
+ * @author Claire Wallace
  * @version 9/8/16
  *
  */
@@ -65,7 +66,8 @@ public class MazeSolver{
                 }
             }
         }
-        this.currentLocation = location;
+        this.currentLocation = location; // saves the start location.
+        FredFin.push(new Coordinate(masterMaze[currentLocation[0]][ currentLocation[1]][currentLocation[2]], currentLocation)); // pushes the first coordinate onto the stack.
 
     }
 
@@ -74,12 +76,14 @@ public class MazeSolver{
         return currentLocation;
     }
 
+
     // explores!!
-    public void startExploration(){
+    public Results startExploration(){
+        int movesMade = 0;
+        boolean success;
         boolean done = false;
         Image visited = new Image(getClass().getResourceAsStream("/graphics/visited.png"));
         while (!done){
-            // // // // TODO: 9/11/16 MAKE THIS RUN IN A SEPERATE THREAD SOMEHOW GOD DAMNIT
             try{
                 graphicsContext.setGlobalAlpha(0.33); // sets opacity for visited image drawing
                 graphicsContext.drawImage(visited, (double)(currentLocation[2] * 45), (double)(currentLocation[1]*45));
@@ -87,27 +91,31 @@ public class MazeSolver{
                 System.out.println(visitedLocations);
                 System.out.println("Current Location: " + currentLocation[0] + " " + currentLocation[1] + " " + currentLocation[2]);
                 done = explore();
-                Thread.sleep((long) (100 - slider.getValue()) * 10);
+                movesMade ++;
+                Thread.sleep((long)(100 - slider.getValue())*10);
             }catch (Exception e){
                 drawer.saveMap(currentLocation[0]); // saves the map where it breaks
                 System.out.println("Something went wrong...");
                 e.printStackTrace();
+                success = false;
+                break;
             }
-
-
 
         }
         graphicsContext.setGlobalAlpha(1); // resets opacity for final image drawing.
         drawer.saveMap(currentLocation[0]);
         if (Character.compare('*', masterMaze[currentLocation[0]][currentLocation[1]][currentLocation[2]]) == 0){
             System.out.println("You found the end at: " + currentLocation[0] + " " + currentLocation[1] + " " + currentLocation[2]);
+            success = true;
         }
         else {
             System.out.println("Map unsolvable.");
+            success = false;
         }
+        return new Results(movesMade, success);
     }
 
-    // // TODO: 9/9/16 Something is very wrong here...
+    // // // TODO: 9/11/16 some broken logic here.
     // calls of the the methods that return a character, explores the area...
     private boolean explore(){ // calls all methods of the class for a search.
         if (on().compareCharacter('*')){

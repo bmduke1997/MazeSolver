@@ -13,7 +13,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="747.0" prefWidth="1070.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -84,6 +84,6 @@
       </VBox>
    </right>
    <center>
-      <Canvas fx:id="canvas" height="346.0" width="693.0" BorderPane.alignment="CENTER" />
+      <Canvas fx:id="canvas" height="618.0" width="943.0" BorderPane.alignment="CENTER" />
    </center>
 </BorderPane>
