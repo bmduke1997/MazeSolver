@@ -157,6 +157,9 @@ public class Controller{
                             else if (currentLevel == masterMaze.length - 1){
                                 lvlUp.setDisable(true);
                                 lvlDown.setDisable(false);
+                            }else{
+                                lvlUp.setDisable(false);
+                                lvlDown.setDisable(false);
                             }
                             start.setDisable(false);
                             load.setDisable(false);

@@ -294,44 +294,12 @@ public class MazeSolver{
         /*
         ################################################################# checking the spot we are on for portals
          */
+        //// TODO: 9/14/16 pop for floors 
         else if (on().compareCharacter('+')){
-            for (int q = currentLocation[0]; q < masterMaze.length + currentLocation[0]; q ++ ){
-                try {
-                    if (Character.compare('+', masterMaze[q][currentLocation[1]][currentLocation[2]]) == 0 && explorable()){
-                        explore();
-                    }
-                    else {//terminate
-                        return true;
-                    }
-                }catch (IndexOutOfBoundsException error){
-                    if (Character.compare('+', masterMaze[q - currentLocation[0]][currentLocation[1]][currentLocation[2]]) == 0 && explorable()){
-                        explore();
-                    }
-                    else {//terminate
-                        return true;
-                    }
-                }
-            }
+            beamMeUpScotty();
         }
         else if (on().compareCharacter('=')){
-            try {
-                if (Character.compare('+', masterMaze[currentLocation[0] + 1][currentLocation[1]][currentLocation[2]]) == 0 && explorable()){
-                    explore();
-                }
-                else  if (Character.compare('=', masterMaze[currentLocation[0] - 1][currentLocation[1]][currentLocation[2]]) == 0 && explorable()){
-                    explore();
-                }
-                else {//terminate
-                    return true;
-                }
-            }catch (IndexOutOfBoundsException error){
-                if (Character.compare('=', masterMaze[currentLocation[0] - 1][currentLocation[1]][currentLocation[2]]) == 0 && explorable()){
-                    explore();
-                }
-                else {//terminate
-                    return true;
-                }
-            }
+            itsActuallyALadder();
         }
         else {
             Coordinate tempCoor = FredFin.pop();
@@ -384,7 +352,7 @@ public class MazeSolver{
                 }
             }catch (IndexOutOfBoundsException error){
                 if (Character.compare('+', masterMaze[q - (currentLocation[0]  + 1)][currentLocation[1]][currentLocation[2]]) == 0){
-                    currentLocation[0] = q - currentLocation[0] + 1;
+                    currentLocation[0] = q - (currentLocation[0] + 1);
                     drawer.displayLevel(currentLocation[0]);
                     break;
                 }
