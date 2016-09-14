@@ -23,10 +23,10 @@ import java.util.Scanner;
  * @author Claire Wallace
  * @version Alpha 0.5
  *
- * This is the controller class for the GUI.fxml. This code does all of the heavy lifting for the GUI.
+ * This is the controller class for the GUI.fxml. This is the code for the fx Thread.
  */
 public class Controller{
-    // data structures / logic stuff
+    // data structures, counters, booleans, all that good stuff.
     private char[][][] masterMaze; // the map as a 3d array for coordinate purposes.
     private boolean run = false;
     private int currentLevel = 0; // used for changing the level that is currently displayed.
@@ -50,6 +50,8 @@ public class Controller{
 
     // Map GUI Stuff
     @FXML private Canvas canvas;
+
+    // custom class used for drawing and displaying the map.
     private MapDrawer drawer;
 
     // used to extract the primary stage from the Main Class.
@@ -124,7 +126,7 @@ public class Controller{
 
     // Starts the search algorithm.
     public void start(){
-        // checks to see if a maze is actually loaded...
+        // checks to see if a maze is actually loaded... if hot, show a warning pop up.
         if (!run){
             WarningWindow warningWindow = new WarningWindow(primaryStage, "NOTHING LOADED", "You have not loaded anything...");
             warningWindow.display();
@@ -144,12 +146,16 @@ public class Controller{
                 public void run() { // logic thread!
                     currentLevel = mazeSolver.getCurrentLocation()[0];
                     drawer.displayLevel(mazeSolver.getCurrentLocation()[0]); // displays the location of start on the map.
-                    // modifying the buttons accordingly
+
+                    // start solving
                     mazeSolver.startExploration();
                     currentLevel = mazeSolver.getCurrentLocation()[0];
-                    Platform.runLater(new Runnable() { // updates the buttons for new usage.
+
+                    // updates the buttons for new usage, this runs in the fx thread.
+                    Platform.runLater(new Runnable() {
                         @Override
-                        public void run() { // re enable all the buttons!
+                        public void run() { // re enable all the buttons and update labels!
+                            statusLbl.setText("Done!");
                             if (currentLevel == 0){
                                 lvlDown.setDisable(true);
                                 lvlUp.setDisable(false);
@@ -168,7 +174,7 @@ public class Controller{
 
                 }
             };
-            one.start();
+            one.start(); // start the logic thread.
         }
 
     }

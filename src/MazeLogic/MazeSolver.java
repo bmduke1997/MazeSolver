@@ -25,9 +25,10 @@ public class MazeSolver{
 
     private char[][][] masterMaze;
     private int[] currentLocation;
-    private Label statusLbl;
     private MapDrawer drawer;
     private Slider slider;
+    private Label statusLbl;
+    private int movesMade = 0;
     private GraphicsContext graphicsContext;
     private HashSet<Coordinate> loopVisitedSpecial = new HashSet<>(); // looped visited portals & stairs
     private HashSet<Coordinate> visitedSpecial = new HashSet<>(); // visited portals & stairs
@@ -84,10 +85,7 @@ public class MazeSolver{
         return currentLocation;
     }
 
-//todo get rid of results    // explores!!
-    public Results startExploration(){
-        int movesMade = 0;
-        boolean success;
+    public void startExploration(){
         boolean done = false;
 
         while (!done){
@@ -97,11 +95,12 @@ public class MazeSolver{
                 graphicsContext.setGlobalAlpha(1); // resets opacity for final image drawing.
                 System.out.println(visitedLocations);
                 System.out.println("Current Location: " + currentLocation[0] + " " + currentLocation[1] + " " + currentLocation[2]);
+                System.out.println("startExploration method was used.");
                 done = explore();
                 movesMade ++;
                 Thread.sleep((long)(100 - slider.getValue())*10);
             }catch (Exception e){
-                runInFX(true);
+                runInFX();
                 System.out.println("Something went wrong...");
                 e.printStackTrace();
 
@@ -109,16 +108,13 @@ public class MazeSolver{
 
         }
         graphicsContext.setGlobalAlpha(1); // resets opacity for final image drawing.
-        runInFX(true);
+        runInFX();
         if (Character.compare('*', masterMaze[currentLocation[0]][currentLocation[1]][currentLocation[2]]) == 0){
             System.out.println("You found the end at: " + currentLocation[0] + " " + currentLocation[1] + " " + currentLocation[2]);
-            success = true;
         }
         else {
             System.out.println("Map unsolvable.");
-            success = false;
         }
-        return new Results(movesMade, success);
     }
 
     // // // TODO: 9/11/16 some broken logic here.
@@ -298,21 +294,16 @@ public class MazeSolver{
         /*
         ################################################################# checking the spot we are on for portals
          */
-        //// TODO: 9/14/16 pop for floors 
         else if (on().compareCharacter('+')){
             if (loopVisitedSpecial.add(on())) beamMeUpScotty();
             else{
-                while(!explorable()){
-                    breadCrumbs();
-                }
+                breadCrumbsLoop();
             }
         }
         else if (on().compareCharacter('=')){
             if (loopVisitedSpecial.add(on())) itsActuallyALadder();
             else{
-                while(!explorable()){
-                    breadCrumbs();
-                }
+                breadCrumbsLoop();
             }
         }
         else {
@@ -347,35 +338,53 @@ public class MazeSolver{
                 new int[] {currentLocation[0],currentLocation[1]+1,currentLocation[2]});
     }
 
-    //pop
+    //// TODO: 9/14/16 this method breaks the gui somehow. Thread Racing maybe... we lose the lose all but the second floor.
     private void breadCrumbs(){
         Coordinate tempCoor = FredFin.pop();
+        // // TODO: 9/14/16 deleteme, debug
         System.out.println("Poped: " + tempCoor.getCharacter() + " " + Arrays.toString(tempCoor.getCoords()));
         int currentLvl = tempCoor.getCoords()[0];
         currentLocation = FredFin.peek().getCoords();
-        graphicsContext.setGlobalAlpha(0.33);
-        graphicsContext.drawImage(visited, (double)(currentLocation[2] * 45), (double)(currentLocation[1]*45));
-        graphicsContext.setGlobalAlpha(1); // sets opacity back to full for image save.
         if (currentLvl != currentLocation[0]){
-            runInFX(false, tempCoor.getCoords()[0]);
+            runInFX(tempCoor.getCoords()[0]);
             drawer.displayLevel(currentLocation[0]);
-            System.out.println("I work" + currentLocation[0]);
+            // // TODO: 9/14/16 delteme , debug
+            System.out.println("Went from " + tempCoor.getCoords()[0] + " to "  + currentLocation[0]);
         }
         System.out.println(Arrays.toString(FredFin.peek().getCoords()));
-        System.out.println("Hansel and Gretal are going home");
-        try {
-            Thread.sleep((long)(100 - slider.getValue())*10);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        movesMade ++;
+
+
+
+    }
+    // // TODO: 9/14/16 This should have all the same issues as breadCrumbs. 
+    private void breadCrumbsLoop(){
+        while(!explorable()){
+            breadCrumbs();
+            graphicsContext.setGlobalAlpha(0.33);
+            graphicsContext.drawImage(visited, (double)(currentLocation[2] * 45), (double)(currentLocation[1]*45));
+            graphicsContext.setGlobalAlpha(1); // sets opacity back to full for image save.
+            try {
+                Thread.sleep((long)(100 - slider.getValue())*10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     // portal and stair traverse methods
     private void beamMeUpScotty(){
+        // // TODO: 9/14/16 deletme, debug
+        System.out.println("BeamUP called");
+        try {
+            Thread.sleep((long)(100 - slider.getValue())*10); // keeps the marking time in sync with the rest of the map.
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         graphicsContext.setGlobalAlpha(0.33);
         graphicsContext.drawImage(visited, (double)(currentLocation[2] * 45), (double)(currentLocation[1]*45));
         graphicsContext.setGlobalAlpha(1); // sets opacity back to full for image save.
-        runInFX(false);
+        runInFX();
         for (int q = currentLocation[0] + 1; q < masterMaze.length + currentLocation[0]; q ++ ){
 
             try {
@@ -393,13 +402,21 @@ public class MazeSolver{
             }
         }
         FredFin.push(new Coordinate('+', currentLocation));
+        movesMade ++;
     }
 
     private void itsActuallyALadder(){
+        // // TODO: 9/14/16 deletme, debug
+        System.out.println("Ladder called");
+        try {
+            Thread.sleep((long)(100 - slider.getValue())*10); // keeps the marking time in sync with the rest of the map.
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         graphicsContext.setGlobalAlpha(0.33);
         graphicsContext.drawImage(visited, (double)(currentLocation[2] * 45), (double)(currentLocation[1]*45));
         graphicsContext.setGlobalAlpha(1); // sets opacity back to full for image save.
-        runInFX(false);
+        runInFX();
         try {
             if (Character.compare('=', masterMaze[currentLocation[0] + 1][currentLocation[1]][currentLocation[2]]) == 0){
                 currentLocation[0] = currentLocation[0] + 1;
@@ -418,14 +435,11 @@ public class MazeSolver{
             }
         }
         FredFin.push(new Coordinate('=', currentLocation));
+        movesMade ++;
     }
 
-    /**
-     * Runs stuff in the fx thread.
-     *
-     * @param lastRun if this is the last time this method should be called, this input should be true.
-     */
-    private void runInFX(boolean lastRun){
+  // // TODO: 9/14/16 Thread optimization.
+    private void runInFX(){
         try {
             boolean ran = false;
             int counter = 0;
@@ -435,10 +449,9 @@ public class MazeSolver{
                 Platform.runLater(new Runnable() { // this is the fx thread.
                     public void run() {
                         drawer.saveMap(currentLocation[0]);
+                        statusLbl.setText("Map running... | Current floor " + currentLocation[0] +
+                                " | Moves made: " + movesMade);
 
-                        if(lastRun){ // update the status label. if its the last run.
-                            statusLbl.setText("Done running!");
-                        }
                     }
                 });
                 if (counter == 2) ran = true;
@@ -450,7 +463,8 @@ public class MazeSolver{
         }
     }
 
-    private void runInFX(boolean lastRun, int prevZ){
+    // overloaded method, can take the previous location instead of using the current location.
+    private void runInFX(int PreviousZ){
         try {
             boolean ran = false;
             int counter = 0;
@@ -459,11 +473,7 @@ public class MazeSolver{
                 Thread.sleep((long)100);
                 Platform.runLater(new Runnable() { // this is the fx thread.
                     public void run() {
-                        drawer.saveMap(prevZ);
-
-                        if(lastRun){ // update the status label. if its the last run.
-                            statusLbl.setText("Done running!");
-                        }
+                        drawer.saveMap(PreviousZ);
                     }
                 });
                 if (counter == 2) ran = true;
@@ -476,20 +486,11 @@ public class MazeSolver{
     }
 
     // checks to see if there any explorable positions
-    // // TODO: 9/11/16 I think we can turn this whole thing into one giant or check.
+    // // // TODO: 9/14/16  optimized this, check logic. I think it works though from initial tests.
     private boolean explorable(){
-        if (above().compareCharacter('.') && !visitedLocations.contains(above())){
-            return true;
-        }
-        else if (left().compareCharacter('.') && !visitedLocations.contains(left())){
-            return true;
-        }
-        else if (below().compareCharacter('.') && !visitedLocations.contains(below())){
-            return true;
-        }
-        else if (right().compareCharacter('.') && !visitedLocations.contains(right())){
-            return true;
-        }
-        else return false;
+        return  ((above().compareCharacter('.') && !visitedLocations.contains(above())) ||
+                (left().compareCharacter('.') && !visitedLocations.contains(left())) ||
+                (below().compareCharacter('.') && !visitedLocations.contains(below())) ||
+                right().compareCharacter('.') && !visitedLocations.contains(right()));
     }
 }

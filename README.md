@@ -28,3 +28,9 @@ Right now there are two branches.
 
 Dev is obviously for developement code, master if for stable static code. That way we can
 just pull a clean code from master in the event that we really screw things up.
+
+## Current Issues
+As of right now the breadCrumbs method of the MazeSolver Class is breaking 
+part of the GUI. Map levels are being over written with  other levels. This does not effect the logic
+however, so the program will effectively solve the maze. The GUI is just having issues representing this properly when we are forced to pop back to the 
+next poin that can be explored.
