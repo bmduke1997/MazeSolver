@@ -17,22 +17,9 @@ public class Main extends Application {
         primaryStage.setTitle("Map Thing");
         Controller controller = new Controller();
         controller.setStage(primaryStage);
-        primaryStage.setScene(new Scene(root, 1070, 745));
+        primaryStage.setScene(new Scene(root, 1070, 630));
         primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/graphics/AppIcon.png")));
         primaryStage.show();
-
-        // // TODO: 9/12/16 may end up deleting, may not be useful...
-        // listeners for when the window is resized.
-        primaryStage.getScene().widthProperty().addListener(new ChangeListener<Number>() {
-            @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
-                System.out.println("Width: " + newSceneWidth);
-            }
-        });
-        primaryStage.getScene().heightProperty().addListener(new ChangeListener<Number>() {
-            @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneHeight, Number newSceneHeight) {
-                System.out.println("Height: " + newSceneHeight);
-            }
-        });
     }
 
 

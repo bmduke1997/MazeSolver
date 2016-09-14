@@ -4,6 +4,7 @@ import GUI.Maze.MapDrawer;
 import GUI.Windows.AboutWindow;
 import GUI.Windows.WarningWindow;
 import MazeLogic.MazeSolver;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
@@ -38,6 +39,8 @@ public class Controller{
     //Buttons
     @FXML private Button lvlUp;
     @FXML private Button lvlDown;
+    @FXML private Button start;
+    @FXML private Button load;
 
     // Labels
     @FXML private Label statusLbl;
@@ -127,17 +130,39 @@ public class Controller{
             warningWindow.display();
         }
         else{
-            //Find exit Algorithm
+            //solve the maze.
             statusLbl.setText("Running maze...");
             MazeSolver mazeSolver = new MazeSolver(masterMaze, slider, canvas, drawer, statusLbl);
-            if (currentLevel == 0)lvlDown.setDisable(true);
-            else if (currentLevel == masterMaze.length - 1)lvlUp.setDisable(true);
+
+            // disables buttons so the user cant screw stuff up.
+            start.setDisable(true);
+            load.setDisable(true);
+            lvlDown.setDisable(true);
+            lvlUp.setDisable(true);
+
             Thread one = new Thread() {
-                public void run() {
+                public void run() { // logic thread!
                     currentLevel = mazeSolver.getCurrentLocation()[0];
                     drawer.displayLevel(mazeSolver.getCurrentLocation()[0]); // displays the location of start on the map.
                     // modifying the buttons accordingly
                     mazeSolver.startExploration();
+                    currentLevel = mazeSolver.getCurrentLocation()[0];
+                    Platform.runLater(new Runnable() { // updates the buttons for new usage.
+                        @Override
+                        public void run() { // re enable all the buttons!
+                            if (currentLevel == 0){
+                                lvlDown.setDisable(true);
+                                lvlUp.setDisable(false);
+                            }
+                            else if (currentLevel == masterMaze.length - 1){
+                                lvlUp.setDisable(true);
+                                lvlDown.setDisable(false);
+                            }
+                            start.setDisable(false);
+                            load.setDisable(false);
+                        }
+                    });
+
                 }
             };
             one.start();

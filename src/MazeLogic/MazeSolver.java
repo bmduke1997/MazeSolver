@@ -32,6 +32,7 @@ public class MazeSolver{
     private HashSet<Coordinate> visitedSpecial = new HashSet<>(); // visited portals & stairs
     private HashSet<Coordinate> visitedLocations = new HashSet<>(); // visited open spaces
     private ThompsonStack<Coordinate> FredFin = new ThompsonStack<>();
+    private Image visited = new Image(getClass().getResourceAsStream("/graphics/visited.png"));
 
 
     /**
@@ -88,7 +89,7 @@ public class MazeSolver{
         int movesMade = 0;
         boolean success;
         boolean done = false;
-        Image visited = new Image(getClass().getResourceAsStream("/graphics/visited.png"));
+
         while (!done){
             try{
                 graphicsContext.setGlobalAlpha(0.33); // sets opacity for visited image drawing
@@ -100,7 +101,6 @@ public class MazeSolver{
                 movesMade ++;
                 Thread.sleep((long)(100 - slider.getValue())*10);
             }catch (Exception e){
-                // // TODO: 9/12/16 any saves from the can as breaks me
                 runInFX(true);
                 System.out.println("Something went wrong...");
                 e.printStackTrace();
@@ -109,8 +109,6 @@ public class MazeSolver{
 
         }
         graphicsContext.setGlobalAlpha(1); // resets opacity for final image drawing.
-        // // TODO: 9/12/16 drawer.saveMap here
-
         runInFX(true);
         if (Character.compare('*', masterMaze[currentLocation[0]][currentLocation[1]][currentLocation[2]]) == 0){
             System.out.println("You found the end at: " + currentLocation[0] + " " + currentLocation[1] + " " + currentLocation[2]);
@@ -372,6 +370,8 @@ public class MazeSolver{
 
     // portal and stair traverse methods
     private void beamMeUpScotty(){
+        graphicsContext.setGlobalAlpha(0.33);
+        graphicsContext.drawImage(visited, (double)(currentLocation[2] * 45), (double)(currentLocation[1]*45));
         graphicsContext.setGlobalAlpha(1); // sets opacity back to full for image save.
         runInFX(false);
         for (int q = currentLocation[0] + 1; q < masterMaze.length + currentLocation[0]; q ++ ){
@@ -393,24 +393,28 @@ public class MazeSolver{
         FredFin.push(new Coordinate('+', currentLocation));
     }
 
-    // the holy fucking grail
+    /**
+     * Runs stuff in the fx thread.
+     *
+     * @param lastRun if this is the last time this method should be called, this input should be true.
+     */
     private void runInFX(boolean lastRun){
         try {
             boolean ran = false;
             int counter = 0;
-            while (!ran){
+            while (!ran){ // don't question the loop, for some reason it is necessary.
+                // so we put the logic thread to sleep until the fx thread has time to do what it needs to do
                 Thread.sleep((long)100);
-                Platform.runLater(new Runnable() {
+                Platform.runLater(new Runnable() { // this is the fx thread.
                     public void run() {
                         drawer.saveMap(currentLocation[0]);
-                        System.out.println("I ran");
 
-                        if(lastRun){
+                        if(lastRun){ // update the status label. if its the last run.
                             statusLbl.setText("Done running!");
                         }
                     }
                 });
-                if (counter == 5) ran = true;
+                if (counter == 2) ran = true;
                 counter ++;
             }
 
@@ -420,8 +424,9 @@ public class MazeSolver{
     }
 
     private void itsActuallyALadder(){
-        graphicsContext.setGlobalAlpha(1);
-        //// TODO: 9/12/16 drawer.saveMap here
+        graphicsContext.setGlobalAlpha(0.33);
+        graphicsContext.drawImage(visited, (double)(currentLocation[2] * 45), (double)(currentLocation[1]*45));
+        graphicsContext.setGlobalAlpha(1); // sets opacity back to full for image save.
         runInFX(false);
         try {
             if (Character.compare('=', masterMaze[currentLocation[0] + 1][currentLocation[1]][currentLocation[2]]) == 0){
