@@ -128,9 +128,8 @@ public class Controller{
         }
         else{
             //Find exit Algorithm
-            Thread fxThread = Thread.currentThread(); // this will grab this thread so we can pass tasks to it.
             statusLbl.setText("Running maze...");
-            MazeSolver mazeSolver = new MazeSolver(masterMaze, slider, canvas, drawer, fxThread);
+            MazeSolver mazeSolver = new MazeSolver(masterMaze, slider, canvas, drawer, statusLbl);
             if (currentLevel == 0)lvlDown.setDisable(true);
             else if (currentLevel == masterMaze.length - 1)lvlUp.setDisable(true);
             Thread one = new Thread() {
@@ -142,8 +141,6 @@ public class Controller{
                 }
             };
             one.start();
-            statusLbl.setText("Done running!");
-
         }
 
     }

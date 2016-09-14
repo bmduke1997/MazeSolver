@@ -1,13 +1,12 @@
 package MazeLogic;
 
 import GUI.Maze.MapDrawer;
-import GUI.Maze.MazeLevel;
-import javafx.scene.SnapshotParameters;
+import javafx.application.Platform;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
-import javafx.scene.image.WritableImage;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -26,8 +25,8 @@ public class MazeSolver{
 
     private char[][][] masterMaze;
     private int[] currentLocation;
+    private Label statusLbl;
     private MapDrawer drawer;
-    private Thread fxThread;
     private Slider slider;
     private GraphicsContext graphicsContext;
     private HashSet<Coordinate> visitedSpecial = new HashSet<>(); // visited portals & stairs
@@ -44,12 +43,13 @@ public class MazeSolver{
      * @param drawer MapDrawer for drawing and saving the map.
      *
      */
-    public MazeSolver(char[][][] masterMaze, Slider slider, Canvas canvas, MapDrawer drawer, Thread fxThread){
+    public MazeSolver(char[][][] masterMaze, Slider slider, Canvas canvas, MapDrawer drawer, Label statusLbl){
         this.masterMaze = masterMaze;
         this.slider = slider;
         this.drawer = drawer;
         this.graphicsContext = canvas.getGraphicsContext2D();
-        this.fxThread = fxThread;
+        this.statusLbl = statusLbl;
+
 
         // This will find the start position and save it for later use...
         boolean startFound = false;
@@ -101,17 +101,17 @@ public class MazeSolver{
                 Thread.sleep((long)(100 - slider.getValue())*10);
             }catch (Exception e){
                 // // TODO: 9/12/16 any saves from the can as breaks me
-                drawer.saveMap(currentLocation[0]); // saves the map where it breaks
+                runInFX(true);
                 System.out.println("Something went wrong...");
                 e.printStackTrace();
-                success = false;
-                break;
+
             }
 
         }
         graphicsContext.setGlobalAlpha(1); // resets opacity for final image drawing.
-        // // TODO: 9/12/16 drawer.saveMap here 
-        drawer.saveMap(currentLocation[0]);
+        // // TODO: 9/12/16 drawer.saveMap here
+
+        runInFX(true);
         if (Character.compare('*', masterMaze[currentLocation[0]][currentLocation[1]][currentLocation[2]]) == 0){
             System.out.println("You found the end at: " + currentLocation[0] + " " + currentLocation[1] + " " + currentLocation[2]);
             success = true;
@@ -373,8 +373,7 @@ public class MazeSolver{
     // portal and stair traverse methods
     private void beamMeUpScotty(){
         graphicsContext.setGlobalAlpha(1); // sets opacity back to full for image save.
-        // // TODO: 9/12/16 drawer.saveMap here. This code needs to run in the FX Thread.
-        drawer.saveMap(currentLocation[0]);
+        runInFX(false);
         for (int q = currentLocation[0] + 1; q < masterMaze.length + currentLocation[0]; q ++ ){
 
             try {
@@ -394,10 +393,36 @@ public class MazeSolver{
         FredFin.push(new Coordinate('+', currentLocation));
     }
 
+    // the holy fucking grail
+    private void runInFX(boolean lastRun){
+        try {
+            boolean ran = false;
+            int counter = 0;
+            while (!ran){
+                Thread.sleep((long)100);
+                Platform.runLater(new Runnable() {
+                    public void run() {
+                        drawer.saveMap(currentLocation[0]);
+                        System.out.println("I ran");
+
+                        if(lastRun){
+                            statusLbl.setText("Done running!");
+                        }
+                    }
+                });
+                if (counter == 5) ran = true;
+                counter ++;
+            }
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void itsActuallyALadder(){
         graphicsContext.setGlobalAlpha(1);
-        //// TODO: 9/12/16 drawer.saveMap here 
-        drawer.saveMap(currentLocation[0]);
+        //// TODO: 9/12/16 drawer.saveMap here
+        runInFX(false);
         try {
             if (Character.compare('=', masterMaze[currentLocation[0] + 1][currentLocation[1]][currentLocation[2]]) == 0){
                 currentLocation[0] = currentLocation[0] + 1;
