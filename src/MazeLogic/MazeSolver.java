@@ -29,6 +29,7 @@ public class MazeSolver{
     private MapDrawer drawer;
     private Slider slider;
     private GraphicsContext graphicsContext;
+    private HashSet<Coordinate> loopVisitedSpecial = new HashSet<>(); // looped visited portals & stairs
     private HashSet<Coordinate> visitedSpecial = new HashSet<>(); // visited portals & stairs
     private HashSet<Coordinate> visitedLocations = new HashSet<>(); // visited open spaces
     private ThompsonStack<Coordinate> FredFin = new ThompsonStack<>();
@@ -154,6 +155,7 @@ public class MazeSolver{
             System.out.println(above().getCharacter());
             FredFin.push(above());
             currentLocation = above().getCoords();
+            loopVisitedSpecial.clear();
 
         }
         else if (left().compareCharacter('.') &&
@@ -161,18 +163,21 @@ public class MazeSolver{
             System.out.println(left().getCharacter());
             FredFin.push(left());
             currentLocation = left().getCoords();
+            loopVisitedSpecial.clear();
         }
         else if (below().compareCharacter('.') &&
                 visitedLocations.add(below())){
             System.out.println(below().getCharacter());
             FredFin.push(below());
             currentLocation = below().getCoords();
+            loopVisitedSpecial.clear();
         }
         else if (right().compareCharacter('.') &&
                 visitedLocations.add(right())){
             System.out.println(right().getCharacter());
             FredFin.push(right());
             currentLocation = right().getCoords();
+            loopVisitedSpecial.clear();
         }
          /*
         ################################################################# checking for unexplored portals
@@ -220,7 +225,7 @@ public class MazeSolver{
                 visitedSpecial.add(left())){
             System.out.println(left().getCharacter());
             FredFin.push(left());
-            currentLocation = above().getCoords();
+            currentLocation = left().getCoords();
             itsActuallyALadder();
         }
         else if (below().compareCharacter('=') &&
@@ -276,7 +281,7 @@ public class MazeSolver{
         else if (left().compareCharacter('=')){
             System.out.println(left().getCharacter());
             FredFin.push(left());
-            currentLocation = above().getCoords();
+            currentLocation = left().getCoords();
             itsActuallyALadder();
         }
         else if (below().compareCharacter('=')){
@@ -296,10 +301,26 @@ public class MazeSolver{
          */
         //// TODO: 9/14/16 pop for floors 
         else if (on().compareCharacter('+')){
-            beamMeUpScotty();
+            if (loopVisitedSpecial.add(on())) beamMeUpScotty();
+            else{
+                while(!explorable()){
+                    Coordinate tempCoor = FredFin.pop();
+                    System.out.println("Poped: " + tempCoor.getCharacter() + " " + Arrays.toString(tempCoor.getCoords()));
+                    currentLocation = FredFin.peek().getCoords();
+                    System.out.println(Arrays.toString(FredFin.peek().getCoords()));
+                }
+            }
         }
         else if (on().compareCharacter('=')){
-            itsActuallyALadder();
+            if (loopVisitedSpecial.add(on())) itsActuallyALadder();
+            else{
+                while(!explorable()){
+                    Coordinate tempCoor = FredFin.pop();
+                    System.out.println("Poped: " + tempCoor.getCharacter() + " " + Arrays.toString(tempCoor.getCoords()));
+                    currentLocation = FredFin.peek().getCoords();
+                    System.out.println(Arrays.toString(FredFin.peek().getCoords()));
+                }
+            }
         }
         else {
             Coordinate tempCoor = FredFin.pop();
@@ -419,40 +440,16 @@ public class MazeSolver{
     // checks to see if there any explorable positions
     // // TODO: 9/11/16 I think we can turn this whole thing into one giant or check.
     private boolean explorable(){
-        if (above().compareCharacter('.') && visitedLocations.add(above())){
+        if (above().compareCharacter('.') && !visitedLocations.contains(above())){
             return true;
         }
-        else if (left().compareCharacter('.') && visitedLocations.add(left())){
+        else if (left().compareCharacter('.') && !visitedLocations.contains(left())){
             return true;
         }
-        else if (below().compareCharacter('.') && visitedLocations.add(below())){
+        else if (below().compareCharacter('.') && !visitedLocations.contains(below())){
             return true;
         }
-        else if (right().compareCharacter('.') && visitedLocations.add(right())){
-            return true;
-        }
-        else if (above().compareCharacter('+') && visitedSpecial.add(above())){
-            return true;
-        }
-        else if (left().compareCharacter('+') && visitedSpecial.add(left())){
-            return true;
-        }
-        else if (below().compareCharacter('+') && visitedSpecial.add(below())){
-            return true;
-        }
-        else if (right().compareCharacter('+') && visitedSpecial.add(right())){
-            return true;
-        }
-        else if (above().compareCharacter('=') && visitedSpecial.add(above())){
-            return true;
-        }
-        else if (left().compareCharacter('=') && visitedSpecial.add(left())){
-            return true;
-        }
-        else if (below().compareCharacter('=') && visitedSpecial.add(below())){
-            return true;
-        }
-        else if (right().compareCharacter('=') && visitedSpecial.add(right())){
+        else if (right().compareCharacter('.') && !visitedLocations.contains(right())){
             return true;
         }
         else return false;
