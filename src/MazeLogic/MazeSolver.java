@@ -84,8 +84,7 @@ public class MazeSolver{
         return currentLocation;
     }
 
-
-    // explores!!
+//todo get rid of results    // explores!!
     public Results startExploration(){
         int movesMade = 0;
         boolean success;
@@ -304,10 +303,12 @@ public class MazeSolver{
             if (loopVisitedSpecial.add(on())) beamMeUpScotty();
             else{
                 while(!explorable()){
-                    Coordinate tempCoor = FredFin.pop();
-                    System.out.println("Poped: " + tempCoor.getCharacter() + " " + Arrays.toString(tempCoor.getCoords()));
-                    currentLocation = FredFin.peek().getCoords();
-                    System.out.println(Arrays.toString(FredFin.peek().getCoords()));
+                    try {
+                        Thread.sleep((long)(100 - slider.getValue())*10);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    breadCrumbs();
                 }
             }
         }
@@ -315,18 +316,17 @@ public class MazeSolver{
             if (loopVisitedSpecial.add(on())) itsActuallyALadder();
             else{
                 while(!explorable()){
-                    Coordinate tempCoor = FredFin.pop();
-                    System.out.println("Poped: " + tempCoor.getCharacter() + " " + Arrays.toString(tempCoor.getCoords()));
-                    currentLocation = FredFin.peek().getCoords();
-                    System.out.println(Arrays.toString(FredFin.peek().getCoords()));
+                    try {
+                        Thread.sleep((long)(100 - slider.getValue())*10);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    breadCrumbs();
                 }
             }
         }
         else {
-            Coordinate tempCoor = FredFin.pop();
-            System.out.println("Poped: " + tempCoor.getCharacter() + " " + Arrays.toString(tempCoor.getCoords()));
-            currentLocation = FredFin.peek().getCoords();
-            System.out.println(Arrays.toString(FredFin.peek().getCoords()));
+            breadCrumbs();
         }
         return false;
     }
@@ -355,6 +355,24 @@ public class MazeSolver{
     private Coordinate below(){
         return new Coordinate(masterMaze[currentLocation[0]][currentLocation[1]+1][currentLocation[2]],
                 new int[] {currentLocation[0],currentLocation[1]+1,currentLocation[2]});
+    }
+
+    //pop
+    private void breadCrumbs(){
+        Coordinate tempCoor = FredFin.pop();
+        System.out.println("Poped: " + tempCoor.getCharacter() + " " + Arrays.toString(tempCoor.getCoords()));
+        int currentLvl = tempCoor.getCoords()[0];
+        currentLocation = FredFin.peek().getCoords();
+        graphicsContext.setGlobalAlpha(0.33);
+        graphicsContext.drawImage(visited, (double)(currentLocation[2] * 45), (double)(currentLocation[1]*45));
+        graphicsContext.setGlobalAlpha(1); // sets opacity back to full for image save.
+        if (currentLvl != currentLocation[0]){
+            runInFX(false, tempCoor.getCoords()[0]);
+            drawer.displayLevel(currentLocation[0]);
+            System.out.println("I work" + currentLocation[0]);
+        }
+        System.out.println(Arrays.toString(FredFin.peek().getCoords()));
+        System.out.println("Hansel and Gretal are going home");
     }
 
     // portal and stair traverse methods
@@ -397,6 +415,31 @@ public class MazeSolver{
                 Platform.runLater(new Runnable() { // this is the fx thread.
                     public void run() {
                         drawer.saveMap(currentLocation[0]);
+
+                        if(lastRun){ // update the status label. if its the last run.
+                            statusLbl.setText("Done running!");
+                        }
+                    }
+                });
+                if (counter == 2) ran = true;
+                counter ++;
+            }
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void runInFX(boolean lastRun, int prevZ){
+        try {
+            boolean ran = false;
+            int counter = 0;
+            while (!ran){ // don't question the loop, for some reason it is necessary.
+                // so we put the logic thread to sleep until the fx thread has time to do what it needs to do
+                Thread.sleep((long)100);
+                Platform.runLater(new Runnable() { // this is the fx thread.
+                    public void run() {
+                        drawer.saveMap(prevZ);
 
                         if(lastRun){ // update the status label. if its the last run.
                             statusLbl.setText("Done running!");
