@@ -303,11 +303,6 @@ public class MazeSolver{
             if (loopVisitedSpecial.add(on())) beamMeUpScotty();
             else{
                 while(!explorable()){
-                    try {
-                        Thread.sleep((long)(100 - slider.getValue())*10);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
                     breadCrumbs();
                 }
             }
@@ -316,11 +311,6 @@ public class MazeSolver{
             if (loopVisitedSpecial.add(on())) itsActuallyALadder();
             else{
                 while(!explorable()){
-                    try {
-                        Thread.sleep((long)(100 - slider.getValue())*10);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
                     breadCrumbs();
                 }
             }
@@ -373,6 +363,11 @@ public class MazeSolver{
         }
         System.out.println(Arrays.toString(FredFin.peek().getCoords()));
         System.out.println("Hansel and Gretal are going home");
+        try {
+            Thread.sleep((long)(100 - slider.getValue())*10);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     // portal and stair traverse methods
@@ -398,6 +393,31 @@ public class MazeSolver{
             }
         }
         FredFin.push(new Coordinate('+', currentLocation));
+    }
+
+    private void itsActuallyALadder(){
+        graphicsContext.setGlobalAlpha(0.33);
+        graphicsContext.drawImage(visited, (double)(currentLocation[2] * 45), (double)(currentLocation[1]*45));
+        graphicsContext.setGlobalAlpha(1); // sets opacity back to full for image save.
+        runInFX(false);
+        try {
+            if (Character.compare('=', masterMaze[currentLocation[0] + 1][currentLocation[1]][currentLocation[2]]) == 0){
+                currentLocation[0] = currentLocation[0] + 1;
+                drawer.displayLevel(currentLocation[0]);
+
+            } else  if (Character.compare('=', masterMaze[currentLocation[0] - 1][currentLocation[1]][currentLocation[2]]) == 0){
+                currentLocation[0] = currentLocation[0] - 1;
+                drawer.displayLevel(currentLocation[0]);
+
+            }
+        }catch (IndexOutOfBoundsException error){
+            if (Character.compare('=', masterMaze[currentLocation[0] - 1][currentLocation[1]][currentLocation[2]]) == 0){
+                currentLocation[0] = currentLocation[0] - 1;
+                drawer.displayLevel(currentLocation[0]);
+
+            }
+        }
+        FredFin.push(new Coordinate('=', currentLocation));
     }
 
     /**
@@ -453,31 +473,6 @@ public class MazeSolver{
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-    }
-
-    private void itsActuallyALadder(){
-        graphicsContext.setGlobalAlpha(0.33);
-        graphicsContext.drawImage(visited, (double)(currentLocation[2] * 45), (double)(currentLocation[1]*45));
-        graphicsContext.setGlobalAlpha(1); // sets opacity back to full for image save.
-        runInFX(false);
-        try {
-            if (Character.compare('=', masterMaze[currentLocation[0] + 1][currentLocation[1]][currentLocation[2]]) == 0){
-                currentLocation[0] = currentLocation[0] + 1;
-                drawer.displayLevel(currentLocation[0]);
-
-            } else  if (Character.compare('=', masterMaze[currentLocation[0] - 1][currentLocation[1]][currentLocation[2]]) == 0){
-                currentLocation[0] = currentLocation[0] - 1;
-                drawer.displayLevel(currentLocation[0]);
-
-            }
-        }catch (IndexOutOfBoundsException error){
-            if (Character.compare('=', masterMaze[currentLocation[0] - 1][currentLocation[1]][currentLocation[2]]) == 0){
-                currentLocation[0] = currentLocation[0] - 1;
-                drawer.displayLevel(currentLocation[0]);
-
-            }
-        }
-        FredFin.push(new Coordinate('=', currentLocation));
     }
 
     // checks to see if there any explorable positions
