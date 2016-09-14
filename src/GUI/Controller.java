@@ -49,14 +49,6 @@ public class Controller{
     @FXML private Canvas canvas;
     private MapDrawer drawer;
 
-    //// TODO: 9/11/16 This doesnt work, but doesn' break eitehr. Make it work. 
-    // resizes the canvas with window size changes.
-    void canvasResize(double windowWidth, double windowHeight){
-        canvas = new Canvas(windowWidth, windowHeight); // resize the canvas by replacing it.
-        if(run) drawer.displayLevel(currentLevel); // display the level on the newly sized canvas.
-    }
-
-
     // used to extract the primary stage from the Main Class.
     void setStage(Stage stage){
         this.primaryStage = stage;
@@ -136,21 +128,20 @@ public class Controller{
         }
         else{
             //Find exit Algorithm
+            Thread fxThread = Thread.currentThread(); // this will grab this thread so we can pass tasks to it.
             statusLbl.setText("Running maze...");
+            MazeSolver mazeSolver = new MazeSolver(masterMaze, slider, canvas, drawer, fxThread);
+            if (currentLevel == 0)lvlDown.setDisable(true);
+            else if (currentLevel == masterMaze.length - 1)lvlUp.setDisable(true);
             Thread one = new Thread() {
                 public void run() {
-                    MazeSolver mazeSolver = new MazeSolver(masterMaze, slider, canvas, drawer);
                     currentLevel = mazeSolver.getCurrentLocation()[0];
                     drawer.displayLevel(mazeSolver.getCurrentLocation()[0]); // displays the location of start on the map.
-
                     // modifying the buttons accordingly
-                    if (currentLevel == 0)lvlDown.setDisable(true);
-                    else if (currentLevel == masterMaze.length - 1)lvlUp.setDisable(true);
                     mazeSolver.startExploration();
                 }
             };
             one.start();
-
             statusLbl.setText("Done running!");
 
         }

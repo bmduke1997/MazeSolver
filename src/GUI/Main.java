@@ -21,7 +21,7 @@ public class Main extends Application {
         primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/graphics/AppIcon.png")));
         primaryStage.show();
 
-        // // TODO: 9/12/16 may end up deleteing, may not be useful... 
+        // // TODO: 9/12/16 may end up deleting, may not be useful...
         // listeners for when the window is resized.
         primaryStage.getScene().widthProperty().addListener(new ChangeListener<Number>() {
             @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {

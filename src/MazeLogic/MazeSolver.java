@@ -27,6 +27,7 @@ public class MazeSolver{
     private char[][][] masterMaze;
     private int[] currentLocation;
     private MapDrawer drawer;
+    private Thread fxThread;
     private Slider slider;
     private GraphicsContext graphicsContext;
     private HashSet<Coordinate> visitedSpecial = new HashSet<>(); // visited portals & stairs
@@ -43,11 +44,12 @@ public class MazeSolver{
      * @param drawer MapDrawer for drawing and saving the map.
      *
      */
-    public MazeSolver(char[][][] masterMaze, Slider slider, Canvas canvas, MapDrawer drawer){
+    public MazeSolver(char[][][] masterMaze, Slider slider, Canvas canvas, MapDrawer drawer, Thread fxThread){
         this.masterMaze = masterMaze;
         this.slider = slider;
         this.drawer = drawer;
         this.graphicsContext = canvas.getGraphicsContext2D();
+        this.fxThread = fxThread;
 
         // This will find the start position and save it for later use...
         boolean startFound = false;
@@ -99,7 +101,7 @@ public class MazeSolver{
                 Thread.sleep((long)(100 - slider.getValue())*10);
             }catch (Exception e){
                 // // TODO: 9/12/16 any saves from the can as breaks me
-                //drawer.saveMap(currentLocation[0]); // saves the map where it breaks
+                drawer.saveMap(currentLocation[0]); // saves the map where it breaks
                 System.out.println("Something went wrong...");
                 e.printStackTrace();
                 success = false;
@@ -109,7 +111,7 @@ public class MazeSolver{
         }
         graphicsContext.setGlobalAlpha(1); // resets opacity for final image drawing.
         // // TODO: 9/12/16 drawer.saveMap here 
-        //drawer.saveMap(currentLocation[0]);
+        drawer.saveMap(currentLocation[0]);
         if (Character.compare('*', masterMaze[currentLocation[0]][currentLocation[1]][currentLocation[2]]) == 0){
             System.out.println("You found the end at: " + currentLocation[0] + " " + currentLocation[1] + " " + currentLocation[2]);
             success = true;
@@ -371,8 +373,8 @@ public class MazeSolver{
     // portal and stair traverse methods
     private void beamMeUpScotty(){
         graphicsContext.setGlobalAlpha(1); // sets opacity back to full for image save.
-        // // TODO: 9/12/16 drawer.saveMap here 
-        //drawer.saveMap(currentLocation[0]);
+        // // TODO: 9/12/16 drawer.saveMap here. This code needs to run in the FX Thread.
+        drawer.saveMap(currentLocation[0]);
         for (int q = currentLocation[0] + 1; q < masterMaze.length + currentLocation[0]; q ++ ){
 
             try {
@@ -395,7 +397,7 @@ public class MazeSolver{
     private void itsActuallyALadder(){
         graphicsContext.setGlobalAlpha(1);
         //// TODO: 9/12/16 drawer.saveMap here 
-        //drawer.saveMap(currentLocation[0]);
+        drawer.saveMap(currentLocation[0]);
         try {
             if (Character.compare('=', masterMaze[currentLocation[0] + 1][currentLocation[1]][currentLocation[2]]) == 0){
                 currentLocation[0] = currentLocation[0] + 1;
