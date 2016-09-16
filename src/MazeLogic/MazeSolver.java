@@ -111,7 +111,6 @@ public class MazeSolver{
                 Thread.sleep((long)(100 - slider.getValue())*10);
             }catch (Exception e){
                 saveMap();
-                System.out.println("Something went wrong...");
                 e.printStackTrace();
                 done = true; // terminates the program.
             }
@@ -127,7 +126,6 @@ public class MazeSolver{
         }
     }
 
-    // // // TODO: 9/11/16 some broken logic here.
     // calls of the the methods that return a character, explores the area...
     private boolean explore(){ // calls all methods of the class for a search.
         if (on().compareCharacter('*')){
@@ -322,7 +320,7 @@ public class MazeSolver{
         return false;
     }
 
-    // portal traverse method
+    // portal traverse method //// TODO: 9/16/16 added to stack multiple times while popping.. 
     private void beamMeUpScotty(){
         logicSleep(); // sleeps the logic thread to slow down gui update.
         markPoint(); // mark the current point.
@@ -347,7 +345,7 @@ public class MazeSolver{
         movesMade ++;
     }
 
-    // steps traversing junk
+    // steps traversing junk //// TODO: 9/16/16 added to stack multiple times while popping.. 
     private void itsActuallyALadder(){
         logicSleep();
         markPoint();
@@ -407,22 +405,24 @@ public class MazeSolver{
                 right().compareCharacter('.') && !visitedLocations.contains(right()));
     }
 
-    // // TODO: 9/16/16 FIX ME!!!!!
+    // // TODO: 9/16/16 FIX ME!!!!! Your dumb ass should have committed last night when you fixed me!!!!!
     private void breadCrumbs(){
         saveMap(); // save the map as is
+        drawer.displayLevel(currentLocation[0]);
         FredFin.pop(); // remove the coordinate from the stack.
         currentLocation = FredFin.peek().getCoords(); // set the new coordinate to the next location in the stack.
         drawer.displayLevel(currentLocation[0]); // display at the new location.
+        saveMap(); // save the map again...
     }
-
+    
+    // called for when we are constantly going back...
     private void breadCrumbsLoop(){
         while(!explorable()) {
             breadCrumbs();
             markPoint(); // since startExploration is never called while in this loop, we need to mark points as we go.
         }
     }
-
-
+    
     // this is all gui markup stuff past this point.
 
     // used to mark points that have been visited.
@@ -468,7 +468,7 @@ public class MazeSolver{
             int counter = 0;
             while (!ran){ // don't question the loop, for some reason it is necessary. Its set up for the shortest run time.
                 // so we put the logic thread to sleep until the fx thread has time to do what it needs to do
-                Thread.sleep((long)1);
+                Thread.sleep((long)10);
                 Platform.runLater(new Runnable() { // this is the fx thread.
                     public void run() {
                         drawer.saveMap(currentLocation[0]);
@@ -485,28 +485,5 @@ public class MazeSolver{
             e.printStackTrace();
         }
     }
-
-    // overloaded method, can take the previous location instead of using the current location.
-    private void saveMap(int previousLocation){
-        try {
-            boolean ran = false;
-            int counter = 0;
-            while (!ran){ // don't question the loop, for some reason it is necessary.
-                // so we put the logic thread to sleep until the fx thread has time to do what it needs to do
-                Thread.sleep((long)100);
-                Platform.runLater(new Runnable() { // this is the fx thread.
-                    public void run() {
-                        drawer.saveMap(previousLocation);
-                    }
-                });
-                if (counter == 2) ran = true;
-                counter ++;
-            }
-
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
 
 }
