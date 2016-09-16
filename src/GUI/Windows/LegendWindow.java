@@ -7,7 +7,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -22,10 +21,12 @@ import javafx.stage.Stage;
 public class LegendWindow {
     private Stage primaryStage;
     private String windowTitle;
+    private String mapTheme;
 
-    public LegendWindow(Stage primaryStage, String windowTitle){
+    public LegendWindow(Stage primaryStage, String windowTitle, String mapTheme){
         this.primaryStage = primaryStage;
         this.windowTitle = windowTitle;
+        this.mapTheme = mapTheme;
     }
 
     public void display(){
@@ -43,12 +44,12 @@ public class LegendWindow {
         Label start = new Label("Start");
 
         // Images
-        Image wallImg = new Image(getClass().getResourceAsStream("/graphics/wall.png"));
-        Image pathImg = new Image(getClass().getResourceAsStream("/graphics/openPath.png"));
-        Image portalImg = new Image(getClass().getResourceAsStream("/graphics/portal.png"));
-        Image ladderImg = new Image(getClass().getResourceAsStream("/graphics/ladder.png"));
-        Image startImg = new Image(getClass().getResourceAsStream("/graphics/Start.png"));
-        Image finishImg = new Image(getClass().getResourceAsStream("/graphics/Finish.png"));
+        Image wallImg = new Image(getClass().getResourceAsStream("/graphics/"+mapTheme+"/wall.png"));
+        Image pathImg = new Image(getClass().getResourceAsStream("/graphics/"+mapTheme+"//openPath.png"));
+        Image portalImg = new Image(getClass().getResourceAsStream("/graphics/"+mapTheme+"/portal.png"));
+        Image ladderImg = new Image(getClass().getResourceAsStream("/graphics/"+mapTheme+"//ladder.png"));
+        Image startImg = new Image(getClass().getResourceAsStream("/graphics/"+mapTheme+"//Start.png"));
+        Image finishImg = new Image(getClass().getResourceAsStream("/graphics/"+mapTheme+"//Finish.png"));
 
         // layout components.
         HBox layout = new HBox(50); // main hbox splits screen down the middle.

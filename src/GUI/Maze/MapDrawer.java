@@ -18,23 +18,24 @@ public class MapDrawer {
 
     private Canvas canvas;
     private GraphicsContext graphicsContext;
-
+    private char[][][] masterMaze;
     private MazeLevel[] levels = new MazeLevel[0]; // stores the levels as images to be written on.
 
 
 
-    public MapDrawer(Canvas canvas, char[][][] masterMaze){
+    public MapDrawer(Canvas canvas, char[][][] masterMaze, String mapPack){
         // sets the canvas and graphicsContext
+        this.masterMaze =masterMaze;
         this.canvas = canvas;
         this.graphicsContext = canvas.getGraphicsContext2D();
 
         // all of the images that will be needed to draw the map.
-        Image wall = new Image(getClass().getResourceAsStream("/graphics/wall.png"));
-        Image path = new Image(getClass().getResourceAsStream("/graphics/openPath.png"));
-        Image portal = new Image(getClass().getResourceAsStream("/graphics/portal.png"));
-        Image ladder = new Image(getClass().getResourceAsStream("/graphics/ladder.png"));
-        Image start = new Image(getClass().getResourceAsStream("/graphics/Start.png"));
-        Image finish = new Image(getClass().getResourceAsStream("/graphics/Finish.png"));
+        Image wall = new Image(getClass().getResourceAsStream("/graphics/"+mapPack+"/wall.png"));
+        Image path = new Image(getClass().getResourceAsStream("/graphics/"+mapPack+"/openPath.png"));
+        Image portal = new Image(getClass().getResourceAsStream("/graphics/"+mapPack+"/portal.png"));
+        Image ladder = new Image(getClass().getResourceAsStream("/graphics/"+mapPack+"/ladder.png"));
+        Image start = new Image(getClass().getResourceAsStream("/graphics/"+mapPack+"/Start.png"));
+        Image finish = new Image(getClass().getResourceAsStream("/graphics/"+mapPack+"/Finish.png"));
 
         // the counters are for keeping track of the indexes since this is not doable in the for each loops.
         int zCounter = 0;
@@ -69,6 +70,49 @@ public class MapDrawer {
             zCounter ++;
         }
 
+    }
+    public void reDraw(String mapPack){
+        this.levels = new MazeLevel[0]; // we dump the array so that we can make the new theme.
+        // all of the images that will be needed to draw the map.
+        Image wall = new Image(getClass().getResourceAsStream("/graphics/"+mapPack+"/wall.png"));
+        Image path = new Image(getClass().getResourceAsStream("/graphics/"+mapPack+"/openPath.png"));
+        Image portal = new Image(getClass().getResourceAsStream("/graphics/"+mapPack+"/portal.png"));
+        Image ladder = new Image(getClass().getResourceAsStream("/graphics/"+mapPack+"/ladder.png"));
+        Image start = new Image(getClass().getResourceAsStream("/graphics/"+mapPack+"/Start.png"));
+        Image finish = new Image(getClass().getResourceAsStream("/graphics/"+mapPack+"/Finish.png"));
+
+        // the counters are for keeping track of the indexes since this is not doable in the for each loops.
+        int zCounter = 0;
+        int yCounter = 0;
+        int xCounter = 0;
+
+        int imageX = 0;
+        int imageY;
+        for (char[][] z : masterMaze){
+            clearMap();
+            imageY = z.length * 45;
+            for (char[] y : z){
+                imageX = y.length * 45;
+                for (char x : y){
+                    // based on what the character corresponds to, draw the item.
+                    if (Character.compare(x, '#') == 0)graphicsContext.drawImage(wall, xCounter * 45,  yCounter * 45);
+                    else if (Character.compare(x, '.') == 0)graphicsContext.drawImage(path, xCounter * 45, yCounter * 45);
+                    else if (Character.compare(x, '+') == 0)graphicsContext.drawImage(portal, xCounter * 45, yCounter * 45);
+                    else if (Character.compare(x, '=') == 0)graphicsContext.drawImage(ladder, xCounter * 45, yCounter * 45);
+                    else if (Character.compare(x, '@') == 0)graphicsContext.drawImage(start, xCounter * 45, yCounter * 45);
+                    else if (Character.compare(x, '*') == 0)graphicsContext.drawImage(finish, xCounter * 45, yCounter * 45);
+
+                    xCounter ++;
+                }
+                yCounter ++;
+                xCounter = 0;
+            }
+            yCounter = 0;
+            xCounter = 0;
+            levels = Arrays.copyOf(levels, levels.length + 1);
+            levels[zCounter] = new MazeLevel(canvas, imageX , imageY); // inserts the newly made image into the array.
+            zCounter ++;
+        }
     }
 
 

@@ -1,8 +1,11 @@
 package GUI.Windows;
 
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -47,16 +50,20 @@ public class AboutWindow {
         Label aboutAppLabel = new Label(aboutApp);
         Label developerLabel = new Label("Developers: " + developer);
         Label versionLabel = new Label("Version: " + version);
+
+        // Images
+        ImageView imageView = new ImageView(new Image(getClass().getResourceAsStream("/graphics/AppIcon.png")));
         
         // Layout type
         VBox layout = new VBox(10);
-        layout.getChildren().addAll(appNameLabel, developerLabel, versionLabel, aboutAppLabel, websiteLabel);
+        layout.getChildren().addAll(imageView, appNameLabel, developerLabel, versionLabel, aboutAppLabel, websiteLabel);
+        layout.setAlignment(Pos.CENTER);
 
         // Building scene and displaying.
         Scene scene = new Scene(layout);
         window.setScene(scene);
-        window.setHeight(200.00);
-        window.setWidth(500.00);
+        window.setHeight(400);
+        window.setWidth(500);
         window.show();
     }
 }

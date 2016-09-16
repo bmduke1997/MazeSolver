@@ -1,7 +1,11 @@
 package GUI.Windows;
 
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -32,9 +36,13 @@ public class WarningWindow {
         // labels
         Label warningLabel = new Label(warning);
 
+        // images
+        ImageView warningImage = new ImageView(new Image(getClass().getResourceAsStream("/graphics/warning.png")));
+
         // Building the window
-        VBox layout = new VBox(10);
-        layout.getChildren().addAll(warningLabel);
+        HBox layout = new HBox(10);
+        layout.getChildren().addAll(warningImage, warningLabel);
+        layout.setAlignment(Pos.CENTER);
 
         // Showing the window
         Scene scene = new Scene(layout);

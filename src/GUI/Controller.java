@@ -124,7 +124,7 @@ public class Controller{
         this.masterMaze = masterMazeHolder; //makes the newly made 3D array available to other methods.
 
         // draws the newly loaded map.
-        drawer = new MapDrawer(canvas, masterMazeHolder);
+        drawer = new MapDrawer(canvas, masterMaze, mapTheme);
         drawer.displayLevel(0);
 
         // updates the gui buttons
@@ -142,13 +142,13 @@ public class Controller{
     // Starts the search algorithm.
     public void start(){
         if (reRun){ // id we need to load a fresh map for a re-run, do it.
-            drawer = new MapDrawer(canvas, masterMaze);
+            drawer = new MapDrawer(canvas, masterMaze, mapTheme);
             drawer.displayLevel(0);
         }
         reRun = true; // lets the controller know that the next run of this map is a re-run.
         //solve the maze.
         statusLbl.setText("Running maze...");
-        MazeSolver mazeSolver = new MazeSolver(masterMaze, slider, canvas, drawer, statusLbl);
+        MazeSolver mazeSolver = new MazeSolver(masterMaze, slider, canvas, drawer, statusLbl, mapTheme);
 
         // disables buttons so the user cant screw stuff up.
         start.setDisable(true);
@@ -240,7 +240,7 @@ public class Controller{
     }
 
     public void legend(){
-        LegendWindow legendWindow = new LegendWindow(primaryStage, "Legend");
+        LegendWindow legendWindow = new LegendWindow(primaryStage, "Legend", mapTheme);
         legendWindow.display();
     }
 
@@ -259,7 +259,7 @@ public class Controller{
         themeBox.setValue(theme);
 
         ComboBox<String> mapBox = new ComboBox<>();
-        mapBox.getItems().addAll("Default");
+        mapBox.getItems().addAll("Default", "MineCraft");
         mapBox.setValue(mapTheme);
 
         // layout defining.
@@ -300,13 +300,15 @@ public class Controller{
 
             }
 
-            private void mapPackMethod(){}
+            private void mapPackMethod(){
+                mapTheme = mapBox.getValue();
+                if (run)drawer.reDraw(mapTheme); // if we are able to run, that means we need to redraw the map.
+            }
         }
 
         // changes the themes on click!
         themeBox.setOnAction(e -> new settingsMethods().themeBoxMethod());
         mapBox.setOnAction(e -> new settingsMethods().mapPackMethod());
     }
-
 
 }

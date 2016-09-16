@@ -35,7 +35,7 @@ public class MazeSolver{
     private HashSet<Coordinate> visitedSpecial = new HashSet<>(); // visited portals & stairs
     private HashSet<Coordinate> visitedLocations = new HashSet<>(); // visited open spaces
     private ThompsonStack<Coordinate> FredFin = new ThompsonStack<>();
-    private Image visited = new Image(getClass().getResourceAsStream("/graphics/visited.png"));
+    private Image visited;
 
 
     /**
@@ -47,12 +47,13 @@ public class MazeSolver{
      * @param drawer MapDrawer for drawing and saving the map.
      *
      */
-    public MazeSolver(char[][][] masterMaze, Slider slider, Canvas canvas, MapDrawer drawer, Label statusLbl){
+    public MazeSolver(char[][][] masterMaze, Slider slider, Canvas canvas, MapDrawer drawer, Label statusLbl, String mapPack){
         this.masterMaze = masterMaze;
         this.slider = slider;
         this.drawer = drawer;
         this.graphicsContext = canvas.getGraphicsContext2D();
         this.statusLbl = statusLbl;
+        this.visited = new Image(getClass().getResourceAsStream("/graphics/"+mapPack+"/visited.png"));
 
 
         // This will find the start position and save it for later use...
