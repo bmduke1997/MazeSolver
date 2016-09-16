@@ -140,59 +140,62 @@ public class Controller{
     }
 
     // Starts the search algorithm.
-    public void start(){
-        if (reRun){ // id we need to load a fresh map for a re-run, do it.
-            drawer = new MapDrawer(canvas, masterMaze, mapTheme);
-            drawer.displayLevel(0);
-        }
-        reRun = true; // lets the controller know that the next run of this map is a re-run.
-        //solve the maze.
-        statusLbl.setText("Running maze...");
-        MazeSolver mazeSolver = new MazeSolver(masterMaze, slider, canvas, drawer, statusLbl, mapTheme);
-
-        // disables buttons so the user cant screw stuff up.
-        start.setDisable(true);
-        load.setDisable(true);
-        lvlDown.setDisable(true);
-        lvlUp.setDisable(true);
-
-        Thread one = new Thread() {
-            public void run() { // logic thread!
-                currentLevel = mazeSolver.getCurrentLocation()[0];
-                drawer.displayLevel(mazeSolver.getCurrentLocation()[0]); // displays the location of start on the map.
-
-                // start solving
-                mazeSolver.startExploration();
-                currentLevel = mazeSolver.getCurrentLocation()[0];
-
-                // updates the buttons for new usage, this runs in the fx thread.
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() { // re enable all the buttons and update labels!
-                        String solved;
-                        if (mazeSolver.isSolved()) solved = "Maze solvable";
-                        else solved = "Maze unsolvable";
-                        statusLbl.setText("Map Status: " + solved + " | Current floor " + mazeSolver.getCurrentLocation()[0] +
-                                " | Moves made: " + mazeSolver.getMovesMade());
-                        if (currentLevel == 0){
-                            lvlDown.setDisable(true);
-                            lvlUp.setDisable(false);
-                        }
-                        else if (currentLevel == masterMaze.length - 1){
-                            lvlUp.setDisable(true);
-                            lvlDown.setDisable(false);
-                        }else{
-                            lvlUp.setDisable(false);
-                            lvlDown.setDisable(false);
-                        }
-                        start.setDisable(false);
-                        load.setDisable(false);
-                    }
-                });
-
+    public void start() {
+        if (!run)
+            new WarningWindow(primaryStage, "Nothing Loaded", "There is nothing loaded so there is nothing to run!").display();
+        else {
+            if (reRun) { // id we need to load a fresh map for a re-run, do it.
+                drawer = new MapDrawer(canvas, masterMaze, mapTheme);
+                drawer.displayLevel(0);
             }
-        };
-        one.start(); // start the logic thread.
+            reRun = true; // lets the controller know that the next run of this map is a re-run.
+            //solve the maze.
+            statusLbl.setText("Running maze...");
+            MazeSolver mazeSolver = new MazeSolver(masterMaze, slider, canvas, drawer, statusLbl, mapTheme);
+
+            // disables buttons so the user cant screw stuff up.
+            start.setDisable(true);
+            load.setDisable(true);
+            lvlDown.setDisable(true);
+            lvlUp.setDisable(true);
+
+            Thread one = new Thread() {
+                public void run() { // logic thread!
+                    currentLevel = mazeSolver.getCurrentLocation()[0];
+                    drawer.displayLevel(mazeSolver.getCurrentLocation()[0]); // displays the location of start on the map.
+
+                    // start solving
+                    mazeSolver.startExploration();
+                    currentLevel = mazeSolver.getCurrentLocation()[0];
+
+                    // updates the buttons for new usage, this runs in the fx thread.
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() { // re enable all the buttons and update labels!
+                            String solved;
+                            if (mazeSolver.isSolved()) solved = "Maze solvable";
+                            else solved = "Maze unsolvable";
+                            statusLbl.setText("Map Status: " + solved + " | Current floor " + mazeSolver.getCurrentLocation()[0] +
+                                    " | Moves made: " + mazeSolver.getMovesMade());
+                            if (currentLevel == 0) {
+                                lvlDown.setDisable(true);
+                                lvlUp.setDisable(false);
+                            } else if (currentLevel == masterMaze.length - 1) {
+                                lvlUp.setDisable(true);
+                                lvlDown.setDisable(false);
+                            } else {
+                                lvlUp.setDisable(false);
+                                lvlDown.setDisable(false);
+                            }
+                            start.setDisable(false);
+                            load.setDisable(false);
+                        }
+                    });
+
+                }
+            };
+            one.start(); // start the logic thread.
+        }
     }
 
     //clears the map from the gui. Has a keyboard shortcut of ctrl + shift + c

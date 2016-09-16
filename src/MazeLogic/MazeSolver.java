@@ -407,19 +407,16 @@ public class MazeSolver{
 
     // // TODO: 9/16/16 FIX ME!!!!! Your dumb ass should have committed last night when you fixed me!!!!!
     private void breadCrumbs(){
-        saveMap(); // save the map as is
-        drawer.displayLevel(currentLocation[0]);
+        saveMap();
         FredFin.pop(); // remove the coordinate from the stack.
         currentLocation = FredFin.peek().getCoords(); // set the new coordinate to the next location in the stack.
         drawer.displayLevel(currentLocation[0]); // display at the new location.
-        saveMap(); // save the map again...
     }
     
     // called for when we are constantly going back...
     private void breadCrumbsLoop(){
         while(!explorable()) {
             breadCrumbs();
-            markPoint(); // since startExploration is never called while in this loop, we need to mark points as we go.
         }
     }
     
