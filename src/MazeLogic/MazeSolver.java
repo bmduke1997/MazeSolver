@@ -405,18 +405,19 @@ public class MazeSolver{
                 right().compareCharacter('.') && !visitedLocations.contains(right()));
     }
 
-    // // TODO: 9/16/16 FIX ME!!!!! Your dumb ass should have committed last night when you fixed me!!!!!
     private void breadCrumbs(){
         saveMap();
         FredFin.pop(); // remove the coordinate from the stack.
         currentLocation = FredFin.peek().getCoords(); // set the new coordinate to the next location in the stack.
         drawer.displayLevel(currentLocation[0]); // display at the new location.
+        saveMap();
     }
     
     // called for when we are constantly going back...
     private void breadCrumbsLoop(){
         while(!explorable()) {
             breadCrumbs();
+            markPoint();
         }
     }
     
