@@ -351,14 +351,8 @@ public class MazeSolver{
     private void itsActuallyALadder(){
         // // TODO: 9/14/16 deletme, debug
         System.out.println("Ladder called");
-        try {
-            Thread.sleep((long)(100 - slider.getValue())*10); // keeps the marking time in sync with the rest of the map.
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        graphicsContext.setGlobalAlpha(0.33);
-        graphicsContext.drawImage(visited, (double)(currentLocation[2] * 45), (double)(currentLocation[1]*45));
-        graphicsContext.setGlobalAlpha(1); // sets opacity back to full for image save.
+        logicSleep();
+        markPoint();
         saveMap();
         try {
             if (Character.compare('=', masterMaze[currentLocation[0] + 1][currentLocation[1]][currentLocation[2]]) == 0){
@@ -419,28 +413,23 @@ public class MazeSolver{
     //// TODO: 9/14/16 this method breaks the gui somehow. Thread Racing maybe... we lose the lose all but the second floor.
     private void breadCrumbs(){
         Coordinate tempCoor = FredFin.pop();
+
         // // TODO: 9/14/16 deleteme, debug
         System.out.println("Poped: " + tempCoor.getCharacter() + " " + Arrays.toString(tempCoor.getCoords()));
         int currentLvl = tempCoor.getCoords()[0];
         currentLocation = FredFin.peek().getCoords();
+        
+        // // TODO: 9/15/16 somehow this screws up the gui level displaying. 
         if (currentLvl != currentLocation[0]){
             saveMap(tempCoor.getCoords()[0]);
             drawer.displayLevel(currentLocation[0]);
-            // // TODO: 9/14/16 delteme , debug
-            System.out.println("Went from " + tempCoor.getCoords()[0] + " to "  + currentLocation[0]);
         }
         System.out.println(Arrays.toString(FredFin.peek().getCoords()));
-        movesMade ++;
-
-
-
     }
 
     // // TODO: 9/14/16 This should have all the same issues as breadCrumbs. 
     private void breadCrumbsLoop(){
-        while(!explorable()){
-            breadCrumbs();
-        }
+        while(!explorable()) breadCrumbs();
     }
 
 

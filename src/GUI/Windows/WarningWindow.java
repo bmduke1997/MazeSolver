@@ -7,7 +7,10 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
- * Created by manjaro on 9/8/16.
+ * WarningWindow Class
+ * This displays a waring when the user tries to run the program with an unloaded map.
+ * @author Patrick Shinn
+ * @version 9/15/16
  */
 public class WarningWindow {
     private Stage primaryStage;
@@ -21,7 +24,7 @@ public class WarningWindow {
     }
 
     public void display(){
-        // displays the fucking window
+        // displays the window
         Stage window = new Stage();
         window.setTitle(windowTitle);
         window.initModality(Modality.APPLICATION_MODAL); // means that while this window is open, you can't interact with the main program.

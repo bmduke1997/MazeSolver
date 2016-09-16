@@ -36,9 +36,15 @@
                   </MenuItem>
             </items>
           </Menu>
+            <Menu mnemonicParsing="false" text="Edit">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#settings" text="Settings" />
+              </items>
+            </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
               <MenuItem fx:id="helpAbout" mnemonicParsing="false" onAction="#about" text="About" />
+                  <MenuItem mnemonicParsing="false" onAction="#legend" text="Legend" />
             </items>
           </Menu>
         </menus>
@@ -51,7 +57,7 @@
                <children>
                   <Slider fx:id="slider" prefHeight="16.0" prefWidth="256.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" HBox.hgrow="NEVER" />
                   <Region HBox.hgrow="ALWAYS" />
-                  <Button fx:id="start" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#start" prefHeight="25.0" prefWidth="75.0" text="Start" HBox.hgrow="NEVER" />
+                  <Button fx:id="start" disable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#start" prefHeight="25.0" prefWidth="75.0" text="Start" HBox.hgrow="NEVER" />
                   <Button fx:id="load" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#load" prefHeight="25.0" prefWidth="75.0" text="Load" HBox.hgrow="NEVER" />
                </children>
                <padding>
