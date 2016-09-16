@@ -29,6 +29,7 @@ public class Controller{
     // data structures, counters, booleans, all that good stuff.
     private char[][][] masterMaze; // the map as a 3d array for coordinate purposes.
     private boolean run = false;
+    private boolean reRun = false; // used to determine if we need to load a fresh copy of a map.
     private int currentLevel = 0; // used for changing the level that is currently displayed.
 
 
@@ -122,6 +123,7 @@ public class Controller{
         // Status updates
         statusLbl.setText("Loaded " + map.getName() + ".");
         run = true; // we loaded a file, so now we can run through the maze.
+        reRun = false;
     }
 
     // Starts the search algorithm.
@@ -132,6 +134,11 @@ public class Controller{
             warningWindow.display();
         }
         else{
+            if (reRun){ // id we need to load a fresh map for a re-run, do it.
+                drawer = new MapDrawer(canvas, masterMaze);
+                drawer.displayLevel(0);
+            }
+            reRun = true; // lets the controller know that the next run of this map is a re-run.
             //solve the maze.
             statusLbl.setText("Running maze...");
             MazeSolver mazeSolver = new MazeSolver(masterMaze, slider, canvas, drawer, statusLbl);
@@ -155,7 +162,11 @@ public class Controller{
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() { // re enable all the buttons and update labels!
-                            statusLbl.setText("Done!");
+                            String solved;
+                            if (mazeSolver.isSolved()) solved = "Maze solvable";
+                            else solved = "Maze unsolvable";
+                            statusLbl.setText("Map Status: " + solved + " | Current floor " + mazeSolver.getCurrentLocation()[0] +
+                                    " | Moves made: " + mazeSolver.getMovesMade());
                             if (currentLevel == 0){
                                 lvlDown.setDisable(true);
                                 lvlUp.setDisable(false);
