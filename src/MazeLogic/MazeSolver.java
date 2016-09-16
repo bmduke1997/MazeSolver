@@ -87,17 +87,18 @@ public class MazeSolver{
         return currentLocation;
     }
 
+    // returns the moves made.
     public int getMovesMade() {
         return movesMade;
     }
 
+    // returns whether or not we successfully solved the maze.
     public boolean isSolved(){
         return solved;
     }
 
     public void startExploration(){
         boolean done = false;
-
         while (!done){
             try{
                 markPoint(); // marks the current location.
@@ -323,8 +324,6 @@ public class MazeSolver{
 
     // portal traverse method
     private void beamMeUpScotty(){
-        // // TODO: 9/14/16 deletme, debug
-        System.out.println("BeamUP called");
         logicSleep(); // sleeps the logic thread to slow down gui update.
         markPoint(); // mark the current point.
         saveMap(); // save the floor before switching floors.
@@ -350,8 +349,6 @@ public class MazeSolver{
 
     // steps traversing junk
     private void itsActuallyALadder(){
-        // // TODO: 9/14/16 deletme, debug
-        System.out.println("Ladder called");
         logicSleep();
         markPoint();
         saveMap();
@@ -410,27 +407,19 @@ public class MazeSolver{
                 right().compareCharacter('.') && !visitedLocations.contains(right()));
     }
 
-
-    //// TODO: 9/14/16 this method breaks the gui somehow. Thread Racing maybe... we lose the lose all but the second floor.
+    // // TODO: 9/16/16 FIX ME!!!!!
     private void breadCrumbs(){
-        Coordinate tempCoor = FredFin.pop();
-
-        // // TODO: 9/14/16 deleteme, debug
-        System.out.println("Poped: " + tempCoor.getCharacter() + " " + Arrays.toString(tempCoor.getCoords()));
-        int currentLvl = tempCoor.getCoords()[0];
-        currentLocation = FredFin.peek().getCoords();
-        
-        // // TODO: 9/15/16 somehow this screws up the gui level displaying. 
-        if (currentLvl != currentLocation[0]){
-            saveMap(tempCoor.getCoords()[0]);
-            drawer.displayLevel(currentLocation[0]);
-        }
-        System.out.println(Arrays.toString(FredFin.peek().getCoords()));
+        saveMap(); // save the map as is
+        FredFin.pop(); // remove the coordinate from the stack.
+        currentLocation = FredFin.peek().getCoords(); // set the new coordinate to the next location in the stack.
+        drawer.displayLevel(currentLocation[0]); // display at the new location.
     }
 
-    // // TODO: 9/14/16 This should have all the same issues as breadCrumbs. 
     private void breadCrumbsLoop(){
-        while(!explorable()) breadCrumbs();
+        while(!explorable()) {
+            breadCrumbs();
+            markPoint(); // since startExploration is never called while in this loop, we need to mark points as we go.
+        }
     }
 
 
@@ -477,9 +466,9 @@ public class MazeSolver{
         try {
             boolean ran = false;
             int counter = 0;
-            while (!ran){ // don't question the loop, for some reason it is necessary.
+            while (!ran){ // don't question the loop, for some reason it is necessary. Its set up for the shortest run time.
                 // so we put the logic thread to sleep until the fx thread has time to do what it needs to do
-                Thread.sleep((long)100);
+                Thread.sleep((long)1);
                 Platform.runLater(new Runnable() { // this is the fx thread.
                     public void run() {
                         drawer.saveMap(currentLocation[0]);
@@ -488,7 +477,7 @@ public class MazeSolver{
 
                     }
                 });
-                if (counter == 2) ran = true;
+                if (counter == 1) ran = true;
                 counter ++;
             }
 
