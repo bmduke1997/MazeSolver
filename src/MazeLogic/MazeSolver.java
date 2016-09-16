@@ -419,7 +419,7 @@ public class MazeSolver{
     private void breadCrumbsLoop(){
         while(!explorable()) {
             breadCrumbs();
-            markPoint();
+            markPoint(); // this is never run because we don't use the startExploration method while this is looping.
         }
     }
     
