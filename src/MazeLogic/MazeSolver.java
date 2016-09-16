@@ -127,7 +127,7 @@ public class MazeSolver{
     }
 
     // calls of the the methods that return a character, explores the area...
-    private boolean explore(){ // calls all methods of the class for a search.
+    public boolean explore(){ // calls all methods of the class for a search.
         if (on().compareCharacter('*')){
             return true;
         }
@@ -342,6 +342,7 @@ public class MazeSolver{
             }
         }
         FredFin.push(new Coordinate('+', currentLocation));
+        visitedSpecial.add(on());
         movesMade ++;
     }
 
@@ -368,6 +369,7 @@ public class MazeSolver{
             }
         }
         FredFin.push(new Coordinate('=', currentLocation));
+        visitedSpecial.add(on());
         movesMade ++;
     }
 
