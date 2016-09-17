@@ -156,6 +156,7 @@ public class MazeSolver{
 
     // calls of the the methods that return a character, explores the area...
     private boolean explore(){ // calls all methods of the class for a search.
+        saveMap();
         if (on().compareCharacter('*')){
             return true;
         }
@@ -431,6 +432,8 @@ public class MazeSolver{
 
     // checks to see if there any explorable positions
     private boolean explorable(){
+        drawer.displayLevel(currentLocation[0]);
+        saveMap();
         return  ((above().compareCharacter('.') && !visitedLocations.contains(above())) ||
                 (left().compareCharacter('.') && !visitedLocations.contains(left())) ||
                 (below().compareCharacter('.') && !visitedLocations.contains(below())) ||
@@ -447,6 +450,8 @@ public class MazeSolver{
     // called for when we are constantly going back...
     private void breadCrumbsLoop(){
         while(!explorable()) {
+            drawer.displayLevel(currentLocation[0]);
+            saveMap();
             breadCrumbs();
             spriteMove();
             markPoint();
@@ -460,7 +465,7 @@ public class MazeSolver{
             int counter = 0;
             while (!ran) { // don't question the loop, for some reason it is necessary.
                 // so we put the logic thread to sleep until the fx thread has time to do what it needs to do
-                Thread.sleep((long) 100);
+                Thread.sleep((long)5);
                 Platform.runLater(new Runnable() { // this is the fx thread.
                     public void run() {
                         sprite.setX(currentLocation[2]*45 + 8);
@@ -487,7 +492,7 @@ public class MazeSolver{
             int counter = 0;
             while (!ran){ // don't question the loop, for some reason it is necessary.
                 // so we put the logic thread to sleep until the fx thread has time to do what it needs to do
-                Thread.sleep((long)100);
+                Thread.sleep((long)5);
                 Platform.runLater(new Runnable() { // this is the fx thread.
                     public void run() {
                         statusLbl.setText("Map State: solving... | Current floor " + currentLocation[0] +
@@ -519,7 +524,7 @@ public class MazeSolver{
             int counter = 0;
             while (!ran){ // don't question the loop, for some reason it is necessary. Its set up for the shortest run time.
                 // so we put the logic thread to sleep until the fx thread has time to do what it needs to do
-                Thread.sleep((long)10);
+                Thread.sleep((long)5);
                 Platform.runLater(new Runnable() { // this is the fx thread.
                     public void run() {
                         drawer.saveMap(currentLocation[0]);
@@ -528,7 +533,7 @@ public class MazeSolver{
 
                     }
                 });
-                if (counter == 1) ran = true;
+                if (counter == 10) ran = true;
                 counter ++;
             }
 
