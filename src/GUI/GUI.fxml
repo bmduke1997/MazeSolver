@@ -58,7 +58,7 @@
                <children>
                   <VBox alignment="CENTER" styleClass="slider">
                      <children>
-                        <Label prefHeight="33.0" prefWidth="93.0" text="Speed Control" />
+                        <Label prefHeight="33.0" text="Speed Control" />
                         <Slider fx:id="slider" prefHeight="16.0" prefWidth="256.0" snapToTicks="true" />
                      </children>
                      <padding>
@@ -66,9 +66,9 @@
                      </padding>
                   </VBox>
                   <Region HBox.hgrow="ALWAYS" />
-                  <Button fx:id="start" contentDisplay="CENTER" disable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#start" prefHeight="25.0" prefWidth="75.0" styleClass="buttons" text="Start" textAlignment="CENTER" HBox.hgrow="NEVER" />
-                  <Button fx:id="exitBtn" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#exit" prefHeight="25.0" prefWidth="75.0" styleClass="buttons" text="Exit" textAlignment="CENTER" />
-                  <Button fx:id="load" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#load" prefHeight="25.0" prefWidth="75.0" styleClass="buttons" text="Load" textAlignment="CENTER" HBox.hgrow="NEVER" />
+                  <Button fx:id="start" contentDisplay="CENTER" disable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#start" prefHeight="26.0" prefWidth="75.0" styleClass="buttons" text="Start" textAlignment="CENTER" HBox.hgrow="NEVER" />
+                  <Button fx:id="exitBtn" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#exit" prefHeight="26.0" prefWidth="75.0" styleClass="buttons" text="Exit" textAlignment="CENTER" />
+                  <Button fx:id="load" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#load" prefHeight="26.0" prefWidth="75.0" styleClass="buttons" text="Load" textAlignment="CENTER" HBox.hgrow="NEVER" />
                </children>
                <padding>
                   <Insets bottom="8.0" left="10.0" right="10.0" top="8.0" />
@@ -100,6 +100,10 @@
       </VBox>
    </right>
    <center>
-      <Canvas fx:id="canvas" height="486.0" width="938.0" BorderPane.alignment="CENTER" />
+      <Pane fx:id="pane" prefHeight="434.0" prefWidth="993.0">
+         <children>
+            <Canvas fx:id="canvas" height="509.0" layoutX="6.0" layoutY="5.0" width="983.0" BorderPane.alignment="CENTER" />
+         </children>
+      </Pane>
    </center>
 </BorderPane>

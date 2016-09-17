@@ -70,3 +70,6 @@
 .menuItem:hover> .label{
     -fx-background-color: #7acbce !important;
 }
+.combo-box{
+    -fx-background-color: #7acbce;
+}

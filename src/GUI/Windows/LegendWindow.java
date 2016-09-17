@@ -22,11 +22,13 @@ public class LegendWindow {
     private Stage primaryStage;
     private String windowTitle;
     private String mapTheme;
+    private String theme;
 
-    public LegendWindow(Stage primaryStage, String windowTitle, String mapTheme){
+    public LegendWindow(Stage primaryStage, String windowTitle, String mapTheme, String theme){
         this.primaryStage = primaryStage;
         this.windowTitle = windowTitle;
         this.mapTheme = mapTheme;
+        this.theme = theme;
     }
 
     public void display(){
@@ -94,6 +96,7 @@ public class LegendWindow {
 
         // building and displaying the window.
         Scene scene = new Scene(layout);
+        scene.getStylesheets().addAll("/graphics/css/"+theme+".css");
         window.setScene(scene);
         window.setHeight(300);
         window.setWidth(500);
