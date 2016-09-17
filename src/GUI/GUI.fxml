@@ -66,9 +66,9 @@
                      </padding>
                   </VBox>
                   <Region HBox.hgrow="ALWAYS" />
-                  <Button fx:id="start" disable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#start" prefHeight="25.0" prefWidth="75.0" text="Start" HBox.hgrow="NEVER" />
+                  <Button fx:id="start" disable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#start" prefHeight="25.0" prefWidth="75.0" styleClass="buttons" text="Start" HBox.hgrow="NEVER" />
                   <Button fx:id="exitBtn" mnemonicParsing="false" onAction="#exit" prefWidth="75.0" styleClass="buttons" text="Exit" />
-                  <Button fx:id="load" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#load" prefHeight="25.0" prefWidth="75.0" text="Load" HBox.hgrow="NEVER" />
+                  <Button fx:id="load" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#load" prefHeight="25.0" prefWidth="75.0" styleClass="buttons" text="Load" HBox.hgrow="NEVER" />
                </children>
                <padding>
                   <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
@@ -90,8 +90,8 @@
       <VBox prefHeight="413.0" prefWidth="77.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
             <Region prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
-            <Button fx:id="lvlUp" disable="true" mnemonicParsing="false" onAction="#displayLevelUp" prefHeight="25.0" prefWidth="58.0" text="Up" />
-            <Button fx:id="lvlDown" disable="true" mnemonicParsing="false" onAction="#displayLevelDown" text="Down" />
+            <Button fx:id="lvlUp" disable="true" mnemonicParsing="false" onAction="#displayLevelUp" prefHeight="25.0" prefWidth="75.0" styleClass="up" />
+            <Button fx:id="lvlDown" disable="true" mnemonicParsing="false" onAction="#displayLevelDown" prefHeight="25.0" prefWidth="75.0" styleClass="down" />
             <Region prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
          </children>
          <padding>

@@ -12,17 +12,29 @@
     color: #2F2F2F;
 }
 
-.buttons,
-.up,
-.down{
+.buttons {
     -fx-background-color: #5F9EA0;
-    -fx-background-radius: 4;
+    -fx-border-radius: 0,0,0,0;
 }
 
-.buttons:hover,
-.up:hover,
-.down:hover{
+.buttons:hover{
     -fx-background-color: #7acbce;
     -fx-cursor: hand;
 }
 
+.up,
+.down{
+    -fx-background-color: rgba(0,0,0,0);
+    -fx-cursor: hand;
+}
+.up{
+    -fx-background-image: url("images/contract.png");
+    -fx-background-size: 25px;
+    -fx-background-repeat: no-repeat;
+}
+
+.down{
+    -fx-background-image: url("images/expand.png");
+    -fx-background-size: 25px;
+    -fx-background-repeat: no-repeat;
+}
