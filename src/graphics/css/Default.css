@@ -1,0 +1,28 @@
+/*FONT IMPORT*/
+
+@font-face {
+    font-family: Ubuntu-Regular;
+    src: url(Ubuntu-Regular.ttf);
+}
+
+/*FONT*/
+
+* {
+    -fx-font-family: 'Ubuntu-Regular';
+    color: #2F2F2F;
+}
+
+.buttons,
+.up,
+.down{
+    -fx-background-color: #5F9EA0;
+    -fx-background-radius: 4;
+}
+
+.buttons:hover,
+.up:hover,
+.down:hover{
+    -fx-background-color: #7acbce;
+    -fx-cursor: hand;
+}
+
