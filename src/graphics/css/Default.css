@@ -2,19 +2,24 @@
 
 @font-face {
     font-family: Ubuntu-Regular;
-    src: url(Ubuntu-Regular.ttf);
+    src: url('Ubuntu-Regular.ttf');
 }
 
 /*FONT*/
 
 * {
-    -fx-font-family: 'Ubuntu-Regular';
-    color: #2F2F2F;
+    -fx-font-family: Ubuntu-Regular;
+    -fx-text-fill: #2F2F2F;
+    -fx-font-size: 1.2em;
 }
 
 .buttons {
     -fx-background-color: #5F9EA0;
-    -fx-border-radius: 0,0,0,0;
+    -fx-background-radius: 15.0;
+}
+
+.buttons .text{
+    -fx-text-alignment: center;
 }
 
 .buttons:hover{
@@ -38,7 +43,30 @@
     -fx-background-size: 40px;
     -fx-background-repeat: no-repeat;
 }
+.slider .track{
+    -fx-background-color: #5F9EA0;
+}
 
-.slider{
+.slider .thumb{
+    -fx-background-color: #7acbce;
+}
+
+.slider,
+.menu:hover,
+.label,
+.context-menu{
     -fx-cursor: hand;
+}
+
+.menu-bar,
+.menu-bar *{
+    -fx-background-color: #5F9EA0;
+}
+
+.menu-button:hover,
+.menu:hover,
+.menu:hover> .label,
+.menuItem:hover,
+.menuItem:hover> .label{
+    -fx-background-color: #7acbce !important;
 }
