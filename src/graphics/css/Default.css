@@ -71,5 +71,10 @@
     -fx-background-color: #7acbce !important;
 }
 .combo-box{
-    -fx-background-color: #7acbce;
+    -fx-background-color: #5F9EA0;
+    -fx-background-radius: 15.0;
+}
+
+.combo-box:hover{
+    -fx-cursor: hand;
 }
