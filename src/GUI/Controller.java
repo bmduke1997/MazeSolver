@@ -272,7 +272,7 @@ public class Controller{
 
 
         ComboBox<String> mapBox = new ComboBox<>();
-        mapBox.getItems().addAll("Default", "MineCraft", "Penguin");
+        mapBox.getItems().addAll("Default", "MineCraft", "Penguin", "Pokemon");
         mapBox.setValue(mapTheme);
         mapBox.setPrefSize(125,25);
 
