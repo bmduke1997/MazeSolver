@@ -38,13 +38,7 @@ class ThompsonStack<T> {
         headNode = newNode;
       }
 
-      void peekAll(){
-          Node temp = headNode;
-          Node temp2 = temp;
-          while (temp.nextNode != null){
-              temp = temp2;
-              temp2 = temp2.nextNode;
-              System.out.print(temp.data);
+      T getLast(){
+          return headNode.nextNode.data;
           }
-      }
 }

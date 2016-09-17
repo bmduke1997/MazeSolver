@@ -7,8 +7,9 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
-
-import java.util.Arrays;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
 import java.util.HashSet;
 
 /**
@@ -36,7 +37,8 @@ public class MazeSolver{
     private HashSet<Coordinate> visitedLocations = new HashSet<>(); // visited open spaces
     private ThompsonStack<Coordinate> FredFin = new ThompsonStack<>();
     private Image visited;
-
+    private Rectangle sprite;
+    private Pane pane;
 
     /**
      * Constructor of the class.
@@ -47,13 +49,14 @@ public class MazeSolver{
      * @param drawer MapDrawer for drawing and saving the map.
      *
      */
-    public MazeSolver(char[][][] masterMaze, Slider slider, Canvas canvas, MapDrawer drawer, Label statusLbl, String mapPack){
+    public MazeSolver(char[][][] masterMaze, Slider slider, Canvas canvas, MapDrawer drawer, Label statusLbl, String mapPack, Pane pane){
         this.masterMaze = masterMaze;
         this.slider = slider;
         this.drawer = drawer;
         this.graphicsContext = canvas.getGraphicsContext2D();
         this.statusLbl = statusLbl;
         this.visited = new Image(getClass().getResourceAsStream("/graphics/"+mapPack+"/visited.png"));
+        this.pane = pane;
 
 
         // This will find the start position and save it for later use...
@@ -101,7 +104,8 @@ public class MazeSolver{
         boolean done = false;
         while (!done){
             try{
-                markPoint(); // marks the current location.
+
+                markPoint(); // marks the last location.
                 System.out.println(visitedLocations);
                 // // TODO: 9/15/16 debug delete.
                 System.out.println("Current Location: " + currentLocation[0] + " " + currentLocation[1] + " " + currentLocation[2]);
@@ -127,7 +131,7 @@ public class MazeSolver{
     }
 
     // calls of the the methods that return a character, explores the area...
-    public boolean explore(){ // calls all methods of the class for a search.
+    private boolean explore(){ // calls all methods of the class for a search.
         if (on().compareCharacter('*')){
             return true;
         }
@@ -323,6 +327,7 @@ public class MazeSolver{
     // portal traverse method //// TODO: 9/16/16 added to stack multiple times while popping.. 
     private void beamMeUpScotty(){
         logicSleep(); // sleeps the logic thread to slow down gui update.
+        spriteMove();
         markPoint(); // mark the current point.
         saveMap(); // save the floor before switching floors.
         for (int q = currentLocation[0] + 1; q < masterMaze.length + currentLocation[0]; q ++ ){
@@ -349,6 +354,7 @@ public class MazeSolver{
     // steps traversing junk //// TODO: 9/16/16 added to stack multiple times while popping.. 
     private void itsActuallyALadder(){
         logicSleep();
+        spriteMove();
         markPoint();
         saveMap();
         try {
@@ -419,12 +425,13 @@ public class MazeSolver{
     private void breadCrumbsLoop(){
         while(!explorable()) {
             breadCrumbs();
-            markPoint(); // this is never run because we don't use the startExploration method while this is looping.
         }
     }
     
     // this is all gui markup stuff past this point.
+    private void spriteMove(){
 
+    }
     // used to mark points that have been visited.
     private void markPoint(){
         graphicsContext.setGlobalAlpha(0.33); // sets opacity for visited image drawing

@@ -15,6 +15,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
@@ -63,6 +64,7 @@ public class Controller{
 
     // Map GUI Stuff
     @FXML private Canvas canvas;
+    @FXML private Pane pane;
 
     // custom class used for drawing and displaying the map.
     private MapDrawer drawer;
@@ -151,7 +153,7 @@ public class Controller{
             reRun = true; // lets the controller know that the next run of this map is a re-run.
             //solve the maze.
             statusLbl.setText("Running maze...");
-            MazeSolver mazeSolver = new MazeSolver(masterMaze, slider, canvas, drawer, statusLbl, mapTheme);
+            MazeSolver mazeSolver = new MazeSolver(masterMaze, slider, canvas, drawer, statusLbl, mapTheme, pane);
 
             // disables buttons so the user cant screw stuff up.
             start.setDisable(true);
@@ -248,13 +250,13 @@ public class Controller{
     }
 
     public void legend(){
-        LegendWindow legendWindow = new LegendWindow(primaryStage, "Legend", mapTheme);
+        LegendWindow legendWindow = new LegendWindow(primaryStage, "Legend", mapTheme, theme);
         legendWindow.display();
     }
 
     public void settings(){ // builds and opens a settings window.
         Stage window = new Stage();
-        window.setTitle("Im working on it!");
+        window.setTitle("Settings");
         window.initModality(Modality.APPLICATION_MODAL); // means that while this window is open, you can't interact with the main program.;
 
         // labels
@@ -265,10 +267,13 @@ public class Controller{
         ComboBox<String> themeBox = new ComboBox<>();
         themeBox.getItems().addAll("Default", "Dark");
         themeBox.setValue(theme);
+        themeBox.setPrefSize(125,25);
+
 
         ComboBox<String> mapBox = new ComboBox<>();
         mapBox.getItems().addAll("Default", "MineCraft", "Penguin");
         mapBox.setValue(mapTheme);
+        mapBox.setPrefSize(125,25);
 
         // layout defining.
         HBox layout = new HBox(50);
@@ -285,9 +290,10 @@ public class Controller{
 
         // build and display window
         Scene scene = new Scene(layout);
+        scene.getStylesheets().addAll("/graphics/css/"+theme+".css");
         window.setScene(scene);
-        window.setWidth(300);
-        window.setHeight(200);
+        window.setWidth(350);
+        window.setHeight(225);
         window.setResizable(false);
         window.show();
 
@@ -300,8 +306,7 @@ public class Controller{
             private void themeBoxMethod(){
                 theme = themeBox.getValue();
                 if (theme.equals("Default")) {
-                    primaryStage.getScene().setFill(Color.WHITE);
-                    window.getScene().setFill(Color.WHITE);
+
                 }
                 else if (theme.equals("Dark")) {
                 }
