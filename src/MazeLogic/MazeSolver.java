@@ -477,7 +477,7 @@ public class MazeSolver{
 
                     }
                 });
-                if (counter == 1) ran = true;
+                if (counter == 2) ran = true;
                 counter ++;
             }
 

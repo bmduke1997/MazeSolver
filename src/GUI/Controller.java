@@ -198,6 +198,11 @@ public class Controller{
         }
     }
 
+    //terminated program
+    public void exit(){
+        System.exit(1);
+    }
+
     //clears the map from the gui. Has a keyboard shortcut of ctrl + shift + c
     public void clearScreen(){
         // code to clear GUI
@@ -262,7 +267,7 @@ public class Controller{
         themeBox.setValue(theme);
 
         ComboBox<String> mapBox = new ComboBox<>();
-        mapBox.getItems().addAll("Default", "MineCraft");
+        mapBox.getItems().addAll("Default", "MineCraft", "Penguin");
         mapBox.setValue(mapTheme);
 
         // layout defining.
