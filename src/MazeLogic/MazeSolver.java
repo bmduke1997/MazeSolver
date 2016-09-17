@@ -81,6 +81,7 @@ public class MazeSolver{
             }
         }
         this.currentLocation = location; // saves the start location.
+        this.sprite = new Rectangle(45, 45, new ImagePattern(new Image(getClass().getResourceAsStream("/graphics/"+mapPack+"/sprite.png"))));
         FredFin.push(new Coordinate(masterMaze[currentLocation[0]][ currentLocation[1]][currentLocation[2]], currentLocation)); // pushes the first coordinate onto the stack.
 
     }
@@ -104,7 +105,30 @@ public class MazeSolver{
         boolean done = false;
         while (!done){
             try{
+                if (movesMade == 0){
+                    try {
+                        boolean ran = false;
+                        int counter = 0;
+                        while (!ran) { // don't question the loop, for some reason it is necessary.
+                            // so we put the logic thread to sleep until the fx thread has time to do what it needs to do
+                            Thread.sleep((long) 100);
+                            Platform.runLater(new Runnable() { // this is the fx thread.
+                                public void run() {
+                                    pane.getChildren().addAll(sprite);
+                                    sprite.setX(currentLocation[2]*45 +8);
+                                    sprite.setY(currentLocation[1]*45+5);
+                                }
+                            });
+                            if (counter == 2) ran = true;
+                            counter++;
+                        }
 
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+
+                    }
+                }
+                spriteMove();
                 markPoint(); // marks the last location.
                 System.out.println(visitedLocations);
                 // // TODO: 9/15/16 debug delete.
@@ -418,19 +442,39 @@ public class MazeSolver{
         FredFin.pop(); // remove the coordinate from the stack.
         currentLocation = FredFin.peek().getCoords(); // set the new coordinate to the next location in the stack.
         drawer.displayLevel(currentLocation[0]); // display at the new location.
-        saveMap();
     }
     
     // called for when we are constantly going back...
     private void breadCrumbsLoop(){
         while(!explorable()) {
             breadCrumbs();
+            spriteMove();
+            markPoint();
         }
     }
     
     // this is all gui markup stuff past this point.
-    private void spriteMove(){
+    private void spriteMove() {
+        try {
+            boolean ran = false;
+            int counter = 0;
+            while (!ran) { // don't question the loop, for some reason it is necessary.
+                // so we put the logic thread to sleep until the fx thread has time to do what it needs to do
+                Thread.sleep((long) 100);
+                Platform.runLater(new Runnable() { // this is the fx thread.
+                    public void run() {
+                        sprite.setX(currentLocation[2]*45 + 8);
+                        sprite.setY(currentLocation[1]*45 + 5);
+                    }
+                });
+                if (counter == 2) ran = true;
+                counter++;
+            }
 
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+
+        }
     }
     // used to mark points that have been visited.
     private void markPoint(){
@@ -484,7 +528,7 @@ public class MazeSolver{
 
                     }
                 });
-                if (counter == 2) ran = true;
+                if (counter == 1) ran = true;
                 counter ++;
             }
 

@@ -100,7 +100,7 @@
       </VBox>
    </right>
    <center>
-      <Pane fx:id="pane" prefHeight="434.0" prefWidth="993.0">
+      <Pane fx:id="spritePane" prefHeight="434.0" prefWidth="993.0">
          <children>
             <Canvas fx:id="canvas" height="509.0" layoutX="6.0" layoutY="5.0" width="983.0" BorderPane.alignment="CENTER" />
          </children>

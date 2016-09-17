@@ -17,7 +17,6 @@ import javafx.scene.control.Slider;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -64,7 +63,7 @@ public class Controller{
 
     // Map GUI Stuff
     @FXML private Canvas canvas;
-    @FXML private Pane pane;
+    @FXML private Pane spritePane;
 
     // custom class used for drawing and displaying the map.
     private MapDrawer drawer;
@@ -143,17 +142,19 @@ public class Controller{
 
     // Starts the search algorithm.
     public void start() {
+
         if (!run)
             new WarningWindow(primaryStage, "Nothing Loaded", "There is nothing loaded so there is nothing to run!").display();
         else {
             if (reRun) { // id we need to load a fresh map for a re-run, do it.
                 drawer = new MapDrawer(canvas, masterMaze, mapTheme);
                 drawer.displayLevel(0);
+                spritePane.getChildren().remove(1);
             }
             reRun = true; // lets the controller know that the next run of this map is a re-run.
             //solve the maze.
             statusLbl.setText("Running maze...");
-            MazeSolver mazeSolver = new MazeSolver(masterMaze, slider, canvas, drawer, statusLbl, mapTheme, pane);
+            MazeSolver mazeSolver = new MazeSolver(masterMaze, slider, canvas, drawer, statusLbl, mapTheme, spritePane);
 
             // disables buttons so the user cant screw stuff up.
             start.setDisable(true);
