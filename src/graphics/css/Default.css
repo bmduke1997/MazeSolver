@@ -29,12 +29,16 @@
 }
 .up{
     -fx-background-image: url("images/contract.png");
-    -fx-background-size: 25px;
+    -fx-background-size: 40px;
     -fx-background-repeat: no-repeat;
 }
 
 .down{
     -fx-background-image: url("images/expand.png");
-    -fx-background-size: 25px;
+    -fx-background-size: 40px;
     -fx-background-repeat: no-repeat;
+}
+
+.slider{
+    -fx-cursor: hand;
 }
