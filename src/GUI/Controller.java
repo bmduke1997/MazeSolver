@@ -304,8 +304,18 @@ public class Controller{
                 // does nothing..
             }
 
+            //// TODO: 9/17/2016 the css swap 
             private void themeBoxMethod() {
                 theme = themeBox.getValue();
+                if (theme.equals("Default")) {
+                    scene.getStylesheets().remove("/graphics/css/Dark.css");
+                    scene.getStylesheets().add("/graphics/css/Default.css");
+                }
+                else if (theme.equals("Dark")) {
+                    scene.getStylesheets().remove("/graphics/css/Default.css");
+                    scene.getStylesheets().add("/graphics/css/Dark.css");
+                }
+
             }
 
             private void mapPackMethod(){
