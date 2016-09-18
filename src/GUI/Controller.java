@@ -304,14 +304,8 @@ public class Controller{
                 // does nothing..
             }
 
-            private void themeBoxMethod(){
+            private void themeBoxMethod() {
                 theme = themeBox.getValue();
-                if (theme.equals("Default")) {
-
-                }
-                else if (theme.equals("Dark")) {
-                }
-
             }
 
             private void mapPackMethod(){

@@ -156,7 +156,6 @@ public class MazeSolver{
 
     // calls of the the methods that return a character, explores the area...
     private boolean explore(){ // calls all methods of the class for a search.
-        saveMap();
         if (on().compareCharacter('*')){
             return true;
         }
@@ -351,10 +350,10 @@ public class MazeSolver{
 
     // portal traverse method //// TODO: 9/16/16 added to stack multiple times while popping.. 
     private void beamMeUpScotty(){
+        saveMap();
         logicSleep(); // sleeps the logic thread to slow down gui update.
         spriteMove();
         markPoint(); // mark the current point.
-        saveMap(); // save the floor before switching floors.
         for (int q = currentLocation[0] + 1; q < masterMaze.length + currentLocation[0]; q ++ ){
 
             try {
@@ -378,10 +377,10 @@ public class MazeSolver{
 
     // steps traversing junk //// TODO: 9/16/16 added to stack multiple times while popping.. 
     private void itsActuallyALadder(){
+        saveMap();
         logicSleep();
         spriteMove();
         markPoint();
-        saveMap();
         try {
             if (Character.compare('=', masterMaze[currentLocation[0] + 1][currentLocation[1]][currentLocation[2]]) == 0){
                 currentLocation[0] = currentLocation[0] + 1;
@@ -432,8 +431,6 @@ public class MazeSolver{
 
     // checks to see if there any explorable positions
     private boolean explorable(){
-        drawer.displayLevel(currentLocation[0]);
-        saveMap();
         return  ((above().compareCharacter('.') && !visitedLocations.contains(above())) ||
                 (left().compareCharacter('.') && !visitedLocations.contains(left())) ||
                 (below().compareCharacter('.') && !visitedLocations.contains(below())) ||
@@ -445,13 +442,12 @@ public class MazeSolver{
         FredFin.pop(); // remove the coordinate from the stack.
         currentLocation = FredFin.peek().getCoords(); // set the new coordinate to the next location in the stack.
         drawer.displayLevel(currentLocation[0]); // display at the new location.
+        saveMap();
     }
     
     // called for when we are constantly going back...
     private void breadCrumbsLoop(){
         while(!explorable()) {
-            drawer.displayLevel(currentLocation[0]);
-            saveMap();
             breadCrumbs();
             spriteMove();
             markPoint();
@@ -481,6 +477,7 @@ public class MazeSolver{
 
         }
     }
+
     // used to mark points that have been visited.
     private void markPoint(){
         graphicsContext.setGlobalAlpha(0.33); // sets opacity for visited image drawing
@@ -530,10 +527,9 @@ public class MazeSolver{
                         drawer.saveMap(currentLocation[0]);
                         statusLbl.setText("Map State: solving... | Current floor " + currentLocation[0] +
                                 " | Moves made: " + movesMade);
-
                     }
                 });
-                if (counter == 10) ran = true;
+                if (counter == 15) ran = true;
                 counter ++;
             }
 
