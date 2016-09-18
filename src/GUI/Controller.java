@@ -75,6 +75,7 @@ public class Controller{
 
     // Load method, loads the maps into a 3d array.
     public void load() {
+        if (reRun) spritePane.getChildren().remove(1); // if we ran, clear the screen of the sprite.
         FileChooser chooser = new FileChooser();
         Scanner scanner;
         char[][] maze = new char[0][0];
@@ -143,9 +144,9 @@ public class Controller{
     // Starts the search algorithm.
     public void start() {
 
-        if (!run)
+        if (!run) {
             new WarningWindow(primaryStage, "Nothing Loaded", "There is nothing loaded so there is nothing to run!").display();
-        else {
+        }else {
             if (reRun) { // id we need to load a fresh map for a re-run, do it.
                 drawer = new MapDrawer(canvas, masterMaze, mapTheme);
                 drawer.displayLevel(0);
@@ -217,6 +218,7 @@ public class Controller{
             drawer.clearMap();
             statusLbl.setText("Status: Nothing Loaded.");
             masterMaze = new char[0][0][0];
+            spritePane.getChildren().remove(1);
             run = false;
             lvlDown.setDisable(true);
             lvlUp.setDisable(true);
