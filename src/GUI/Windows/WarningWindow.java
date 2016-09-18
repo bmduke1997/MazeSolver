@@ -1,7 +1,9 @@
 package GUI.Windows;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -19,12 +21,13 @@ import javafx.stage.Stage;
 public class WarningWindow {
     private Stage primaryStage;
     private String windowTitle;
-    private String warning;
+    private String warning, mapTheme;
 
-    public WarningWindow(Stage primaryStage, String windowTitle, String warning){
+    public WarningWindow(Stage primaryStage, String windowTitle, String warning,String mapTheme){
         this.primaryStage = primaryStage;
         this.windowTitle = windowTitle;
         this.warning = warning;
+        this.mapTheme = mapTheme;
     }
 
     public void display(){
@@ -33,6 +36,10 @@ public class WarningWindow {
         window.setTitle(windowTitle);
         window.initModality(Modality.APPLICATION_MODAL); // means that while this window is open, you can't interact with the main program.
 
+        // buttons
+        Button closeBtn = new Button("Close");
+        closeBtn.setOnAction(e -> window.close());
+
         // labels
         Label warningLabel = new Label(warning);
 
@@ -40,12 +47,19 @@ public class WarningWindow {
         ImageView warningImage = new ImageView(new Image(getClass().getResourceAsStream("/graphics/warning.png")));
 
         // Building the window
-        HBox layout = new HBox(10);
-        layout.getChildren().addAll(warningImage, warningLabel);
+        VBox layout = new VBox(10);
+        HBox closeBox = new HBox();
+        closeBox.getChildren().addAll(closeBtn);
+        closeBox.setAlignment(Pos.CENTER_RIGHT);
+        closeBox.setPadding(new Insets(5,5,5,5));
+        HBox hBox = new HBox(10);
+        hBox.getChildren().addAll(warningImage, warningLabel);
+        layout.getChildren().addAll(hBox,closeBox);
         layout.setAlignment(Pos.CENTER);
 
         // Showing the window
         Scene scene = new Scene(layout);
+        scene.getStylesheets().addAll("/graphics/css/"+mapTheme+".css");
         window.setScene(scene);
         window.setHeight(200.00);
         window.setWidth(500.00);

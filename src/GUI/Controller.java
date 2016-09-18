@@ -145,7 +145,7 @@ public class Controller{
     public void start() {
 
         if (!run) {
-            new WarningWindow(primaryStage, "Nothing Loaded", "There is nothing loaded so there is nothing to run!").display();
+            new WarningWindow(primaryStage, "Nothing Loaded", "There is nothing loaded so there is nothing to run!", mapTheme).display();
         }else {
             if (reRun) { // id we need to load a fresh map for a re-run, do it.
                 drawer = new MapDrawer(canvas, masterMaze, mapTheme);
@@ -212,7 +212,7 @@ public class Controller{
         // code to clear GUI
         if (!run){
             WarningWindow warning = new WarningWindow(primaryStage, "Unable to Clear",
-                    "There is nothing loaded, so there is nothing to clear.");
+                    "There is nothing loaded, so there is nothing to clear.", mapTheme);
             warning.display();
         }else{
             drawer.clearMap();
@@ -248,7 +248,7 @@ public class Controller{
         AboutWindow aboutWindow = new AboutWindow("About", "Maze Solver", "1.0",
                 "This is the most amazing maze crawler that world will ever know!\n" +
                         "Let it be known that this is a fact and has been scientifically proven.",
-                "Awesome Team", "https://github.com/shinn16/MazeSolver");
+                "Awesome Team", "https://github.com/shinn16/MazeSolver", mapTheme);
         aboutWindow.display();
     }
 

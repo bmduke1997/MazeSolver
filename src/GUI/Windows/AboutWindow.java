@@ -1,5 +1,6 @@
 package GUI.Windows;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -19,29 +20,34 @@ import javafx.stage.Stage;
  * @version 9/2/16
  */
 
-// // TODO: 9/5/16 FORMAT THIS SHIT TO MAKE IT LOOK NICE 
 public class AboutWindow {
     private String windowName ,
             developer,
             version,
             appName,
             website,
-            aboutApp;
+            aboutApp,
+            mapTheme;
     public AboutWindow(String windowName, String appName,
                        String version, String aboutApp,
-                       String developer, String website){
+                       String developer, String website, String mapTheme){
         this.windowName = windowName;
         this.appName = appName;
         this.version = version;
         this.aboutApp = aboutApp;
         this.developer = developer;
         this.website = website;
+        this.mapTheme = mapTheme;
     }
     public void display(){
         // Stage setup
         Stage window = new Stage();
         window.setTitle(windowName);
         window.initModality(Modality.APPLICATION_MODAL); // means that while this window is open, you can't interact with the main program.
+
+        // buttons
+        Button closeBtn = new Button("Close");
+        closeBtn.setOnAction(e -> window.close());
 
         
         // Labels
@@ -56,11 +62,16 @@ public class AboutWindow {
         
         // Layout type
         VBox layout = new VBox(10);
-        layout.getChildren().addAll(imageView, appNameLabel, developerLabel, versionLabel, aboutAppLabel, websiteLabel);
+        HBox closeBox = new HBox();
+        closeBox.getChildren().addAll(closeBtn);
+        closeBox.setAlignment(Pos.CENTER_RIGHT);
+        closeBox.setPadding(new Insets(5,5,5,5));
+        layout.getChildren().addAll(imageView, appNameLabel, developerLabel, versionLabel, aboutAppLabel, websiteLabel, closeBox);
         layout.setAlignment(Pos.CENTER);
 
         // Building scene and displaying.
         Scene scene = new Scene(layout);
+        scene.getStylesheets().addAll("/graphics/css/"+mapTheme+".css");
         window.setScene(scene);
         window.setHeight(400);
         window.setWidth(500);

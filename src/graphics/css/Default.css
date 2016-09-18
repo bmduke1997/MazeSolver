@@ -13,16 +13,16 @@
     -fx-font-size: 1.2em;
 }
 
-.buttons {
+.button {
     -fx-background-color: #5F9EA0;
     -fx-background-radius: 15.0;
 }
 
-.buttons .text{
+.button .text{
     -fx-text-alignment: center;
 }
 
-.buttons:hover{
+.button:hover{
     -fx-background-color: #7acbce;
     -fx-cursor: hand;
 }

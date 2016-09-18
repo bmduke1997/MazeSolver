@@ -130,10 +130,6 @@ public class MazeSolver{
                 }
                 spriteMove();
                 markPoint(); // marks the last location.
-                System.out.println(visitedLocations);
-                // // TODO: 9/15/16 debug delete.
-                System.out.println("Current Location: " + currentLocation[0] + " " + currentLocation[1] + " " + currentLocation[2]);
-                System.out.println("startExploration method was used.");
                 done = explore();
                 movesMade ++;
                 Thread.sleep((long)(100 - slider.getValue())*10);
@@ -348,7 +344,6 @@ public class MazeSolver{
         return false;
     }
 
-    // portal traverse method //// TODO: 9/16/16 added to stack multiple times while popping.. 
     private void beamMeUpScotty(){
         saveMap();
         logicSleep(); // sleeps the logic thread to slow down gui update.
@@ -375,7 +370,6 @@ public class MazeSolver{
         movesMade ++;
     }
 
-    // steps traversing junk //// TODO: 9/16/16 added to stack multiple times while popping.. 
     private void itsActuallyALadder(){
         saveMap();
         logicSleep();

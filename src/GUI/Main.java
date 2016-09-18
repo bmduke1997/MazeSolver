@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
+    //// TODO: 9/17/16 make the canvas scrollable or something. Needs to display 25X25
 
     @Override
     public void start(Stage primaryStage) throws Exception{
