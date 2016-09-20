@@ -346,6 +346,7 @@ public class MazeSolver{
     }
 
     private void beamMeUpScotty(){
+        // // TODO: 9/20/16 add a case in which the if portal does not go anywhere, add it to the visited hashSet to we don't get stuck.  
         saveMap();
         logicSleep(); // sleeps the logic thread to slow down gui update.
         spriteMove();
