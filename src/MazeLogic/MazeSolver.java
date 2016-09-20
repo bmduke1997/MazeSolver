@@ -152,26 +152,23 @@ public class MazeSolver{
     }
 
     // calls of the the methods that return a character, explores the area...
-    private boolean explore(){ // calls all methods of the class for a search.
-        if (on().compareCharacter('*')){
+    private boolean explore() { // calls all methods of the class for a search.
+        if (on().compareCharacter('*')) {
             return true;
         }
         /*
         ################################################################# checking for exit
          */
-        else if ((above().compareCharacter('*'))){
+        else if ((above().compareCharacter('*'))) {
             FredFin.push(above());
             currentLocation = above().getCoords();
-        }
-        else if (left().compareCharacter('*')){
+        } else if (left().compareCharacter('*')) {
             FredFin.push(left());
             currentLocation = left().getCoords();
-        }
-        else if (below().compareCharacter('*')){
+        } else if (below().compareCharacter('*')) {
             FredFin.push(below());
             currentLocation = below().getCoords();
-        }
-        else if (right().compareCharacter('*')){
+        } else if (right().compareCharacter('*')) {
             FredFin.push(right());
             currentLocation = right().getCoords();
         }
@@ -179,29 +176,26 @@ public class MazeSolver{
         ################################################################# checking for empty spaces
          */
         else if (above().compareCharacter('.') &&
-                visitedLocations.add(above())){
+                visitedLocations.add(above())) {
             System.out.println(above().getCharacter());
             FredFin.push(above());
             currentLocation = above().getCoords();
             loopVisitedSpecial.clear();
 
-        }
-        else if (left().compareCharacter('.') &&
-                visitedLocations.add(left())){
+        } else if (left().compareCharacter('.') &&
+                visitedLocations.add(left())) {
             System.out.println(left().getCharacter());
             FredFin.push(left());
             currentLocation = left().getCoords();
             loopVisitedSpecial.clear();
-        }
-        else if (below().compareCharacter('.') &&
-                visitedLocations.add(below())){
+        } else if (below().compareCharacter('.') &&
+                visitedLocations.add(below())) {
             System.out.println(below().getCharacter());
             FredFin.push(below());
             currentLocation = below().getCoords();
             loopVisitedSpecial.clear();
-        }
-        else if (right().compareCharacter('.') &&
-                visitedLocations.add(right())){
+        } else if (right().compareCharacter('.') &&
+                visitedLocations.add(right())) {
             System.out.println(right().getCharacter());
             FredFin.push(right());
             currentLocation = right().getCoords();
@@ -211,29 +205,26 @@ public class MazeSolver{
         ################################################################# checking for unexplored portals
          */
         else if (above().compareCharacter('+') &&
-                visitedSpecial.add(above())){
+                visitedSpecial.add(above())) {
             System.out.println(above().getCharacter());
             FredFin.push(above());
             currentLocation = above().getCoords();
             beamMeUpScotty();
-        }
-        else if (left().compareCharacter('+') &&
-                visitedSpecial.add(left())){
+        } else if (left().compareCharacter('+') &&
+                visitedSpecial.add(left())) {
             System.out.println(left().getCharacter());
             FredFin.push(left());
             currentLocation = left().getCoords();
             beamMeUpScotty();
-        }
-        else if (below().compareCharacter('+') &&
-                visitedSpecial.add(below())){
+        } else if (below().compareCharacter('+') &&
+                visitedSpecial.add(below())) {
             System.out.println(below().getCharacter());
             FredFin.push(below());
             currentLocation = below().getCoords();
             beamMeUpScotty();
 
-        }
-        else if (right().compareCharacter('+') &&
-                visitedSpecial.add(right())){
+        } else if (right().compareCharacter('+') &&
+                visitedSpecial.add(right())) {
             System.out.println(right().getCharacter());
             FredFin.push(right());
             currentLocation = right().getCoords();
@@ -243,28 +234,25 @@ public class MazeSolver{
         ################################################################# checking for unexplored stairs
          */
         else if (above().compareCharacter('=') &&
-                visitedSpecial.add(above())){
+                visitedSpecial.add(above())) {
             System.out.println(above().getCharacter());
             FredFin.push(above());
             currentLocation = above().getCoords();
             itsActuallyALadder();
-        }
-        else if (left().compareCharacter('=') &&
-                visitedSpecial.add(left())){
+        } else if (left().compareCharacter('=') &&
+                visitedSpecial.add(left())) {
             System.out.println(left().getCharacter());
             FredFin.push(left());
             currentLocation = left().getCoords();
             itsActuallyALadder();
-        }
-        else if (below().compareCharacter('=') &&
-                visitedSpecial.add(below())){
+        } else if (below().compareCharacter('=') &&
+                visitedSpecial.add(below())) {
             System.out.println(below().getCharacter());
             FredFin.push(below());
             currentLocation = below().getCoords();
             itsActuallyALadder();
-        }
-        else if (right().compareCharacter('=') &&
-                visitedSpecial.add(right())){
+        } else if (right().compareCharacter('=') &&
+                visitedSpecial.add(right())) {
             System.out.println(right().getCharacter());
             FredFin.push(right());
             currentLocation = right().getCoords();
@@ -273,77 +261,72 @@ public class MazeSolver{
          /*
         ################################################################# checking for any portals
          */
-        else if (above().compareCharacter('+')){
-            System.out.println(above().getCharacter());
-            FredFin.push(above());
-            currentLocation = above().getCoords();
-            beamMeUpScotty();
-        }
-        else if (left().compareCharacter('+')){
-            System.out.println(left().getCharacter());
-            FredFin.push(left());
-            currentLocation = left().getCoords();
-            beamMeUpScotty();
-        }
-        else if (below().compareCharacter('+')){
-            System.out.println(below().getCharacter());
-            FredFin.push(below());
-            currentLocation = below().getCoords();
-            beamMeUpScotty();
-        }
-        else if (right().compareCharacter('+')){
-            System.out.println(right().getCharacter());
-            FredFin.push(right());
-            currentLocation = right().getCoords();
-            beamMeUpScotty();
-        }
+        else if (!visitedLocations.contains(on())) {
+            if (above().compareCharacter('+')) {
+                System.out.println(above().getCharacter());
+                FredFin.push(above());
+                currentLocation = above().getCoords();
+                beamMeUpScotty();
+            } else if (left().compareCharacter('+')) {
+                System.out.println(left().getCharacter());
+                FredFin.push(left());
+                currentLocation = left().getCoords();
+                beamMeUpScotty();
+            } else if (below().compareCharacter('+')) {
+                System.out.println(below().getCharacter());
+                FredFin.push(below());
+                currentLocation = below().getCoords();
+                beamMeUpScotty();
+            } else if (right().compareCharacter('+')) {
+                System.out.println(right().getCharacter());
+                FredFin.push(right());
+                currentLocation = right().getCoords();
+                beamMeUpScotty();
+            }
+
          /*
         ################################################################# checking for any stairs
          */
-        else if (above().compareCharacter('=')){
-            System.out.println(above().getCharacter());
-            FredFin.push(above());
-            currentLocation = above().getCoords();
-            itsActuallyALadder();
-        }
-        else if (left().compareCharacter('=')){
-            System.out.println(left().getCharacter());
-            FredFin.push(left());
-            currentLocation = left().getCoords();
-            itsActuallyALadder();
-        }
-        else if (below().compareCharacter('=')){
-            System.out.println(below().getCharacter());
-            FredFin.push(below());
-            currentLocation = below().getCoords();
-            itsActuallyALadder();
-        }
-        else if (right().compareCharacter('=')){
-            System.out.println(right().getCharacter());
-            FredFin.push(right());
-            currentLocation = right().getCoords();
-            itsActuallyALadder();
+            else if (above().compareCharacter('=')) {
+                System.out.println(above().getCharacter());
+                FredFin.push(above());
+                currentLocation = above().getCoords();
+                itsActuallyALadder();
+            } else if (left().compareCharacter('=')) {
+                System.out.println(left().getCharacter());
+                FredFin.push(left());
+                currentLocation = left().getCoords();
+                itsActuallyALadder();
+            } else if (below().compareCharacter('=')) {
+                System.out.println(below().getCharacter());
+                FredFin.push(below());
+                currentLocation = below().getCoords();
+                itsActuallyALadder();
+            } else if (right().compareCharacter('=')) {
+                System.out.println(right().getCharacter());
+                FredFin.push(right());
+                currentLocation = right().getCoords();
+                itsActuallyALadder();
+            }
         }
         /*
         ################################################################# checking the spot we are on for portals
          */
-        else if (on().compareCharacter('+')){
-            if (loopVisitedSpecial.add(on())) beamMeUpScotty();
-            else{
-                breadCrumbsLoop();
+            else if (on().compareCharacter('+')) {
+                if (loopVisitedSpecial.add(on())) beamMeUpScotty();
+                else {
+                    breadCrumbsLoop();
+                }
+            } else if (on().compareCharacter('=')) {
+                if (loopVisitedSpecial.add(on())) itsActuallyALadder();
+                else {
+                    breadCrumbsLoop();
+                }
+            } else {
+                breadCrumbs();
             }
+            return false;
         }
-        else if (on().compareCharacter('=')){
-            if (loopVisitedSpecial.add(on())) itsActuallyALadder();
-            else{
-                breadCrumbsLoop();
-            }
-        }
-        else {
-            breadCrumbs();
-        }
-        return false;
-    }
 
     private void beamMeUpScotty(){
         // // TODO: 9/20/16 add a case in which the if portal does not go anywhere, add it to the visited hashSet to we don't get stuck.  
@@ -351,8 +334,13 @@ public class MazeSolver{
         logicSleep(); // sleeps the logic thread to slow down gui update.
         spriteMove();
         markPoint(); // mark the current point.
+        int tempCurrentLocation = currentLocation[0];
         for (int q = currentLocation[0] + 1; q < masterMaze.length + currentLocation[0]; q ++ ){
 
+            if (q == tempCurrentLocation){
+                visitedLocations.add(on());
+                break;
+            }
             try {
                 if (Character.compare('+', masterMaze[q][currentLocation[1]][currentLocation[2]]) == 0){
                     currentLocation[0] = q;
