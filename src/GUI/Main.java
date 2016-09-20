@@ -20,7 +20,7 @@ public class Main extends Application {
         primaryStage.setTitle("Map Thing");
         Controller controller = new Controller();
         controller.setStage(primaryStage);
-        primaryStage.setScene(new Scene(root, 1261, 759));
+        primaryStage.setScene(new Scene(root, 1261, 903));
         primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/graphics/AppIcon.png")));
 
         primaryStage.show();
