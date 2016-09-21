@@ -10,6 +10,8 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
+
+import java.util.Arrays;
 import java.util.HashSet;
 
 /**
@@ -105,6 +107,8 @@ public class MazeSolver{
     public void startExploration(){
         boolean done = false;
         while (!done){
+            System.out.println(visitedLocations);
+            System.out.println("Current Location: " + currentLocation[0] + " " + currentLocation[1] + " " + currentLocation[2]);
             try{
                 if (movesMade == 0){
                     try {
@@ -261,7 +265,7 @@ public class MazeSolver{
          /*
         ################################################################# checking for any portals
          */
-        else if (!visitedLocations.contains(on())) {
+        else if (!(visitedLocations.contains(on()))) {
             if (above().compareCharacter('+')) {
                 System.out.println(above().getCharacter());
                 FredFin.push(above());
@@ -329,6 +333,7 @@ public class MazeSolver{
         }
 
     private void beamMeUpScotty(){
+        System.out.println("im called");
         // // TODO: 9/20/16 add a case in which the if portal does not go anywhere, add it to the visited hashSet to we don't get stuck.  
         saveMap();
         logicSleep(); // sleeps the logic thread to slow down gui update.
@@ -336,11 +341,6 @@ public class MazeSolver{
         markPoint(); // mark the current point.
         int tempCurrentLocation = currentLocation[0];
         for (int q = currentLocation[0] + 1; q < masterMaze.length + currentLocation[0]; q ++ ){
-
-            if (q == tempCurrentLocation){
-                visitedLocations.add(on());
-                break;
-            }
             try {
                 if (Character.compare('+', masterMaze[q][currentLocation[1]][currentLocation[2]]) == 0){
                     currentLocation[0] = q;
@@ -354,6 +354,10 @@ public class MazeSolver{
                     break;
                 }
             }
+        }
+        if (currentLocation[0] == tempCurrentLocation){
+            visitedLocations.add(on());
+            System.out.println("This location was added" + Arrays.asList(currentLocation));
         }
         FredFin.push(new Coordinate('+', currentLocation));
         visitedSpecial.add(on());
