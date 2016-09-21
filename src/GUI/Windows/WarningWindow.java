@@ -21,13 +21,13 @@ import javafx.stage.Stage;
 public class WarningWindow {
     private Stage primaryStage;
     private String windowTitle;
-    private String warning, mapTheme;
+    private String warning, theme;
 
     public WarningWindow(Stage primaryStage, String windowTitle, String warning,String mapTheme){
         this.primaryStage = primaryStage;
         this.windowTitle = windowTitle;
         this.warning = warning;
-        this.mapTheme = mapTheme;
+        this.theme = mapTheme;
     }
 
     public void display(){
@@ -54,15 +54,16 @@ public class WarningWindow {
         closeBox.setPadding(new Insets(5,5,5,5));
         HBox hBox = new HBox(10);
         hBox.getChildren().addAll(warningImage, warningLabel);
+        hBox.setAlignment(Pos.CENTER);
         layout.getChildren().addAll(hBox,closeBox);
         layout.setAlignment(Pos.CENTER);
 
         // Showing the window
         Scene scene = new Scene(layout);
-        scene.getStylesheets().addAll("/graphics/css/"+mapTheme+".css");
+        scene.getStylesheets().addAll("/graphics/css/"+theme+".css");
         window.setScene(scene);
         window.setHeight(200.00);
-        window.setWidth(500.00);
+        window.setWidth(550.00);
         window.show();
     }
 }

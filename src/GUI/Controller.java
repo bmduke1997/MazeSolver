@@ -48,6 +48,7 @@ public class Controller{
     //GUI elements, can be called by using @FXML then defining an object with the same name as the FXid.
     //--------------------------------------------------------------------------------
     private Stage primaryStage; // the primary stage of the GUI, obtained through setStage method.
+    private Scene primaryScene;
 
     //Buttons
     @FXML private Button lvlUp;
@@ -69,8 +70,9 @@ public class Controller{
     private MapDrawer drawer;
 
     // used to extract the primary stage from the Main Class.
-    void setStage(Stage stage){
+    void setStage(Stage stage, Scene scene){
         this.primaryStage = stage;
+        this.primaryScene = scene;
     }
 
     // Load method, loads the maps into a 3d array.
@@ -145,7 +147,7 @@ public class Controller{
     public void start() {
 
         if (!run) {
-            new WarningWindow(primaryStage, "Nothing Loaded", "There is nothing loaded so there is nothing to run!", mapTheme).display();
+            new WarningWindow(primaryStage, "Nothing Loaded", "There is nothing loaded so there is nothing to run!", theme).display();
         }else {
             if (reRun) { // id we need to load a fresh map for a re-run, do it.
                 drawer = new MapDrawer(canvas, masterMaze, mapTheme);
@@ -213,7 +215,7 @@ public class Controller{
         // code to clear GUI
         if (!run){
             WarningWindow warning = new WarningWindow(primaryStage, "Unable to Clear",
-                    "There is nothing loaded, so there is nothing to clear.", mapTheme);
+                    "There is nothing loaded, so there is nothing to clear.", theme);
             warning.display();
         }else{
             drawer.clearMap();
@@ -247,10 +249,10 @@ public class Controller{
 
     //Shows about info screen from help menu
     public void about(){
-        AboutWindow aboutWindow = new AboutWindow("About", "Maze Solver", "1.0",
-                "This is the most amazing maze crawler that world will ever know!\n" +
+        AboutWindow aboutWindow = new AboutWindow("About", "aMAZEing Solver", "1.0",
+                "This is the most amazing maze solver that world will ever know!\n" +
                         "Let it be known that this is a fact and has been scientifically proven.",
-                "Awesome Team", "https://github.com/shinn16/MazeSolver", mapTheme);
+                "Awesome Team", "https://github.com/shinn16/MazeSolver", theme);
         aboutWindow.display();
     }
 
@@ -314,10 +316,16 @@ public class Controller{
                 if (theme.equals("Default")) {
                     scene.getStylesheets().remove("/graphics/css/Dark.css");
                     scene.getStylesheets().add("/graphics/css/Default.css");
+                    primaryScene.getStylesheets().clear();
+                    primaryScene.getStylesheets().add("/graphics/css/Default.css");
+                    System.out.println(theme);
                 }
                 else if (theme.equals("Dark")) {
                     scene.getStylesheets().remove("/graphics/css/Default.css");
                     scene.getStylesheets().add("/graphics/css/Dark.css");
+                    primaryScene.getStylesheets().clear();
+                    primaryScene.getStylesheets().add("/graphics/css/Dark.css");
+                    System.out.println(theme);
                 }
 
             }

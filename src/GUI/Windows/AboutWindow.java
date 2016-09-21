@@ -27,17 +27,17 @@ public class AboutWindow {
             appName,
             website,
             aboutApp,
-            mapTheme;
+            theme;
     public AboutWindow(String windowName, String appName,
                        String version, String aboutApp,
-                       String developer, String website, String mapTheme){
+                       String developer, String website, String theme){
         this.windowName = windowName;
         this.appName = appName;
         this.version = version;
         this.aboutApp = aboutApp;
         this.developer = developer;
         this.website = website;
-        this.mapTheme = mapTheme;
+        this.theme = theme;
     }
     public void display(){
         // Stage setup
@@ -71,10 +71,10 @@ public class AboutWindow {
 
         // Building scene and displaying.
         Scene scene = new Scene(layout);
-        scene.getStylesheets().addAll("/graphics/css/"+mapTheme+".css");
+        scene.getStylesheets().addAll("/graphics/css/"+ theme +".css");
         window.setScene(scene);
         window.setHeight(400);
-        window.setWidth(500);
+        window.setWidth(550);
         window.show();
     }
 }

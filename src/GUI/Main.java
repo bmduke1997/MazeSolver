@@ -1,13 +1,10 @@
 package GUI;
 
 import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -15,10 +12,11 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("GUI.fxml"));
-        primaryStage.setTitle("Map Thing");
+        primaryStage.setTitle("aMAZEing Solver");
         Controller controller = new Controller();
-        controller.setStage(primaryStage);
-        primaryStage.setScene(new Scene(root, 1261, 903));
+        Scene scene = new Scene(root, 1261, 903);
+        controller.setStage(primaryStage, scene);
+        primaryStage.setScene(scene);
         primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/graphics/AppIcon.png")));
 
         primaryStage.show();
