@@ -84,7 +84,7 @@ public class MazeSolver{
             }
         }
         this.currentLocation = location; // saves the start location.
-        this.sprite = new Rectangle(45, 45, new ImagePattern(new Image(getClass().getResourceAsStream("/graphics/"+mapPack+"/sprite.png"))));
+        this.sprite = new Rectangle(30, 30, new ImagePattern(new Image(getClass().getResourceAsStream("/graphics/"+mapPack+"/sprite.png"))));
         FredFin.push(new Coordinate(masterMaze[currentLocation[0]][ currentLocation[1]][currentLocation[2]], currentLocation)); // pushes the first coordinate onto the stack.
 
     }
@@ -120,8 +120,8 @@ public class MazeSolver{
                             Platform.runLater(new Runnable() { // this is the fx thread.
                                 public void run() {
                                     pane.getChildren().addAll(sprite);
-                                    sprite.setX(currentLocation[2]*45 +8);
-                                    sprite.setY(currentLocation[1]*45+5);
+                                    sprite.setX(currentLocation[2]*30 +8);
+                                    sprite.setY(currentLocation[1]*30+5);
                                 }
                             });
                             if (counter == 2) ran = true;
@@ -452,8 +452,8 @@ public class MazeSolver{
                 Thread.sleep((long)5);
                 Platform.runLater(new Runnable() { // this is the fx thread.
                     public void run() {
-                        sprite.setX(currentLocation[2]*45 + 8);
-                        sprite.setY(currentLocation[1]*45 + 5);
+                        sprite.setX(currentLocation[2]*30 + 8);
+                        sprite.setY(currentLocation[1]*30 + 5);
                     }
                 });
                 if (counter == 2) ran = true;
@@ -469,7 +469,7 @@ public class MazeSolver{
     // used to mark points that have been visited.
     private void markPoint(){
         graphicsContext.setGlobalAlpha(0.33); // sets opacity for visited image drawing
-        graphicsContext.drawImage(visited, (double)(currentLocation[2] * 45), (double)(currentLocation[1]*45));
+        graphicsContext.drawImage(visited, (double)(currentLocation[2] * 30), (double)(currentLocation[1]*30));
         graphicsContext.setGlobalAlpha(1); // resets opacity for final image drawing.
         // this next part updates the step counter on the GUI.
         try {

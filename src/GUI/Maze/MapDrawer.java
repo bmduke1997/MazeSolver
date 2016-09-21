@@ -46,17 +46,17 @@ public class MapDrawer {
         int imageY;
         for (char[][] z : masterMaze){
             clearMap();
-            imageY = z.length * 45;
+            imageY = z.length * 30;
             for (char[] y : z){
-                imageX = y.length * 45;
+                imageX = y.length * 30;
                     for (char x : y){
                         // based on what the character corresponds to, draw the item.
-                        if (Character.compare(x, '#') == 0)graphicsContext.drawImage(wall, xCounter * 45,  yCounter * 45);
-                        else if (Character.compare(x, '.') == 0)graphicsContext.drawImage(path, xCounter * 45, yCounter * 45);
-                        else if (Character.compare(x, '+') == 0)graphicsContext.drawImage(portal, xCounter * 45, yCounter * 45);
-                        else if (Character.compare(x, '=') == 0)graphicsContext.drawImage(ladder, xCounter * 45, yCounter * 45);
-                        else if (Character.compare(x, '@') == 0)graphicsContext.drawImage(start, xCounter * 45, yCounter * 45);
-                        else if (Character.compare(x, '*') == 0)graphicsContext.drawImage(finish, xCounter * 45, yCounter * 45);
+                        if (Character.compare(x, '#') == 0)graphicsContext.drawImage(wall, xCounter * 30,  yCounter * 30);
+                        else if (Character.compare(x, '.') == 0)graphicsContext.drawImage(path, xCounter * 30, yCounter * 30);
+                        else if (Character.compare(x, '+') == 0)graphicsContext.drawImage(portal, xCounter * 30, yCounter * 30);
+                        else if (Character.compare(x, '=') == 0)graphicsContext.drawImage(ladder, xCounter * 30, yCounter * 30);
+                        else if (Character.compare(x, '@') == 0)graphicsContext.drawImage(start, xCounter * 30, yCounter * 30);
+                        else if (Character.compare(x, '*') == 0)graphicsContext.drawImage(finish, xCounter * 30, yCounter * 30);
 
                         xCounter ++;
                     }
@@ -90,17 +90,17 @@ public class MapDrawer {
         int imageY;
         for (char[][] z : masterMaze){
             clearMap();
-            imageY = z.length * 45;
+            imageY = z.length * 30;
             for (char[] y : z){
-                imageX = y.length * 45;
+                imageX = y.length * 30;
                 for (char x : y){
                     // based on what the character corresponds to, draw the item.
-                    if (Character.compare(x, '#') == 0)graphicsContext.drawImage(wall, xCounter * 45,  yCounter * 45);
-                    else if (Character.compare(x, '.') == 0)graphicsContext.drawImage(path, xCounter * 45, yCounter * 45);
-                    else if (Character.compare(x, '+') == 0)graphicsContext.drawImage(portal, xCounter * 45, yCounter * 45);
-                    else if (Character.compare(x, '=') == 0)graphicsContext.drawImage(ladder, xCounter * 45, yCounter * 45);
-                    else if (Character.compare(x, '@') == 0)graphicsContext.drawImage(start, xCounter * 45, yCounter * 45);
-                    else if (Character.compare(x, '*') == 0)graphicsContext.drawImage(finish, xCounter * 45, yCounter * 45);
+                    if (Character.compare(x, '#') == 0)graphicsContext.drawImage(wall, xCounter * 30,  yCounter * 30);
+                    else if (Character.compare(x, '.') == 0)graphicsContext.drawImage(path, xCounter * 30, yCounter * 30);
+                    else if (Character.compare(x, '+') == 0)graphicsContext.drawImage(portal, xCounter * 30, yCounter * 30);
+                    else if (Character.compare(x, '=') == 0)graphicsContext.drawImage(ladder, xCounter * 30, yCounter * 30);
+                    else if (Character.compare(x, '@') == 0)graphicsContext.drawImage(start, xCounter * 30, yCounter * 30);
+                    else if (Character.compare(x, '*') == 0)graphicsContext.drawImage(finish, xCounter * 30, yCounter * 30);
 
                     xCounter ++;
                 }
