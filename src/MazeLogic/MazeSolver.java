@@ -291,22 +291,22 @@ public class MazeSolver{
          /*
         ################################################################# checking for any stairs
          */
-        else if (above().compareCharacter('=')) {
+        else if (above().compareCharacter('=') && !blacklistSites.contains(above())) {
             System.out.println(above().getCharacter());
             FredFin.push(above());
             currentLocation = above().getCoords();
             itsActuallyALadder();
-        } else if (left().compareCharacter('=')) {
+        } else if (left().compareCharacter('=') && !blacklistSites.contains(left())) {
             System.out.println(left().getCharacter());
             FredFin.push(left());
             currentLocation = left().getCoords();
             itsActuallyALadder();
-        } else if (below().compareCharacter('=')) {
+        } else if (below().compareCharacter('=') && !blacklistSites.contains(below())) {
             System.out.println(below().getCharacter());
             FredFin.push(below());
             currentLocation = below().getCoords();
             itsActuallyALadder();
-        } else if (right().compareCharacter('=')) {
+        } else if (right().compareCharacter('=') && !blacklistSites.contains(right())) {
             System.out.println(right().getCharacter());
             FredFin.push(right());
             currentLocation = right().getCoords();
@@ -372,6 +372,7 @@ public class MazeSolver{
         logicSleep();
         spriteMove();
         markPoint();
+        int tempCurrentLocation = currentLocation[0];
         try {
             if (Character.compare('=', masterMaze[currentLocation[0] + 1][currentLocation[1]][currentLocation[2]]) == 0){
                 currentLocation[0] = currentLocation[0] + 1;
@@ -388,6 +389,10 @@ public class MazeSolver{
                 drawer.displayLevel(currentLocation[0]);
 
             }
+        }
+        if (currentLocation[0] == tempCurrentLocation){
+            blacklistSites.add(on());
+            System.out.println("This location was added" + Arrays.toString(currentLocation));
         }
         FredFin.push(new Coordinate('=', currentLocation));
         visitedSpecial.add(on());
