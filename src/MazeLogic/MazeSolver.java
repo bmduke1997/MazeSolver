@@ -38,6 +38,7 @@ public class MazeSolver{
     private HashSet<Coordinate> loopVisitedSpecial = new HashSet<>(); // looped visited portals & stairs
     private HashSet<Coordinate> visitedSpecial = new HashSet<>(); // visited portals & stairs
     private HashSet<Coordinate> visitedLocations = new HashSet<>(); // visited open spaces
+    private HashSet<Coordinate> blacklistSites = new HashSet<>(); // blacklisted portals and strairs
     private ThompsonStack<Coordinate> FredFin = new ThompsonStack<>();
     private Image visited;
     private Rectangle sprite;
@@ -265,54 +266,53 @@ public class MazeSolver{
          /*
         ################################################################# checking for any portals
          */
-        else if (!(visitedLocations.contains(on()))) {
-            if (above().compareCharacter('+')) {
-                System.out.println(above().getCharacter());
-                FredFin.push(above());
-                currentLocation = above().getCoords();
-                beamMeUpScotty();
-            } else if (left().compareCharacter('+')) {
-                System.out.println(left().getCharacter());
-                FredFin.push(left());
-                currentLocation = left().getCoords();
-                beamMeUpScotty();
-            } else if (below().compareCharacter('+')) {
-                System.out.println(below().getCharacter());
-                FredFin.push(below());
-                currentLocation = below().getCoords();
-                beamMeUpScotty();
-            } else if (right().compareCharacter('+')) {
-                System.out.println(right().getCharacter());
-                FredFin.push(right());
-                currentLocation = right().getCoords();
-                beamMeUpScotty();
-            }
+        else if (above().compareCharacter('+') && !blacklistSites.contains(above())) {
+            System.out.println(above().getCharacter());
+            FredFin.push(above());
+            currentLocation = above().getCoords();
+            beamMeUpScotty();
+        } else if (left().compareCharacter('+') && !blacklistSites.contains(left())) {
+            System.out.println(left().getCharacter());
+            FredFin.push(left());
+            currentLocation = left().getCoords();
+            beamMeUpScotty();
+        } else if (below().compareCharacter('+') && !blacklistSites.contains(below())) {
+            System.out.println(below().getCharacter());
+            FredFin.push(below());
+            currentLocation = below().getCoords();
+            beamMeUpScotty();
+        } else if (right().compareCharacter('+') && !blacklistSites.contains(right())) {
+            System.out.println(right().getCharacter());
+            FredFin.push(right());
+            currentLocation = right().getCoords();
+            beamMeUpScotty();
+        }
 
          /*
         ################################################################# checking for any stairs
          */
-            else if (above().compareCharacter('=')) {
-                System.out.println(above().getCharacter());
-                FredFin.push(above());
-                currentLocation = above().getCoords();
-                itsActuallyALadder();
-            } else if (left().compareCharacter('=')) {
-                System.out.println(left().getCharacter());
-                FredFin.push(left());
-                currentLocation = left().getCoords();
-                itsActuallyALadder();
-            } else if (below().compareCharacter('=')) {
-                System.out.println(below().getCharacter());
-                FredFin.push(below());
-                currentLocation = below().getCoords();
-                itsActuallyALadder();
-            } else if (right().compareCharacter('=')) {
-                System.out.println(right().getCharacter());
-                FredFin.push(right());
-                currentLocation = right().getCoords();
-                itsActuallyALadder();
-            }
+        else if (above().compareCharacter('=')) {
+            System.out.println(above().getCharacter());
+            FredFin.push(above());
+            currentLocation = above().getCoords();
+            itsActuallyALadder();
+        } else if (left().compareCharacter('=')) {
+            System.out.println(left().getCharacter());
+            FredFin.push(left());
+            currentLocation = left().getCoords();
+            itsActuallyALadder();
+        } else if (below().compareCharacter('=')) {
+            System.out.println(below().getCharacter());
+            FredFin.push(below());
+            currentLocation = below().getCoords();
+            itsActuallyALadder();
+        } else if (right().compareCharacter('=')) {
+            System.out.println(right().getCharacter());
+            FredFin.push(right());
+            currentLocation = right().getCoords();
+            itsActuallyALadder();
         }
+
         /*
         ################################################################# checking the spot we are on for portals
          */
@@ -356,7 +356,7 @@ public class MazeSolver{
             }
         }
         if (currentLocation[0] == tempCurrentLocation){
-            visitedLocations.add(on());
+            blacklistSites.add(on());
             System.out.println("This location was added" + Arrays.asList(currentLocation));
         }
         FredFin.push(new Coordinate('+', currentLocation));
