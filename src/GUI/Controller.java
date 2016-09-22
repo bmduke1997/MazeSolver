@@ -267,14 +267,10 @@ public class Controller{
         window.initModality(Modality.APPLICATION_MODAL); // means that while this window is open, you can't interact with the main program.;
 
         // labels
-        Label windowThemes = new Label("Window Themes");
         Label themePacks = new Label("Map Packs");
 
         // drop down menus
-        ComboBox<String> themeBox = new ComboBox<>();
-        themeBox.getItems().addAll("Default", "Dark");
-        themeBox.setValue(theme);
-        themeBox.setPrefSize(125,25);
+
 
 
         ComboBox<String> mapBox = new ComboBox<>();
@@ -284,15 +280,13 @@ public class Controller{
 
         // layout defining.
         HBox layout = new HBox(50);
-        VBox left = new VBox(10);
         VBox right = new VBox(10);
 
         // layout building
-        left.getChildren().addAll(windowThemes, themeBox);
-        left.setAlignment(Pos.CENTER);
+
         right.getChildren().addAll(themePacks, mapBox);
         right.setAlignment(Pos.CENTER);
-        layout.getChildren().addAll(left,right);
+        layout.getChildren().addAll(right);
         layout.setAlignment(Pos.CENTER);
 
         // build and display window
@@ -310,25 +304,7 @@ public class Controller{
                 // does nothing..
             }
 
-            //// TODO: 9/17/2016 the css swap 
-            private void themeBoxMethod() {
-                theme = themeBox.getValue();
-                if (theme.equals("Default")) {
-                    scene.getStylesheets().remove("/graphics/css/Dark.css");
-                    scene.getStylesheets().add("/graphics/css/Default.css");
-                    primaryScene.getStylesheets().clear();
-                    primaryScene.getStylesheets().add("/graphics/css/Default.css");
-                    System.out.println(theme);
-                }
-                else if (theme.equals("Dark")) {
-                    scene.getStylesheets().remove("/graphics/css/Default.css");
-                    scene.getStylesheets().add("/graphics/css/Dark.css");
-                    primaryScene.getStylesheets().clear();
-                    primaryScene.getStylesheets().add("/graphics/css/Dark.css");
-                    System.out.println(theme);
-                }
 
-            }
 
             private void mapPackMethod(){
                 mapTheme = mapBox.getValue();
@@ -337,7 +313,6 @@ public class Controller{
         }
 
         // changes the themes on click!
-        themeBox.setOnAction(e -> new settingsMethods().themeBoxMethod());
         mapBox.setOnAction(e -> new settingsMethods().mapPackMethod());
     }
 
