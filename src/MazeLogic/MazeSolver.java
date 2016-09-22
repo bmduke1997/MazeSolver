@@ -266,22 +266,22 @@ public class MazeSolver{
          /*
         ################################################################# checking for any portals
          */
-        else if (above().compareCharacter('+') && !blacklistSites.contains(above())) {
+        else if (above().compareCharacter('+') && !blacklistSites.contains(above()) && !loopVisitedSpecial.contains(above())) {
             System.out.println(above().getCharacter());
             FredFin.push(above());
             currentLocation = above().getCoords();
             beamMeUpScotty();
-        } else if (left().compareCharacter('+') && !blacklistSites.contains(left())) {
+        } else if (left().compareCharacter('+') && !blacklistSites.contains(left()) && !loopVisitedSpecial.contains(left())) {
             System.out.println(left().getCharacter());
             FredFin.push(left());
             currentLocation = left().getCoords();
             beamMeUpScotty();
-        } else if (below().compareCharacter('+') && !blacklistSites.contains(below())) {
+        } else if (below().compareCharacter('+') && !blacklistSites.contains(below()) && !loopVisitedSpecial.contains(below())) {
             System.out.println(below().getCharacter());
             FredFin.push(below());
             currentLocation = below().getCoords();
             beamMeUpScotty();
-        } else if (right().compareCharacter('+') && !blacklistSites.contains(right())) {
+        } else if (right().compareCharacter('+') && !blacklistSites.contains(right()) && !loopVisitedSpecial.contains(right())) {
             System.out.println(right().getCharacter());
             FredFin.push(right());
             currentLocation = right().getCoords();
@@ -340,6 +340,7 @@ public class MazeSolver{
         spriteMove();
         markPoint(); // mark the current point.
         int tempCurrentLocation = currentLocation[0];
+        int[] tempArray = currentLocation.clone();
         for (int q = currentLocation[0] + 1; q < masterMaze.length + currentLocation[0]; q ++ ){
             try {
                 if (Character.compare('+', masterMaze[q][currentLocation[1]][currentLocation[2]]) == 0){
@@ -357,11 +358,13 @@ public class MazeSolver{
         }
         if (currentLocation[0] == tempCurrentLocation){
             blacklistSites.add(on());
-            System.out.println("This location was added" + Arrays.asList(currentLocation));
+            System.out.println("This location was added" + Arrays.toString(currentLocation));
         }
         FredFin.push(new Coordinate('+', currentLocation));
         visitedSpecial.add(on());
+        loopVisitedSpecial.add(on());
         movesMade ++;
+        System.out.print("Went from " + Arrays.toString(tempArray) + " to " + Arrays.toString(currentLocation));
     }
 
     private void itsActuallyALadder(){
