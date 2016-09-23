@@ -18,7 +18,8 @@ public class Main extends Application {
         controller.setStage(primaryStage, scene);
         primaryStage.setScene(scene);
         primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/graphics/AppIcon.png")));
-
+        primaryStage.setMinHeight(943);
+        primaryStage.setMinWidth(1281);
         primaryStage.show();
     }
 

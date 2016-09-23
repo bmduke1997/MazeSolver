@@ -124,6 +124,7 @@ public class LegendWindow {
         window.setHeight(350);
         window.setWidth(500);
         window.setResizable(false);
+        window.getIcons().add(new Image(getClass().getResourceAsStream("/graphics/AppIcon.png")));
         window.show();
     }
 }

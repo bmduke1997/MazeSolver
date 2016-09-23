@@ -14,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -296,6 +297,7 @@ public class Controller{
         window.setWidth(350);
         window.setHeight(225);
         window.setResizable(false);
+        window.getIcons().add(new Image(getClass().getResourceAsStream("/graphics/AppIcon.png")));
         window.show();
 
         // this is here because nested methods aren't a thing in java...

@@ -75,6 +75,8 @@ public class AboutWindow {
         window.setScene(scene);
         window.setHeight(400);
         window.setWidth(550);
+        window.setResizable(false);
+        window.getIcons().add(new Image(getClass().getResourceAsStream("/graphics/AppIcon.png")));
         window.show();
     }
 }

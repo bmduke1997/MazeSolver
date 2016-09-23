@@ -64,6 +64,7 @@ public class WarningWindow {
         window.setScene(scene);
         window.setHeight(200.00);
         window.setWidth(550.00);
+        window.getIcons().add(new Image(getClass().getResourceAsStream("/graphics/AppIcon.png")));
         window.show();
     }
 }

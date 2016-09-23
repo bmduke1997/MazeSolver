@@ -29,8 +29,8 @@
 
 .up,
 .down{
-    -fx-background-color: rgba(0,0,0,0);
     -fx-cursor: hand;
+    -fx-background-color: none !important;
 }
 .up{
     -fx-background-image: url("images/contract.png");
