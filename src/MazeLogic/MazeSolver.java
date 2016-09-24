@@ -24,7 +24,6 @@ import java.util.HashSet;
  * @version 9/8/16
  *
  */
-// // TODO: 9/19/16 Remove all of the debuging stuff "System.out.print..." 
 public class MazeSolver{
 
     private char[][][] masterMaze;

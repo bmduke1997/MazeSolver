@@ -212,7 +212,6 @@ public class Controller{
 
     //clears the map from the gui. Has a keyboard shortcut of ctrl + shift + c
     public void clearScreen(){
-        // // TODO: 9/20/16 make this kill the logic thread 
         // code to clear GUI
         if (!run){
             WarningWindow warning = new WarningWindow(primaryStage, "Unable to Clear",
