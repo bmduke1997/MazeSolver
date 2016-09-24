@@ -382,10 +382,14 @@ public class MazeSolver{
 
             }
         }catch (IndexOutOfBoundsException error){
-            if (Character.compare('=', masterMaze[currentLocation[0] - 1][currentLocation[1]][currentLocation[2]]) == 0){
-                currentLocation[0] = currentLocation[0] - 1;
-                drawer.displayLevel(currentLocation[0]);
+            try {
+                if (Character.compare('=', masterMaze[currentLocation[0] - 1][currentLocation[1]][currentLocation[2]]) == 0) {
+                    currentLocation[0] = currentLocation[0] - 1;
+                    drawer.displayLevel(currentLocation[0]);
 
+                }
+            }catch (IndexOutOfBoundsException e){
+                //todo patrick anything better? this is a fix for a 1lv maze with a stair
             }
         }
         if (currentLocation[0] == tempCurrentLocation){
