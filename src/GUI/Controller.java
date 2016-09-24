@@ -172,15 +172,17 @@ public class Controller{
                     drawer.displayLevel(mazeSolver.getCurrentLocation()[0]); // displays the location of start on the map.
 
                     // start solving
-                    mazeSolver.startExploration();
-                    currentLevel = mazeSolver.getCurrentLocation()[0];
+                    synchronized (mazeSolver) {  // syncronize the solver in hopes that this will end the level breakage
+                        mazeSolver.startExploration();
+                        currentLevel = mazeSolver.getCurrentLocation()[0];
+                    }
 
                     // updates the buttons for new usage, this runs in the fx thread.
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() { // re enable all the buttons and update labels!
                             String solved;
-                            if (mazeSolver.isSolved()) solved = "Maze solvable";
+                            if (mazeSolver.isSolved()) solved = "Maze solvable, finish at: " + Arrays.toString(mazeSolver.getCurrentLocation());
                             else solved = "Maze unsolvable";
                             statusLbl.setText("Map Status: " + solved + " | Current floor " + mazeSolver.getCurrentLocation()[0] +
                                     " | Moves made: " + mazeSolver.getMovesMade());
